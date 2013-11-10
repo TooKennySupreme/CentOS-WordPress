@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 yum -y --exclude=kernel* update
 yum -y install git bc
