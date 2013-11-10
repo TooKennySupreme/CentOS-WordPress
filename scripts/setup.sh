@@ -1,18 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
 # Declare script variables for future portability
-CENTMIN_DIR="usr/local/src" # Directory where centmin is installed
-INSTALL_FOLDER_NAME="gigabyteio" # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
-CONF_FOLDER="configs" # Name of folder in the GigabyteIO directory that holds the configuration files
-SCRIPTS_FOLDER="scripts" # Name of folder in the GigabyteIO directory that holds scripts
-WORDPRESS_FOLDER="wordpress" # Name of folder in the GigabyteIO directory that holds WordPress related files
+CENTMIN_DIR='usr/local/src' # Directory where centmin is installed
+INSTALL_FOLDER_NAME='gigabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
+CONF_FOLDER='configs' # Name of folder in the GigabyteIO directory that holds the configuration files
+SCRIPTS_FOLDER='scripts' # Name of folder in the GigabyteIO directory that holds scripts
+WORDPRESS_FOLDER='wordpress' # Name of folder in the GigabyteIO directory that holds WordPress related files
 SSH_PORT_NUMBER=8388 # SSH port used - NOTE: NOT WORKING - SSH PORT is hardcoded as 8388 - Any help guys? Commits? :)
-CENTMIN_FOLDER_NAME="centmin-v1.2.3mod" # Name of centmin folder
-CENTMIN_DOWNLOAD_URL="http://centminmod.com/download/centmin-v1.2.3-eva2000.04.zip" # Centmin download URL
-CENTMIN_FILE_NAME="centmin-v1.2.3-eva2000.04.zip" # Centmin zip file name
-GITHUB_URL="https://github.com/GigabyteIO/WordPress-Droplet.git" # GigabyteIO git repo
-WEBSITE_INSTALL_DIRECTORY="home/nginx/domains" # Path to website files folder
-NGINX_CONF_DIR="usr/local/nginx/conf" # Path to nginx configurations
+CENTMIN_FOLDER_NAME='centmin-v1.2.3mod' # Name of centmin folder
+CENTMIN_DOWNLOAD_URL='http://centminmod.com/download/centmin-v1.2.3-eva2000.04.zip' # Centmin download URL
+CENTMIN_FILE_NAME='centmin-v1.2.3-eva2000.04.zip' # Centmin zip file name
+GITHUB_URL='https://github.com/GigabyteIO/WordPress-Droplet.git' # GigabyteIO git repo
+WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
+NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 
 # Change root user password
 passwd
@@ -78,9 +78,10 @@ fi
 cd /$CENTMIN_DIR
 wget $CENTMIN_DOWNLOAD_URL
 unzip $CENTMIN_FILE_NAME
-rm -f $CENTMIN_FILE_NAME
+rm $CENTMIN_FILE_NAME
+echo "Spot 1"
 cd $CENTMIN_FOLDER_NAME
-
+echo "Spot 2"
 # Change time zone
 perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 perl -pi -e 's/Brisbane/New_York/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
