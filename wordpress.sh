@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Get MySQL host from envoirnment variables
 CLI_DATABASE_HOST=$DATABASE_SERVER
