@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 # Declare script variables for future portability
 CENTMIN_DIR='usr/local/src' # Directory where centmin is installed
