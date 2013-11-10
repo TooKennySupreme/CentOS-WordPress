@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# whitelist.sh - contains IPs that are whitelisted using CSF
 # Whitelist Cloudflare IPs
 csf -a 204.93.240.0/24 Cloudflare
 csf -a 204.93.177.0/24 Cloudflare
