@@ -86,29 +86,3 @@ perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' /$CENTMIN_DIR/$CENTMIN_FOL
 perl -pi -e 's/Brisbane/New_York/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 perl -pi -e 's/nginx centminmod/GigabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 chmod +x centmin.sh
-
-# Change SSH port
-cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
-perl -pi -e 's/read -ep "Enter existing SSH port number \(default = 22 for fresh installs\): " EXISTPORTNUM/EXISTPORTNUM=22/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
-perl -pi -e 's/read -ep "Enter the SSH port number you want to change to: " PORTNUM/PORTNUM=8388/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
-echo "sshdport" | ./centmin.sh
-# Restore centmin SSH config file to original state
-rm /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
-cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
-
-# Run a fresh Centmin install
-#perl -pi -e 's/read -ep "Enter option \[ 1 - 21 ] " option/option=install/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
-#./centmin.sh
-# Restore Centmin files to original format
-#perl -pi -e 's/option=install/read -ep "Enter option [ 1 - 21 ] " option/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.shn
-
-# Move/replace nginx configuration files
-cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/configs/cloudflare.conf /$NGINX_CONF_DIR/cloudflare.conf
-cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/configs/nginx.conf /$NGINX_CONF_DIR/nginx.conf
-cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/configs/phpwpcache.conf /$NGINX_CONF_DIR/phpwpcache.conf
-cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/configs/roots.conf /$NGINX_CONF_DIR/roots.conf
-cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/configs/wp_fastcgicache.conf /$NGINX_CONF_DIR/wp_fastcgicache.conf
-cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/configs/wpcache.conf /$NGINX_CONF_DIR/wpcache.conf
-cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/configs/wpnocache.conf /$NGINX_CONF_DIR/wpnocache.conf
-cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/configs/wpsecure.conf /$NGINX_CONF_DIR/wpsecure.conf
-cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/configs/yoast.conf /$NGINX_CONF_DIR/yoast.conf
