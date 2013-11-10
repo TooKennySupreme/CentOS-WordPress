@@ -36,6 +36,10 @@ else
 fi
 
 # Add new root user to visudo list
+echo "What upppp?"
+echo $CENTMIN_DIR
+echo $INSTALL_FOLDER_NAME
+echo $SCRIPTS_FOLDER
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 chmod +x visudo.sh
 ./visudo.sh $NEW_ROOT_USERNAME
