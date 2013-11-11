@@ -40,21 +40,21 @@ if [ $(id -u) -eq 0 ]; then
         read -s -p "Enter the new root users password: " NEW_ROOT_PASSWORD
         egrep "^$NEW_ROOT_USERNAME" /etc/passwd >/dev/null
         if [ $? -eq 0 ]; then
-                echo -e "\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) $NEW_ROOT_USERNAME already exists! Aborting installation."
+                echo -e "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) $NEW_ROOT_USERNAME already exists! Aborting installation."
                 exit 1
         else
                 ENCRYPTED_NEW_ROOT_PASSWORD=$(perl -e 'print crypt($ARGV[0], "password")' $NEW_ROOT_PASSWORD)
                 useradd -m -p $ENCRYPTED_NEW_ROOT_PASSWORD $NEW_ROOT_USERNAME
-                [ $? -eq 0 ] && echo -e "\n* $(tput setaf 6)$NEW_ROOT_USERNAME added to user list$(tput sgr0)" || echo -e "\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Failed to add $NEW_ROOT_USERNAME to the user list"
+                [ $? -eq 0 ] && echo -e "\n\n* $(tput setaf 6)$NEW_ROOT_USERNAME added to user list$(tput sgr0)" || echo -e "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Failed to add $NEW_ROOT_USERNAME to the user list"
         fi
 else
-        echo -e "\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) You must be root to add a user to the system. Aborting installation."
+        echo -e "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) You must be root to add a user to the system. Aborting installation."
         exit 2
 fi
 # Add new root user to visudo list
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 chmod +x visudo.sh
-echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USER_NAME$(tput sgr0)"
+echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USERNAME$(tput sgr0)"
 ./visudo.sh $NEW_ROOT_USERNAME
 chmod 644 visudo.sh
 echo ""
