@@ -52,10 +52,11 @@ else
         exit 2
 fi
 # Add new root user to visudo list
+echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER$(tput sgr0)"
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 echo "* $(tput setaf 6)Granting executable permissions to visudo.sh$(tput sgr0)"
 chmod +x visudo.sh
-echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USERNAME$(tput sgr0)"
+echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USERNAME$ using visudo.sh(tput sgr0)"
 ./visudo.sh $NEW_ROOT_USERNAME
 echo "* $(tput setaf 6)Restoring visudo.sh permissions to original state$(tput sgr0)"
 chmod 644 visudo.sh
@@ -76,7 +77,7 @@ if [ "$SSH_CHOICE" == "yes" ]; then
         cp /root/.ssh/authorized_keys /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
         echo "* $(tput setaf 6)Removing root SSH key file$(tput sgr0)"
         rm ~/.ssh/authorized_keys
-        echo "* $(tput setaf 6)Applying appropriate permissions to $NEW_ROOT_USERNAME's SSH key file and directory$(tput sgr0)"
+        echo "* $(tput setaf 6)Applying appropriate permissions and ownership to $NEW_ROOT_USERNAME's SSH key file and directory$(tput sgr0)"
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh
         chmod 700 /home/$NEW_ROOT_USERNAME/.ssh
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
@@ -105,6 +106,7 @@ echo ""
 echo "$(tput bold)$(tput setaf 2)Step 4 of 7:$(tput sgr0) Configure and install CentminMod"
 echo ""
 # Download and set up CentminMod directory
+echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR$(tput sgr0)"
 cd /$CENTMIN_DIR
 echo "* $(tput setaf 6)Downloading CentminMod from $CENTMIN_DOWNLOAD_URL$(tput sgr0)"
 wget -q $CENTMIN_DOWNLOAD_URL
@@ -112,6 +114,7 @@ echo "* $(tput setaf 6)Unzipping $CENTMIN_FILE_NAME to $CENTMIN_DIR$(tput sgr0)"
 unzip -q $CENTMIN_FILE_NAME
 echo "* $(tput setaf 6)Removing $CENTMIN_FILE_NAME$(tput sgr0)"
 rm $CENTMIN_FILE_NAME
+echo "* $(tput setaf 6)Changing directory to $CENTMIN_FOLDER_NAME$(tput sgr0)"
 cd $CENTMIN_FOLDER_NAME
 
 # Change time zone in centmin.sh
@@ -128,12 +131,19 @@ echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
 chmod +x centmin.sh
 
 echo ""
-echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The initial set up is complete. If you restart the server or attempt to log in via SSH, you will only be able to connect via the server's IP address on port number $SSH_PORT_NUMBER (please note that the port number is changed at the end of the installation so if the script fails for whatever reason, the SSH port might still be 22). In addition, the only user that can login is your new root username ($NEW_ROOT_USERNAME). If for some reason you need to use the root user, you will have to login with your new root username ($NEW_ROOT_USERNAME) and then switch to the root user by entering 'su'.\n\nThe script will now compile the server via CentminMod. This process generally takes around 30 minutes. For the most part, it is an unattended installation."
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The initial set up is complete. The script will now compile the server via CentminMod. This process generally takes around 30 minutes. The installation will be run with the following variables (you should probably write these down):"
+echo ""
+echo "$(tput bold)$(tput setaf 3)MySQL root password:$(tput sgr0) Your Root Password"
+echo "$(tput bold)$(tput setaf 3)Memcached Monitor Username:$(tput sgr0) GigabyteIO"
+MEMCACHED_PWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
+echo "$(tput bold)$(tput setaf 3)Memcached Monitor Password:$(tput sgr0) $MEMCACHED_PWORD"
 echo ""
 read -p "$(tput bold)Press any key to continue and install CentminMod... $(tput sgr0)" -n1 -s
-
+echo ""
+echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/$SCRIPTS_FOLDER$(tput sgr0)"
 cd /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/$SCRIPTS_FOLDER
 # Install CentminMod with expect script to automate user inputs
+echo "* $(tput setaf 6)Running centmin-install.exp$(tput sgr0)"
 ./centmin-install.exp GigabyteIO password mysqlpass direct
 #expect "New password for the MySQL \"root\" user:"
 #send "PasswordHere\r"
@@ -164,6 +174,7 @@ cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/wpsecure.conf /$NGINX_CONF
 cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/yoast.conf /$NGINX_CONF_DIR/yoast.conf
 
 # Run scripts
+echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER$(tput sgr0)"
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 echo "* $(tput setaf 6)Granting executable permissions to memory.sh$(tput sgr0)"
 chmod +x memory.sh
