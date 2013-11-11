@@ -101,6 +101,7 @@ if [ "$SSH_CHOICE" == "yes" ]; then
 fi
 echo ""
 echo "$(tput bold)$(tput setaf 2)Step 4 of 7:$(tput sgr0) Configure and install CentminMod"
+echo ""
 # Download and set up CentminMod directory
 cd /$CENTMIN_DIR
 echo "* $(tput setaf 6)Downloading CentminMod from $CENTMIN_DOWNLOAD_URL$(tput sgr0)"
