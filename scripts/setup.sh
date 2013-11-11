@@ -15,52 +15,56 @@ GITHUB_URL='https://github.com/GigabyteIO/WordPress-Droplet.git' # GigabyteIO gi
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 
+echo "* Performing a system update (excluding kernel)"
+yum -y --quiet --exclude=kernel* update
+echo "* Installing some dependencies (bc expect)"
+yum -y --quiet install bc expect
 # Change root user password
 echo ""
 echo ""
 #http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
-echo "$(tput sgr 0 1)$(tput setaf 6)Thanks for using GigabyteIO (http://gigabyte.io)$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 6)Thanks for using GigabyteIO (http://gigabyte.io)$(tput sgr0)"
 echo ""
-echo "IMPORTANT: THIS SCRIPT HAS ONLY BEEN TESTED ON A 2GB CENTOS 6.4 64-BIT DIGITAL OCEAN VPS."
+echo "$(tput sgr 0 1)This script has only been tested on a Digital Ocean 64-bit CentOS 6.4 VPS. Use at your own risk.$(tput sgr0)"
 echo ""
-echo "TASKS COMPLETED SO FAR:"
-echo "- System has been updated to latest software."
-echo "- Some dependencies have been installed (bc and git)."
-echo "- GigabyteIO has been cloned to /usr/local/src/gigabyteio."
 echo ""
-echo "NOTE:"
+echo "$(tput bold)Instructions/Notes:$(tput sgr0)"
 echo "Begin by changing the root password. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges. You should make this root password long and very hard to guess."
 echo ""
 passwd
 echo ""
-echo "NOTE:"
+echo "$(tput bold)Instructions/Notes:$(tput sgr0)"
 echo "Now create a new user and password combination. This is the user that you will use when doing anything that requires root privileges. When doing something that requires root privileges with this new user, you will have to add 'sudo' to the beginning of the command."
-
+echo ""
+echo ""
 # Set up new root username and password for security purposes
 if [ $(id -u) -eq 0 ]; then
         read -p "Enter a new root username: " NEW_ROOT_USERNAME
         read -s -p "Enter the new root users password: " NEW_ROOT_PASSWORD
         egrep "^$NEW_ROOT_USERNAME" /etc/passwd >/dev/null
         if [ $? -eq 0 ]; then
-                echo "" && echo "" && echo "$NEW_ROOT_USERNAME already exists!"
+                echo "ERROR: $NEW_ROOT_USERNAME already exists!"
                 exit 1
         else
                 ENCRYPTED_NEW_ROOT_PASSWORD=$(perl -e 'print crypt($ARGV[0], "password")' $NEW_ROOT_PASSWORD)
                 useradd -m -p $ENCRYPTED_NEW_ROOT_PASSWORD $NEW_ROOT_USERNAME
-                [ $? -eq 0 ] && echo "" && echo "" && echo "$NEW_ROOT_USERNAME has been added to the user list." || echo "" && echo "" && echo "Failed to add $NEW_ROOT_USERNAME to the user list."
+                [ $? -eq 0 ] && echo "* $NEW_ROOT_USERNAME added to user list" || echo "ERROR: Failed to add $NEW_ROOT_USERNAME to the user list."
         fi
 else
-        echo "" && echo "" && echo "You must be root to add a user to the system."
+        echo "You must be root to add a user to the system."
         exit 2
 fi
 # Add new root user to visudo list
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 chmod +x visudo.sh
+echo "* Giving root permissions to $NEW_ROOT_USER_NAME"
 ./visudo.sh $NEW_ROOT_USERNAME
 chmod 644 visudo.sh
 echo ""
-echo "NOTE:"
+echo ""
+echo "$(tput bold)Instructions/Notes:$(tput sgr0)"
 echo "It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username ($NEW_ROOT_USERNAME). With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created ($NEW_ROOT_USERNAME)."
+echo ""
 echo ""
 # Change the SSH key to be used with new root user
 read -p "Is this a Digital Ocean droplet created using an SSH key (y/n)? " SSH_CHOICE
@@ -72,8 +76,11 @@ esac
 
 # Transfer SSH key credentials from root to new root user
 if [ "$SSH_CHOICE" == "yes" ]; then
+        echo "* Copying root SSH key to $NEW_ROOT_USER_NAME's SSH key file"
         cp /root/.ssh/authorized_keys /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
+        echo "* Removing root SSH key file"
         rm ~/.ssh/authorized_keys
+        echo "* Applying appropriate permissions to $NEW_ROOT_USERNAME's SSH key file and directory."
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh
         chmod 700 /home/$NEW_ROOT_USERNAME/.ssh
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
@@ -83,39 +90,50 @@ fi
 # Tweak SSH settings for security
 # Let CentminMod handle the changing of the port number so that there are no conflicts with the firewall
 # perl -pi -e 's/#Port 22/Port $SSH_PORT_NUMBER/g' /etc/ssh/sshd_config
+echo "* Forcing SSH to only accept connections to server's IP address"
 perl -pi -e 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
+echo "* Disabling SSH login ability for the root user"
 perl -pi -e 's/#PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+echo "* Allowing only $NEW_ROOT_USERNAME to log in via SSH"
 echo "AllowUsers $NEW_ROOT_USERNAME" >> /etc/ssh/sshd_config
 
 # Modifies sshd_config if an SSH key is being used instead of a password
 if [ "$SSH_CHOICE" == "yes" ]; then
+        echo "* Disabling ability to login to SSH via password authentication"
         perl -pi -e 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
         # This probably doesn't do anything because it's supposedly just for SSH1 but let's change it anyway.
+        echo "* Increasing the ServerKeyBits to 2048"
         perl -pi -e 's/#ServerKeyBits 1024/ServerKeyBits 2048/g' /etc/ssh/sshd_config
 fi
 
 # Download and set up CentminMod directory
 cd /$CENTMIN_DIR
+echo "* Downloading CentminMod from $CENTMIN_DOWNLOAD_URL"
 wget $CENTMIN_DOWNLOAD_URL
+echo "* Unzipping $CENTMIN_FILE_NAME to $CENTMIN_DIR"
 unzip $CENTMIN_FILE_NAME
+echo "* Removing $CENTMIN_FILE_NAME"
 rm $CENTMIN_FILE_NAME
 cd $CENTMIN_FOLDER_NAME
 
 # Change time zone in centmin.sh
+echo "* Changing time zone to America/New_York in centmin.sh"
 perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 perl -pi -e 's/Brisbane/New_York/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change custom TCP packet header in centmin.sh
+echo "* Changing TCP packet header to GigabyteIO in centmin.sh"
 perl -pi -e 's/nginx centminmod/GigabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change permissions of centmin.sh to executable
+echo "* Giving centmin.sh executable permissions"
 chmod +x centmin.sh
 
 echo ""
-echo "NOTE:"
+echo "$(tput bold)Instructions/Notes:$(tput sgr0)"
 echo "The initial set up is complete. If you restart the server or attempt to log in via SSH, you will only be able to connect via the server's IP address on port number $SSH_PORT_NUMBER (please note that the port number is changed at the end of the installation so if the script fails for whatever reason, the SSH port might still be 22). In addition, the only user that can login is your new root username ($NEW_ROOT_USERNAME). If for some reason you need to use the root user, you will have to login with your new root username ($NEW_ROOT_USERNAME) and then switch to the root user by entering 'su'.\n\nThe script will now compile the server via CentminMod. This process generally takes around 30 minutes. For the most part, it is an unattended installation."
 echo ""
-read -p "Press any key to continue... " -n1 -s
+read -p "$(tput bold)Press any key to continue... $(tput sgr0)" -n1 -s
 
 # Install CentminMod
 CENTMIN_INSTALL_EXPECT=$(expect -c '
@@ -145,7 +163,6 @@ echo "$CENTMIN_SSH_EXPECT"
 #perl -pi -e 's/read -ep "Enter existing SSH port number \(default = 22 for fresh installs\): " EXISTPORTNUM/EXISTPORTNUM=22/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
 #perl -pi -e 's/read -ep "Enter the SSH port number you want to change to: " PORTNUM/PORTNUM=${SSH_PORT_NUMBER}/g' sshd.inc
 #./centmin.sh sshdport
-read -p "Centmin Install done. Ready to change the SSH port?: " RANDOMTHINGHERE
 # Restore centmin SSH config file to original state
 #rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
 #cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
@@ -158,9 +175,11 @@ read -p "Centmin Install done. Ready to change the SSH port?: " RANDOMTHINGHERE
 #perl -pi -e '/ENABLE_MENU=.n./ && s/n/y/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change permissions of centmin.sh back to original
+echo "* Restoring centmin.sh permissions to original state"
 chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Move/replace nginx configuration files
+echo "* Copying nginx configuration files from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER to /$NGINX_CONF_DIR"
 cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/cloudflare.conf /$NGINX_CONF_DIR/cloudflare.conf
 cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/nginx.conf /$NGINX_CONF_DIR/nginx.conf
 cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/phpwpcache.conf /$NGINX_CONF_DIR/phpwpcache.conf
@@ -173,12 +192,17 @@ cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/yoast.conf /$NGINX_CONF_DI
 
 # Run scripts
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
+echo "* Granting executable permissions to memory.sh, tweaks.sh, and whitelist.sh"
 chmod +x memory.sh
 chmod +x tweaks.sh
 chmod +x whitelist.sh
+echo "* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/memory.sh"
 ./memory.sh
+echo "* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/tweaks.sh"
 ./tweaks.sh
+echo "* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/whitelist.sh"
 ./whitelist.sh
+echo "* Restoring memory.sh, tweaks,sh, and whitelist.sh permissions to original state"
 chmod 644 memory.sh
 chmod 644 tweaks.sh
 chmod 644 whitelist.sh
