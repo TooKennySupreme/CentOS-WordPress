@@ -140,7 +140,9 @@ echo ""
 echo "* $(tput setaf 6)Copying centmin-install.exp from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
 cp /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-install.exp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-install.exp
 echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
+pwd
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME
+pwd
 echo "* $(tput setaf 6)Giving centmin-install.exp executable permissions$(tput sgr0)"
 chmod +x centmin-install.exp
 # Change permissions of centmin.sh to executable
