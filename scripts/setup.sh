@@ -193,5 +193,6 @@ chmod 644 tweaks.sh
 chmod 644 whitelist.sh
 echo ""
 echo ""
-echo "$(tput sgr 0 1)$(tput setaf 6)Thanks again for using GigabyteIO (http://gigabyte.io)$(tput sgr0)"
-echo ""
+echo "$(tput bold)$(tput setaf 6)Thanks for using CentOS WordPress by GigabyteIO$(tput sgr0)"
+echo "Home URL  : http://gigabyte.io"
+echo "Github URL: https://github.com/GigabyteIO/CentOS-WordPress"
