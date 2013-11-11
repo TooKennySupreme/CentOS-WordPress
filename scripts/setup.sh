@@ -159,7 +159,7 @@ expect /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-install.exp
 
 # Change permissions of centmin.sh back to original
 echo "* $(tput setaf 6)Restoring centmin.sh permissions to original state$(tput sgr0)"
-chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
+#chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Move/replace nginx configuration files
 echo "* $(tput setaf 6)Copying nginx configuration files from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER to /$NGINX_CONF_DIR$(tput sgr0)"
