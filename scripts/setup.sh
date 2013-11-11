@@ -17,7 +17,7 @@ WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 
 echo ""
-echo "$(tput bold)$(tput setaf 2)Step 2 of 7:$(tput sgr0) Updating system"
+echo "$(tput bold)$(tput setaf 2)Step 2 of 7:$(tput sgr0) Update system"
 echo ""
 echo "* $(tput setaf 6)Performing a system update (excluding kernel)$(tput sgr0)"
 yum -y --quiet --exclude=kernel* update
@@ -26,7 +26,7 @@ yum -y --quiet install bc expect
 # Change root user password
 #http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
 echo ""
-echo "$(tput bold)$(tput setaf 2)Step 3 of 7: Setting up administrator account $(tput sgr0)"
+echo "$(tput bold)$(tput setaf 2)Step 3 of 7: Set up administrator account $(tput sgr0)"
 echo ""
 echo "$(tput bold)$(tput setaf 7)Notes:$(tput sgr0)"
 echo "Begin by changing the root password. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges. You should make this root password long and very hard to guess."
@@ -57,7 +57,7 @@ fi
 # Add new root user to visudo list
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 chmod +x visudo.sh
-echo "* $(tput bold)$(tput setaf 6)Giving root permissions to $NEW_ROOT_USER_NAME$(tput sgr0)"
+echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USER_NAME$(tput sgr0)"
 ./visudo.sh $NEW_ROOT_USERNAME
 chmod 644 visudo.sh
 echo ""
@@ -75,11 +75,11 @@ esac
 
 # Transfer SSH key credentials from root to new root user
 if [ "$SSH_CHOICE" == "yes" ]; then
-        echo "* $(tput bold)$(tput setaf 6)Copying root SSH key to $NEW_ROOT_USER_NAME's SSH key file$(tput sgr0)"
+        echo "* $(tput setaf 6)Copying root SSH key to $NEW_ROOT_USER_NAME's SSH key file$(tput sgr0)"
         cp /root/.ssh/authorized_keys /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
-        echo "* $(tput bold)$(tput setaf 6)Removing root SSH key file$(tput sgr0)"
+        echo "* $(tput setaf 6)Removing root SSH key file$(tput sgr0)"
         rm ~/.ssh/authorized_keys
-        echo "* $(tput bold)$(tput setaf 6)Applying appropriate permissions to $NEW_ROOT_USERNAME's SSH key file and directory$(tput sgr0)"
+        echo "* $(tput setaf 6)Applying appropriate permissions to $NEW_ROOT_USERNAME's SSH key file and directory$(tput sgr0)"
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh
         chmod 700 /home/$NEW_ROOT_USERNAME/.ssh
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
@@ -89,43 +89,43 @@ fi
 # Tweak SSH settings for security
 # Let CentminMod handle the changing of the port number so that there are no conflicts with the firewall
 # perl -pi -e 's/#Port 22/Port $SSH_PORT_NUMBER/g' /etc/ssh/sshd_config
-echo "* $(tput bold)$(tput setaf 6)Forcing SSH to only accept connections to server's IP address$(tput sgr0)"
+echo "* $(tput setaf 6)Forcing SSH to only accept connections to server's IP address$(tput sgr0)"
 perl -pi -e 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
-echo "* $(tput bold)$(tput setaf 6)Disabling SSH login ability for the root user$(tput sgr0)"
+echo "* $(tput setaf 6)Disabling SSH login ability for the root user$(tput sgr0)"
 perl -pi -e 's/#PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-echo "* $(tput bold)$(tput setaf 6)Allowing only $NEW_ROOT_USERNAME to log in via SSH$(tput sgr0)"
+echo "* $(tput setaf 6)Allowing only $NEW_ROOT_USERNAME to log in via SSH$(tput sgr0)"
 echo "AllowUsers $NEW_ROOT_USERNAME" >> /etc/ssh/sshd_config
 
 # Modifies sshd_config if an SSH key is being used instead of a password
 if [ "$SSH_CHOICE" == "yes" ]; then
-        echo "* $(tput bold)$(tput setaf 6)Disabling ability to login to SSH via password authentication$(tput sgr0)"
+        echo "* $(tput setaf 6)Disabling ability to login to SSH via password authentication$(tput sgr0)"
         perl -pi -e 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
         # This probably doesn't do anything because it's supposedly just for SSH1 but let's change it anyway.
-        echo "* $(tput bold)$(tput setaf 6)Increasing the ServerKeyBits to 2048$(tput sgr0)"
+        echo "* $(tput setaf 6)Increasing the ServerKeyBits to 2048$(tput sgr0)"
         perl -pi -e 's/#ServerKeyBits 1024/ServerKeyBits 2048/g' /etc/ssh/sshd_config
 fi
-echo "$(tput bold)$(tput setaf 2)Step 4 of 7: Configuring and installing CentminMod $(tput sgr0)"
+echo "$(tput bold)$(tput setaf 2)Step 4 of 7: Configure and install CentminMod $(tput sgr0)"
 # Download and set up CentminMod directory
 cd /$CENTMIN_DIR
-echo "* $(tput bold)$(tput setaf 6)Downloading CentminMod from $CENTMIN_DOWNLOAD_URL$(tput sgr0)"
+echo "* $(tput setaf 6)Downloading CentminMod from $CENTMIN_DOWNLOAD_URL$(tput sgr0)"
 wget $CENTMIN_DOWNLOAD_URL
-echo "* $(tput bold)$(tput setaf 6)Unzipping $CENTMIN_FILE_NAME to $CENTMIN_DIR$(tput sgr0)"
+echo "* $(tput setaf 6)Unzipping $CENTMIN_FILE_NAME to $CENTMIN_DIR$(tput sgr0)"
 unzip -q $CENTMIN_FILE_NAME
-echo "* $(tput bold)$(tput setaf 6)Removing $CENTMIN_FILE_NAME$(tput sgr0)"
+echo "* $(tput setaf 6)Removing $CENTMIN_FILE_NAME$(tput sgr0)"
 rm $CENTMIN_FILE_NAME
 cd $CENTMIN_FOLDER_NAME
 
 # Change time zone in centmin.sh
-echo "* $(tput bold)$(tput setaf 6)Changing time zone to America/New_York in centmin.sh"
+echo "* $(tput setaf 6)Changing time zone to America/New_York in centmin.sh"
 perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 perl -pi -e 's/Brisbane/New_York/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change custom TCP packet header in centmin.sh
-echo "* $(tput bold)$(tput setaf 6)Changing TCP packet header to GigabyteIO in centmin.sh$(tput sgr0)"
+echo "* $(tput setaf 6)Changing TCP packet header to GigabyteIO in centmin.sh$(tput sgr0)"
 perl -pi -e 's/nginx centminmod/GigabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change permissions of centmin.sh to executable
-echo "* $(tput bold)$(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
+echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
 chmod +x centmin.sh
 
 echo ""
@@ -135,28 +135,20 @@ echo ""
 read -p "$(tput bold)$(tput setaf 2)Press any key to continue... $(tput sgr0)" -n1 -s
 
 # Install CentminMod
-CENTMIN_INSTALL_EXPECT=$(expect -c '
-spawn ./centmin.sh
-expect "Enter option [ 1 - 21 ]"
-send "1\r"
+#expect \"New password for the MySQL \"root\" user:\"
+#send \"ls\r\"
+CENTMIN_INSTALL_EXPECT=$(expect -c "
+spawn bash centmin.sh
+expect \"Enter option [ 1 - 21 ]\"
+send \"1\r\"
 expect "New password for the MySQL \"root\" user:"
 send "PasswordHere\r"
 expect "Repeat password for the MySQL \"root\" user:"
 send "PasswordHere\r"
 expect eof
-')
+")
 echo "$CENTMIN_INSTALL_EXPECT"
 
-# Change SSH port
-CENTMIN_SSH_EXPECT=$(expect -c '
-spawn ./centmin.sh
-expect "Enter option [ 1 - 21 ]"
-send "16\r"
-expect "Enter existing SSH port number (default = 22 for fresh installs):"
-send "22\r"
-expect eof
-')
-echo "$CENTMIN_SSH_EXPECT"
 
 #cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
 #perl -pi -e 's/read -ep "Enter existing SSH port number \(default = 22 for fresh installs\): " EXISTPORTNUM/EXISTPORTNUM=22/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
@@ -174,11 +166,11 @@ echo "$CENTMIN_SSH_EXPECT"
 #perl -pi -e '/ENABLE_MENU=.n./ && s/n/y/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change permissions of centmin.sh back to original
-echo "$(tput bold)$(tput setaf 7)* Restoring centmin.sh permissions to original state$(tput sgr0)"
+echo "* $(tput setaf 6)Restoring centmin.sh permissions to original state$(tput sgr0)"
 chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Move/replace nginx configuration files
-echo "$(tput bold)$(tput setaf 7)* Copying nginx configuration files from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER to /$NGINX_CONF_DIR$(tput sgr0)"
+echo "* $(tput setaf 6)Copying nginx configuration files from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER to /$NGINX_CONF_DIR$(tput sgr0)"
 cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/cloudflare.conf /$NGINX_CONF_DIR/cloudflare.conf
 cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/nginx.conf /$NGINX_CONF_DIR/nginx.conf
 cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/phpwpcache.conf /$NGINX_CONF_DIR/phpwpcache.conf
@@ -191,17 +183,17 @@ cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/yoast.conf /$NGINX_CONF_DI
 
 # Run scripts
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
-echo "$(tput bold)$(tput setaf 7)* Granting executable permissions to memory.sh, tweaks.sh, and whitelist.sh$(tput sgr0)"
+echo "* $(tput setaf 6)Granting executable permissions to memory.sh, tweaks.sh, and whitelist.sh$(tput sgr0)"
 chmod +x memory.sh
 chmod +x tweaks.sh
 chmod +x whitelist.sh
-echo "$(tput bold)$(tput setaf 7)* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/memory.sh$(tput sgr0)"
+echo "* $(tput setaf 6)Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/memory.sh$(tput sgr0)"
 ./memory.sh
-echo "$(tput bold)$(tput setaf 7)* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/tweaks.sh$(tput sgr0)"
+echo "* $(tput setaf 6)Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/tweaks.sh$(tput sgr0)"
 ./tweaks.sh
-echo "$(tput bold)$(tput setaf 7)* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/whitelist.sh$(tput sgr0)"
+echo "* $(tput setaf 6)Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/whitelist.sh$(tput sgr0)"
 ./whitelist.sh
-echo "$(tput bold)$(tput setaf 7)* Restoring memory.sh, tweaks,sh, and whitelist.sh permissions to original state$(tput sgr0)"
+echo "* $(tput setaf 6)Restoring memory.sh, tweaks,sh, and whitelist.sh permissions to original state$(tput sgr0)"
 chmod 644 memory.sh
 chmod 644 tweaks.sh
 chmod 644 whitelist.sh
