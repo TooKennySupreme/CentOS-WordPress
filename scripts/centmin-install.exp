@@ -1,22 +1,10 @@
-#!/usr/bin/expect -f
-# Usage: ./centmin-install.exp memcached_user_name memcached_user_password mysql_root_password directory_of_centmin_install centmin_folder_name
+#!/usr/bin/expect
 
-# Make sure that 5 arguments are passed
-#if {[llength $argv] != 5} {
-# 
-# Output error message to user
-#puts "ERROR: centmin.exp did not receive the proper number of arguments"
-# 
-# Exit script with error code 1
-#exit 1
-#}
- 
-# Set variables based on inputs
-set memcacheuser [lrange $argv 0 0]
-set memcachepass [lrange $argv 1 1]
-set mysqlpass [lrange $argv 2 2]
-set basedirectory [lrange $argv 3 3]
-set centminfolder [lrange $argv 4 4]
+#set memcacheuser  [lindex $argv 0]
+#set memcachepass [lindex $argv 1]
+#set mysqlpass  [lindex $argv 2]
+#set basedirectory  [lindex $argv 3]
+#set centminfolder [lrange $argv 4 4]
  
 # Makes it so that expect does not time out
 set timeout -1
