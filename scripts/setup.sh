@@ -53,6 +53,7 @@ else
 fi
 # Add new root user to visudo list
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
+echo "* $(tput setaf 6)Granting visudo.sh executable permissions
 chmod +x visudo.sh
 echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USERNAME$(tput sgr0)"
 ./visudo.sh $NEW_ROOT_USERNAME
@@ -162,9 +163,11 @@ cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/yoast.conf /$NGINX_CONF_DI
 
 # Run scripts
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
-echo "* $(tput setaf 6)Granting executable permissions to memory.sh, tweaks.sh, and whitelist.sh$(tput sgr0)"
+echo "* $(tput setaf 6)Granting executable permissions to memory.sh$(tput sgr0)"
 chmod +x memory.sh
+echo "* $(tput setaf 6)Granting executable permissions to tweaks.sh$(tput sgr0)"
 chmod +x tweaks.sh
+echo "* $(tput setaf 6)Granting executable permissions to whitelist.sh$(tput sgr0)"
 chmod +x whitelist.sh
 echo "* $(tput setaf 6)Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/memory.sh$(tput sgr0)"
 ./memory.sh
@@ -172,13 +175,17 @@ echo "* $(tput setaf 6)Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDE
 ./tweaks.sh
 echo "* $(tput setaf 6)Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/whitelist.sh$(tput sgr0)"
 ./whitelist.sh
-echo "* $(tput setaf 6)Restoring memory.sh, tweaks,sh, and whitelist.sh permissions to original state$(tput sgr0)"
+echo "* $(tput setaf 6)Restoring memory.sh permissions to original state$(tput sgr0)"
 chmod 644 memory.sh
+echo "* $(tput setaf 6)Restoring tweaks.sh permissions to original state$(tput sgr0)"
 chmod 644 tweaks.sh
+echo "* $(tput setaf 6)Restoring whitelist.sh permissions to original state$(tput sgr0)"
 chmod 644 whitelist.sh
 echo ""
 echo ""
-echo "$(tput bold)$(tput setaf 6)Thanks for using CentOS WordPress by GigabyteIO$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 2)Installation Complete$(tput sgr0)"
+echo ""
+echo "$(tput bold)$(tput setaf 6)Thanks for choosing CentOS WordPress by GigabyteIO$(tput sgr0)"
 echo "Home URL  : http://gigabyte.io"
 echo "Github URL: https://github.com/GigabyteIO/CentOS-WordPress"
 echo "Author    : Brian Zalewski"
