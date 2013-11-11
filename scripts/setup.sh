@@ -19,7 +19,7 @@ NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 echo ""
 echo ""
 #http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
-echo "$(tput sgr 0 1)$(tput setaf $6)Thanks for using GigabyteIO (http://gigabyte.io)$(tput sgr0)"
+echo "$(tput sgr 0 1)$(tput setaf 6)Thanks for using GigabyteIO (http://gigabyte.io)$(tput sgr0)"
 echo ""
 echo "IMPORTANT: THIS SCRIPT HAS ONLY BEEN TESTED ON A 2GB CENTOS 6.4 64-BIT DIGITAL OCEAN VPS."
 echo ""
@@ -184,5 +184,5 @@ chmod 644 tweaks.sh
 chmod 644 whitelist.sh
 echo ""
 echo ""
-echo "$(tput sgr 0 1)$(tput setaf $6)Thanks again for using GigabyteIO (http://gigabyte.io)$(tput sgr0)"
+echo "$(tput sgr 0 1)$(tput setaf 6)Thanks again for using GigabyteIO (http://gigabyte.io)$(tput sgr0)"
 echo ""
