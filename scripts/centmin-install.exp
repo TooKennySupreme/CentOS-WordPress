@@ -1,4 +1,4 @@
-!/usr/bin/expect -f
+#!/usr/bin/expect -f
 # Usage: ./centmin-install.exp memcached_user_name memcached_user_password mysql_root_password directory_of_centmin_install centmin_folder_name
 
 # Make sure that 5 arguments are passed
