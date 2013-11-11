@@ -126,10 +126,6 @@ perl -pi -e 's/Brisbane/New_York/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.s
 echo "* $(tput setaf 6)Changing TCP packet header to GigabyteIO in centmin.sh$(tput sgr0)"
 perl -pi -e 's/nginx centminmod/GigabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
-# Change permissions of centmin.sh to executable
-echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
-chmod +x centmin.sh
-
 echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The initial set up is complete. The script will now compile the server via CentminMod. This process generally takes around 30 minutes. The installation will be run with the following variables (you should probably write these down):"
 echo ""
@@ -140,11 +136,18 @@ echo "$(tput bold)$(tput setaf 3)Memcached Monitor Password:$(tput sgr0) $MEMCAC
 echo ""
 read -p "$(tput bold)Press any key to continue and install CentminMod... $(tput sgr0)" -n1 -s
 echo ""
+# Install CentminMod with expect script to automate user inputs
+echo "* $(tput setaf 6)Copying centmin-install.exp from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
+cp /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-install.exp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-install.exp
 echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME
-# Install CentminMod with expect script to automate user inputs
-echo "* $(tput setaf 6)Initializing the CentminMod install process via /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-install.exp$(tput sgr0)"
-expect /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-install.exp
+echo "* $(tput setaf 6)Giving centmin-install.exp executable permissions$(tput sgr0)"
+chmod +x centmin-install.exp
+# Change permissions of centmin.sh to executable
+echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
+chmod +x centmin.sh
+echo "* $(tput setaf 6)Initializing the CentminMod install process via centmin-install.exp$(tput sgr0)"
+./centmin-install.exp
 #expect "New password for the MySQL \"root\" user:"
 #send "PasswordHere\r"
 #expect "Repeat password for the MySQL \"root\" user:"
@@ -157,9 +160,11 @@ expect /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-install.exp
 #(Type username your want to set and press Enter):
 #(Type password your want to set and press Enter):
 
-# Change permissions of centmin.sh back to original
+# Change permissions of centmin.sh and centmin-install.exp back to original
+echo "* $(tput setaf 6)Restoring centmin-install.exp permissions to original state$(tput sgr0)"
+chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 echo "* $(tput setaf 6)Restoring centmin.sh permissions to original state$(tput sgr0)"
-#chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
+chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Move/replace nginx configuration files
 echo "* $(tput setaf 6)Copying nginx configuration files from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER to /$NGINX_CONF_DIR$(tput sgr0)"
