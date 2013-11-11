@@ -135,7 +135,7 @@ read -p "$(tput bold)Press any key to continue... $(tput sgr0)" -n1 -s
 #send \"ls\r\"
 CENTMIN_INSTALL_EXPECT=$(expect -c "
 spawn bash ./centmin.sh
-expect \"Enter option [ 1 - 21 ]\"
+expect "Enter option \[ 1 - 21 ]"
 send "1\r"
 expect eof
 ")
