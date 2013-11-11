@@ -1,5 +1,7 @@
 #!/bin/bash
 echo "$(tput sgr 0 1)$(tput setaf 6)Installing GigabyteIO...$(tput sgr0)"
+echo ""
+echo ""
 if [ -f /usr/local/src/gigabyteio ];
 then
   read -p "The GigabyteIO directory already exists! Do you want to delete it and continue the installation? (y/n)" INSTALL_CHOICE
@@ -9,12 +11,12 @@ then
     * ) echo "Invalid input.";;
   esac
 fi
-echo "Performing a system update."
+echo "* Performing a system update (excluding kernel)"
 yum -q -y --exclude=kernel* update
-echo "Installing some dependencies (git bc expect)."
+echo "* Installing some dependencies (git bc expect)"
 yum -q -y install git bc expect
-echo "Cloning the GigabyteIO git repository to /usr/local/src/gigabyteio."
-git -q clone https://github.com/GigabyteIO/WordPress-Droplet.git /usr/local/src/gigabyteio
+echo "* Cloning the GigabyteIO git repository to /usr/local/src/gigabyteio"
+git clone -q https://github.com/GigabyteIO/WordPress-Droplet.git /usr/local/src/gigabyteio
 chmod +x /usr/local/src/gigabyteio/scripts/setup.sh
-echo "Initializing setup script."
+echo "* Initializing setup script from /usr/local/src/gigabyteio/scripts/setup.sh"
 /bin/bash /usr/local/src/gigabyteio/scripts/setup.sh
