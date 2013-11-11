@@ -16,12 +16,17 @@ GITHUB_URL='https://github.com/GigabyteIO/WordPress-Droplet.git' # GigabyteIO gi
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 
+echo ""
+echo "$(tput bold)$(tput setaf 2)Step 2 of 7:$(tput sgr0) Updating system"
+echo ""
 echo "* $(tput setaf 6)Performing a system update (excluding kernel)$(tput sgr0)"
 yum -y --quiet --exclude=kernel* update
 echo "* $(tput setaf 6)Installing some dependencies (bc expect)$(tput sgr0)"
 yum -y --quiet install bc expect
 # Change root user password
 #http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
+echo ""
+echo "$(tput bold)$(tput setaf 2)Step 3 of 7: Setting up administrator account $(tput sgr0)"
 echo ""
 echo "$(tput bold)$(tput setaf 7)Notes:$(tput sgr0)"
 echo "Begin by changing the root password. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges. You should make this root password long and very hard to guess."
@@ -99,13 +104,13 @@ if [ "$SSH_CHOICE" == "yes" ]; then
         echo "* $(tput bold)$(tput setaf 6)Increasing the ServerKeyBits to 2048$(tput sgr0)"
         perl -pi -e 's/#ServerKeyBits 1024/ServerKeyBits 2048/g' /etc/ssh/sshd_config
 fi
-
+echo "$(tput bold)$(tput setaf 2)Step 4 of 7: Configuring and installing CentminMod $(tput sgr0)"
 # Download and set up CentminMod directory
 cd /$CENTMIN_DIR
 echo "* $(tput bold)$(tput setaf 6)Downloading CentminMod from $CENTMIN_DOWNLOAD_URL$(tput sgr0)"
 wget $CENTMIN_DOWNLOAD_URL
 echo "* $(tput bold)$(tput setaf 6)Unzipping $CENTMIN_FILE_NAME to $CENTMIN_DIR$(tput sgr0)"
-unzip $CENTMIN_FILE_NAME
+unzip -q $CENTMIN_FILE_NAME
 echo "* $(tput bold)$(tput setaf 6)Removing $CENTMIN_FILE_NAME$(tput sgr0)"
 rm $CENTMIN_FILE_NAME
 cd $CENTMIN_FOLDER_NAME
