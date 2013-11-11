@@ -16,7 +16,7 @@ spawn bash /usr/local/src/centmin-v1.2.3mod/centmin.sh
 match_max 100000
 
 # Wait for initial prompt
-expect "Enter option [ 1 - 21 ]"
+expect "Enter option ? 1 - 21 ?"
 
 # Send the install command
 send -- "install\r"
