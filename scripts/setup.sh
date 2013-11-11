@@ -140,11 +140,11 @@ echo "$(tput bold)$(tput setaf 3)Memcached Monitor Password:$(tput sgr0) $MEMCAC
 echo ""
 read -p "$(tput bold)Press any key to continue and install CentminMod... $(tput sgr0)" -n1 -s
 echo ""
-echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/$SCRIPTS_FOLDER$(tput sgr0)"
-cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
+#echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/$SCRIPTS_FOLDER$(tput sgr0)"
+#cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-install.exp
 # Install CentminMod with expect script to automate user inputs
-echo "* $(tput setaf 6)Running centmin-install.exp$(tput sgr0)"
-./centmin-install.exp GigabyteIO password mysqlpass direct
+echo "* $(tput setaf 6)Initializing the CentminMod install process via /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-install.exp$(tput sgr0)"
+bash /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-install.exp GigabyteIO password mysqlpass direct
 #expect "New password for the MySQL \"root\" user:"
 #send "PasswordHere\r"
 #expect "Repeat password for the MySQL \"root\" user:"
