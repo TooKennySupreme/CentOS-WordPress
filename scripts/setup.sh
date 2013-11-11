@@ -2,6 +2,7 @@
 
 # Setting time zone has to be done manually for now - not exactly sure how to find and replace with a variable - if anyone could guide me in the right direction, I'll add this feature :)
 # Declare script variables for future portability
+echo "$(tput bold)$(tput setaf 7)* Declaring potentially customizable script variables at top of setup.sh$(tput sgr0)"
 CENTMIN_DIR='usr/local/src' # Directory where centmin is installed
 INSTALL_FOLDER_NAME='gigabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
 CONF_FOLDER='configs' # Name of folder in the GigabyteIO directory that holds the configuration files
@@ -15,9 +16,9 @@ GITHUB_URL='https://github.com/GigabyteIO/WordPress-Droplet.git' # GigabyteIO gi
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 
-echo "* Performing a system update (excluding kernel)"
+echo "$(tput bold)$(tput setaf 7)* Performing a system update (excluding kernel)$(tput sgr0)"
 yum -y --quiet --exclude=kernel* update
-echo "* Installing some dependencies (bc expect)"
+echo "$(tput bold)$(tput setaf 7)* Installing some dependencies (bc expect)$(tput sgr0)"
 yum -y --quiet install bc expect
 # Change root user password
 echo ""
@@ -57,7 +58,7 @@ fi
 # Add new root user to visudo list
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 chmod +x visudo.sh
-echo "* Giving root permissions to $NEW_ROOT_USER_NAME"
+echo "$(tput bold)$(tput setaf 7)* Giving root permissions to $NEW_ROOT_USER_NAME$(tput sgr0)"
 ./visudo.sh $NEW_ROOT_USERNAME
 chmod 644 visudo.sh
 echo ""
@@ -76,11 +77,11 @@ esac
 
 # Transfer SSH key credentials from root to new root user
 if [ "$SSH_CHOICE" == "yes" ]; then
-        echo "* Copying root SSH key to $NEW_ROOT_USER_NAME's SSH key file"
+        echo "$(tput bold)$(tput setaf 7)* Copying root SSH key to $NEW_ROOT_USER_NAME's SSH key file$(tput sgr0)"
         cp /root/.ssh/authorized_keys /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
-        echo "* Removing root SSH key file"
+        echo "$(tput bold)$(tput setaf 7)* Removing root SSH key file$(tput sgr0)"
         rm ~/.ssh/authorized_keys
-        echo "* Applying appropriate permissions to $NEW_ROOT_USERNAME's SSH key file and directory."
+        echo "$(tput bold)$(tput setaf 7)* Applying appropriate permissions to $NEW_ROOT_USERNAME's SSH key file and directory$(tput sgr0)"
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh
         chmod 700 /home/$NEW_ROOT_USERNAME/.ssh
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
@@ -90,43 +91,43 @@ fi
 # Tweak SSH settings for security
 # Let CentminMod handle the changing of the port number so that there are no conflicts with the firewall
 # perl -pi -e 's/#Port 22/Port $SSH_PORT_NUMBER/g' /etc/ssh/sshd_config
-echo "* Forcing SSH to only accept connections to server's IP address"
+echo "$(tput bold)$(tput setaf 7)* Forcing SSH to only accept connections to server's IP address$(tput sgr0)"
 perl -pi -e 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
-echo "* Disabling SSH login ability for the root user"
+echo "$(tput bold)$(tput setaf 7)* Disabling SSH login ability for the root user$(tput sgr0)"
 perl -pi -e 's/#PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-echo "* Allowing only $NEW_ROOT_USERNAME to log in via SSH"
+echo "$(tput bold)$(tput setaf 7)* Allowing only $NEW_ROOT_USERNAME to log in via SSH$(tput sgr0)"
 echo "AllowUsers $NEW_ROOT_USERNAME" >> /etc/ssh/sshd_config
 
 # Modifies sshd_config if an SSH key is being used instead of a password
 if [ "$SSH_CHOICE" == "yes" ]; then
-        echo "* Disabling ability to login to SSH via password authentication"
+        echo "$(tput bold)$(tput setaf 7)* Disabling ability to login to SSH via password authentication$(tput sgr0)"
         perl -pi -e 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
         # This probably doesn't do anything because it's supposedly just for SSH1 but let's change it anyway.
-        echo "* Increasing the ServerKeyBits to 2048"
+        echo "$(tput bold)$(tput setaf 7)* Increasing the ServerKeyBits to 2048$(tput sgr0)"
         perl -pi -e 's/#ServerKeyBits 1024/ServerKeyBits 2048/g' /etc/ssh/sshd_config
 fi
 
 # Download and set up CentminMod directory
 cd /$CENTMIN_DIR
-echo "* Downloading CentminMod from $CENTMIN_DOWNLOAD_URL"
+echo "$(tput bold)$(tput setaf 7)* Downloading CentminMod from $CENTMIN_DOWNLOAD_URL$(tput sgr0)"
 wget $CENTMIN_DOWNLOAD_URL
-echo "* Unzipping $CENTMIN_FILE_NAME to $CENTMIN_DIR"
+echo "$(tput bold)$(tput setaf 7)* Unzipping $CENTMIN_FILE_NAME to $CENTMIN_DIR$(tput sgr0)"
 unzip $CENTMIN_FILE_NAME
-echo "* Removing $CENTMIN_FILE_NAME"
+echo "$(tput bold)$(tput setaf 7)* Removing $CENTMIN_FILE_NAME$(tput sgr0)"
 rm $CENTMIN_FILE_NAME
 cd $CENTMIN_FOLDER_NAME
 
 # Change time zone in centmin.sh
-echo "* Changing time zone to America/New_York in centmin.sh"
+echo "$(tput bold)$(tput setaf 7)* Changing time zone to America/New_York in centmin.sh"
 perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 perl -pi -e 's/Brisbane/New_York/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change custom TCP packet header in centmin.sh
-echo "* Changing TCP packet header to GigabyteIO in centmin.sh"
+echo "$(tput bold)$(tput setaf 7)* Changing TCP packet header to GigabyteIO in centmin.sh$(tput sgr0)"
 perl -pi -e 's/nginx centminmod/GigabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change permissions of centmin.sh to executable
-echo "* Giving centmin.sh executable permissions"
+echo "$(tput bold)$(tput setaf 7)* Giving centmin.sh executable permissions$(tput sgr0)"
 chmod +x centmin.sh
 
 echo ""
@@ -175,11 +176,11 @@ echo "$CENTMIN_SSH_EXPECT"
 #perl -pi -e '/ENABLE_MENU=.n./ && s/n/y/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change permissions of centmin.sh back to original
-echo "* Restoring centmin.sh permissions to original state"
+echo "$(tput bold)$(tput setaf 7)* Restoring centmin.sh permissions to original state$(tput sgr0)"
 chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Move/replace nginx configuration files
-echo "* Copying nginx configuration files from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER to /$NGINX_CONF_DIR"
+echo "$(tput bold)$(tput setaf 7)* Copying nginx configuration files from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER to /$NGINX_CONF_DIR$(tput sgr0)"
 cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/cloudflare.conf /$NGINX_CONF_DIR/cloudflare.conf
 cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/nginx.conf /$NGINX_CONF_DIR/nginx.conf
 cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/phpwpcache.conf /$NGINX_CONF_DIR/phpwpcache.conf
@@ -192,17 +193,17 @@ cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/yoast.conf /$NGINX_CONF_DI
 
 # Run scripts
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
-echo "* Granting executable permissions to memory.sh, tweaks.sh, and whitelist.sh"
+echo "$(tput bold)$(tput setaf 7)* Granting executable permissions to memory.sh, tweaks.sh, and whitelist.sh$(tput sgr0)"
 chmod +x memory.sh
 chmod +x tweaks.sh
 chmod +x whitelist.sh
-echo "* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/memory.sh"
+echo "$(tput bold)$(tput setaf 7)* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/memory.sh$(tput sgr0)"
 ./memory.sh
-echo "* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/tweaks.sh"
+echo "$(tput bold)$(tput setaf 7)* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/tweaks.sh$(tput sgr0)"
 ./tweaks.sh
-echo "* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/whitelist.sh"
+echo "$(tput bold)$(tput setaf 7)* Running /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/whitelist.sh$(tput sgr0)"
 ./whitelist.sh
-echo "* Restoring memory.sh, tweaks,sh, and whitelist.sh permissions to original state"
+echo "$(tput bold)$(tput setaf 7)* Restoring memory.sh, tweaks,sh, and whitelist.sh permissions to original state$(tput sgr0)"
 chmod 644 memory.sh
 chmod 644 tweaks.sh
 chmod 644 whitelist.sh
