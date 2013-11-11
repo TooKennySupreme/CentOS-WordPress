@@ -30,5 +30,6 @@ send -- "$password\r"
 # send blank line (\r) to make sure we get back to cli
 send -- "\r"
  
+wait
 #We have gave our "program" and now we expect that the remote server close the connection:
 expect eof
