@@ -1,6 +1,12 @@
 #!/bin/bash
 echo ""
 echo "$(tput bold)$(tput setaf 6)Installing GigabyteIO for WordPress...$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 1)Installing GigabyteIO for WordPress...$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 2)Installing GigabyteIO for WordPress...$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 3)Installing GigabyteIO for WordPress...$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 4)Installing GigabyteIO for WordPress...$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 5)Installing GigabyteIO for WordPress...$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 7)Installing GigabyteIO for WordPress...$(tput sgr0)"
 echo "Github URL: https://github.com/GigabyteIO/WordPress-Droplet"
 echo "GigabyteIO URL: http://gigabyte.io/"
 echo ""
@@ -15,7 +21,7 @@ then
 fi
 
 echo "* Installing git"
-yes | yum --quiet install git
+yum --quiet install git
 echo "* Cloning the GigabyteIO git repository to /usr/local/src/gigabyteio"
 git clone -q https://github.com/GigabyteIO/WordPress-Droplet.git /usr/local/src/gigabyteio
 chmod +x /usr/local/src/gigabyteio/scripts/setup.sh
