@@ -6,6 +6,7 @@ This started as a simple wrapper shell script for [CentminMod](http://centminmod
 + Intelligently configures server based on hardware
 + Best security practices
 + Bug fixes to CentminMod
+
 ## Instructions
 1. Instructions
 2. Set up a CentOS VPS (we built and tested CentOS WordPress with a 2GB 64-bit CentOS 6.4 [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36)
