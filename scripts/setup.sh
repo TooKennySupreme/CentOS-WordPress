@@ -16,7 +16,20 @@ WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 
 # Change root user password
+echo ""
+echo ""
+echo "TASKS COMPLETED SO FAR:"
+echo "- System has been updated to latest software."
+echo "- Some dependencies have been installed (bc and git)."
+echo "- GigabyteIO has been cloned to /usr/local/src/gigabyteio."
+echo ""
+echo "NOTE:"
+echo "Begin by changing the root password. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges. You should make this root password long and very hard to guess."
+echo ""
 passwd
+echo ""
+echo "NOTE:"
+echo "Now create a new user and password combination. This is the user that you will use when doing anything that requires root privileges. When doing something that requires root privileges with this new user, you will have to add 'sudo' to the beginning of the command."
 
 # Set up new root username and password for security purposes
 if [ $(id -u) -eq 0 ]; then
@@ -24,27 +37,26 @@ if [ $(id -u) -eq 0 ]; then
         read -s -p "Enter the new root users password: " NEW_ROOT_PASSWORD
         egrep "^$NEW_ROOT_USERNAME" /etc/passwd >/dev/null
         if [ $? -eq 0 ]; then
-                echo "$NEW_ROOT_USERNAME already exists!"
+                echo "" && echo "" && echo "$NEW_ROOT_USERNAME already exists!"
                 exit 1
         else
                 ENCRYPTED_NEW_ROOT_PASSWORD=$(perl -e 'print crypt($ARGV[0], "password")' $NEW_ROOT_PASSWORD)
                 useradd -m -p $ENCRYPTED_NEW_ROOT_PASSWORD $NEW_ROOT_USERNAME
-                [ $? -eq 0 ] && echo "$NEW_ROOT_USERNAME has been added to the user list." || echo "Failed to add $NEW_ROOT_USERNAME to the user list."
+                [ $? -eq 0 ] && echo "" && echo "" && echo "$NEW_ROOT_USERNAME has been added to the user list." || echo "" && echo "" && echo "Failed to add $NEW_ROOT_USERNAME to the user list."
         fi
 else
-        echo "You must be root to add a user to the system."
+        echo "" && echo "" && echo "You must be root to add a user to the system."
         exit 2
 fi
-
 # Add new root user to visudo list
-echo $CENTMIN_DIR
-echo $INSTALL_FOLDER_NAME
-echo $SCRIPTS_FOLDER
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 chmod +x visudo.sh
 ./visudo.sh $NEW_ROOT_USERNAME
 chmod 644 visudo.sh
-
+echo ""
+echo "NOTE:"
+echo "It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username or password. With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created."
+echo ""
 # Change the SSH key to be used with new root user
 read -p "Is this a Digital Ocean droplet created using an SSH key (y/n)? " SSH_CHOICE
 case "$SSH_CHOICE" in
@@ -55,7 +67,6 @@ esac
 
 # Transfer SSH key credentials from root to new root user
 if [ "$SSH_CHOICE" == "yes" ]; then
-        echo "Moving SSH key credentials from root user to new root user. The root user will no longer be able to connect via SSH."
         cp /root/.ssh/authorized_keys /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
         rm ~/.ssh/authorized_keys
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh
@@ -97,10 +108,14 @@ chmod +x centmin.sh
 
 # Disable the menu system in centmin.sh
 perl -pi -e '/ENABLE_MENU=.y./ && s/y/n/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
-
+echo ""
+echo "NOTE:"
+echo "The initial set up is complete. Now, if you restart the server or attempt to log in via SSH, you will only be able to connect via the server's IP address on port number 8388 (please note that the port number is changed at the end of the installation so if the script fails for whatever reason, the SSH port might still be 22). In addition, the only user that can login is your new root username. If for some reason you need to use the root user, you will have to login with your new root username and then switch to the root user by entering 'su'.\n\nThe script will now compile the server via CentminMod. This process generally takes around 20 minutes. For the most part, it is an unattended installation."
+echo ""
+read -p "Press enter to continue: " CONTINUE_PROMPT
 # Install CentminMod
 ./centmin.sh install
-read -p "Centmin Install done. You ready to continue?: " RANDOMTHINGHERE
+read -p "Centmin Install done. Ready to change the SSH port?: " RANDOMTHINGHERE
 # Change SSH port
 cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
 perl -pi -e 's/read -ep "Enter existing SSH port number \(default = 22 for fresh installs\): " EXISTPORTNUM/EXISTPORTNUM=22/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
