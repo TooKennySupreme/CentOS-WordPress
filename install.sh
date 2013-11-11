@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "$(tput sgr 0 1)$(tput setaf 6)Installing GigabyteIO...$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 6)Installing GigabyteIO...$(tput sgr0)"
 echo ""
 if [ -f /usr/local/src/gigabyteio/install.sh ];
 then
@@ -10,10 +10,9 @@ then
     * ) echo "Invalid input.";;
   esac
 fi
-echo "* Performing a system update (excluding kernel)"
-yum -y --quiet --exclude=kernel* update
-echo "* Installing some dependencies (git bc expect)"
-yum -y --quiet install git bc expect
+
+echo "* Installing git"
+yum -y --quiet install git
 echo "* Cloning the GigabyteIO git repository to /usr/local/src/gigabyteio"
 git clone -q https://github.com/GigabyteIO/WordPress-Droplet.git /usr/local/src/gigabyteio
 chmod +x /usr/local/src/gigabyteio/scripts/setup.sh
