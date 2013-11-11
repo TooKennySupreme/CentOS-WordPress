@@ -2,7 +2,7 @@
 
 # Setting time zone has to be done manually for now - not exactly sure how to find and replace with a variable - if anyone could guide me in the right direction, I'll add this feature :)
 # Declare script variables for future portability
-echo "$(tput bold)$(tput setaf 7)* Declaring potentially customizable script variables at top of setup.sh$(tput sgr0)"
+echo "* $(tput setaf 6)Declaring potentially customizable script variables at top of setup.sh$(tput sgr0)"
 CENTMIN_DIR='usr/local/src' # Directory where centmin is installed
 INSTALL_FOLDER_NAME='gigabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
 CONF_FOLDER='configs' # Name of folder in the GigabyteIO directory that holds the configuration files
