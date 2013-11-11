@@ -18,6 +18,11 @@ NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 # Change root user password
 echo ""
 echo ""
+#http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
+echo "$(tput sgr 0 1)$(tput setaf $6)Thanks for using GigabyteIO (http://gigabyte.io)$(tput sgr0)"
+echo ""
+echo "IMPORTANT: THIS SCRIPT HAS ONLY BEEN TESTED ON A 2GB CENTOS 6.4 64-BIT DIGITAL OCEAN VPS."
+echo ""
 echo "TASKS COMPLETED SO FAR:"
 echo "- System has been updated to latest software."
 echo "- Some dependencies have been installed (bc and git)."
@@ -55,7 +60,7 @@ chmod +x visudo.sh
 chmod 644 visudo.sh
 echo ""
 echo "NOTE:"
-echo "It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username or password. With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created."
+echo "It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username ($NEW_ROOT_USERNAME). With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created ($NEW_ROOT_USERNAME)."
 echo ""
 # Change the SSH key to be used with new root user
 read -p "Is this a Digital Ocean droplet created using an SSH key (y/n)? " SSH_CHOICE
@@ -106,31 +111,78 @@ perl -pi -e 's/nginx centminmod/GigabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME
 # Change permissions of centmin.sh to executable
 chmod +x centmin.sh
 
-# Disable the menu system in centmin.sh
-perl -pi -e '/ENABLE_MENU=.y./ && s/y/n/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 echo ""
 echo "NOTE:"
-echo "The initial set up is complete. Now, if you restart the server or attempt to log in via SSH, you will only be able to connect via the server's IP address on port number 8388 (please note that the port number is changed at the end of the installation so if the script fails for whatever reason, the SSH port might still be 22). In addition, the only user that can login is your new root username. If for some reason you need to use the root user, you will have to login with your new root username and then switch to the root user by entering 'su'.\n\nThe script will now compile the server via CentminMod. This process generally takes around 20 minutes. For the most part, it is an unattended installation."
+echo "The initial set up is complete. If you restart the server or attempt to log in via SSH, you will only be able to connect via the server's IP address on port number $SSH_PORT_NUMBER (please note that the port number is changed at the end of the installation so if the script fails for whatever reason, the SSH port might still be 22). In addition, the only user that can login is your new root username ($NEW_ROOT_USERNAME). If for some reason you need to use the root user, you will have to login with your new root username ($NEW_ROOT_USERNAME) and then switch to the root user by entering 'su'.\n\nThe script will now compile the server via CentminMod. This process generally takes around 30 minutes. For the most part, it is an unattended installation."
 echo ""
-read -p "Press enter to continue: " CONTINUE_PROMPT
-# Install CentminMod
-./centmin.sh install
-read -p "Centmin Install done. Ready to change the SSH port?: " RANDOMTHINGHERE
-# Change SSH port
-cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
-perl -pi -e 's/read -ep "Enter existing SSH port number \(default = 22 for fresh installs\): " EXISTPORTNUM/EXISTPORTNUM=22/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
-echo $SSH_PORT_NUMBER | ./centmin.sh sshdport
+read -p "Press any key to continue... " -n1 -s
 
+# Install CentminMod
+CENTMIN_INSTALL_EXPECT=$(expect -c '
+spawn ./centmin.sh
+expect "Enter option [ 1 - 21 ]"
+send "1\r"
+expect "New password for the MySQL \"root\" user:"
+send "PasswordHere\r"
+expect "Repeat password for the MySQL \"root\" user:"
+send "PasswordHere\r"
+expect eof
+')
+echo "$CENTMIN_INSTALL_EXPECT"
+
+# Change SSH port
+CENTMIN_SSH_EXPECT=$(expect -c '
+spawn ./centmin.sh
+expect "Enter option [ 1 - 21 ]"
+send "16\r"
+expect "Enter existing SSH port number (default = 22 for fresh installs):"
+send "22\r"
+expect eof
+')
+echo "$CENTMIN_SSH_EXPECT"
+
+#cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
+#perl -pi -e 's/read -ep "Enter existing SSH port number \(default = 22 for fresh installs\): " EXISTPORTNUM/EXISTPORTNUM=22/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
+#perl -pi -e 's/read -ep "Enter the SSH port number you want to change to: " PORTNUM/PORTNUM=${SSH_PORT_NUMBER}/g' sshd.inc
+#./centmin.sh sshdport
+read -p "Centmin Install done. Ready to change the SSH port?: " RANDOMTHINGHERE
 # Restore centmin SSH config file to original state
-rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
-cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
-rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
+#rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
+#cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
+#rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
 
 # Restore centmin.sh menu system (to keep centmin.sh in original condition
 # NOTE: Substitute (find and replace) "foo" with "bar" on lines that match "baz"
 # NOTE: perl -pe '/baz/ && s/foo/bar/'
 # NOTE: See http://www.catonmat.net/download/perl1line.txt for more tricks
-perl -pe '/ENABLE_MENU=.n./ && s/n/y/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
+#perl -pi -e '/ENABLE_MENU=.n./ && s/n/y/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change permissions of centmin.sh back to original
 chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
+
+# Move/replace nginx configuration files
+cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/cloudflare.conf /$NGINX_CONF_DIR/cloudflare.conf
+cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/nginx.conf /$NGINX_CONF_DIR/nginx.conf
+cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/phpwpcache.conf /$NGINX_CONF_DIR/phpwpcache.conf
+cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/roots.conf /$NGINX_CONF_DIR/roots.conf
+cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/wp_fastcgicache.conf /$NGINX_CONF_DIR/wp_fastcgicache.conf
+cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/wpcache.conf /$NGINX_CONF_DIR/wpcache.conf
+cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/wpnocache.conf /$NGINX_CONF_DIR/wpnocache.conf
+cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/wpsecure.conf /$NGINX_CONF_DIR/wpsecure.conf
+cp -f /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$CONF_FOLDER/yoast.conf /$NGINX_CONF_DIR/yoast.conf
+
+# Run scripts
+cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
+chmod +x memory.sh
+chmod +x tweaks.sh
+chmod +x whitelist.sh
+./memory.sh
+./tweaks.sh
+./whitelist.sh
+chmod 644 memory.sh
+chmod 644 tweaks.sh
+chmod 644 whitelist.sh
+echo ""
+echo ""
+echo "$(tput sgr 0 1)$(tput setaf $6)Thanks again for using GigabyteIO (http://gigabyte.io)$(tput sgr0)"
+echo ""
