@@ -3,11 +3,11 @@ CentOS WordPress
 
 Built and tested with a 2GB [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36) VPS. CentOS WordPress adds a bleeding-edge web server software stack to your CentOS VPS.
 
-+Compiles software from source
-+Caches WordPress into RAM
-+Built-in load-bearing network capabilities
-+Uses best security practices
-+Bug fixes to CentminMod
++ Compiles software from source
++ Caches WordPress into RAM
++ Built-in load-bearing network capabilities
++ Uses best security practices
++ Bug fixes to CentminMod
 
 Benchmarks
 
