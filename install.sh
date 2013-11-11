@@ -1,7 +1,6 @@
 #!/bin/bash
 echo ""
 echo "$(tput bold)$(tput setaf 6)Installing GigabyteIO for WordPress...$(tput sgr0)"
-echo ""
 echo "Github URL: https://github.com/GigabyteIO/WordPress-Droplet"
 echo "GigabyteIO URL: http://gigabyte.io/"
 echo ""
