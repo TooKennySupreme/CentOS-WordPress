@@ -141,7 +141,7 @@ echo ""
 read -p "$(tput bold)Press any key to continue and install CentminMod... $(tput sgr0)" -n1 -s
 echo ""
 echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/$SCRIPTS_FOLDER$(tput sgr0)"
-cd /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/$SCRIPTS_FOLDER
+cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 # Install CentminMod with expect script to automate user inputs
 echo "* $(tput setaf 6)Running centmin-install.exp$(tput sgr0)"
 ./centmin-install.exp GigabyteIO password mysqlpass direct
