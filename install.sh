@@ -1,10 +1,12 @@
 #!/bin/bash
 echo ""
+echo ""
 echo "$(tput bold)$(tput setaf 6)CentOS WordPress by GigabyteIO$(tput sgr0)"
 echo "Github URL: https://github.com/GigabyteIO/WordPress-Droplet"
 echo "GigabyteIO URL: http://gigabyte.io/"
 echo ""
-echo "$(tput bold)$(tput setaf 2)Step 1 of 7: Setting up GigabyteIO$(tput sgr0)"
+echo ""
+echo "$(tput bold)$(tput setaf 2)Step 1 of 7:$(tput sgr0) Setting up GigabyteIO"
 if [ -f /usr/local/src/gigabyteio/install.sh ];
 then
   read -p "$(tput bold)$(tput setaf 3)Warning:$(tput sgr0) The GigabyteIO directory already exists! Delete it and continue the installation? [Y/N] " INSTALL_CHOICE
