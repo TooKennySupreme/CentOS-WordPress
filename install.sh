@@ -4,7 +4,7 @@ echo "$(tput bold)$(tput setaf 6)CentOS WordPress by GigabyteIO$(tput sgr0)"
 echo "Github URL: https://github.com/GigabyteIO/WordPress-Droplet"
 echo "GigabyteIO URL: http://gigabyte.io/"
 echo ""
-echo "Step 1 of 7: Setting up GigabyteIO"
+echo "$(tput bold)$(tput setaf 2)Step 1 of 7: Setting up GigabyteIO$(tput sgr0)"
 if [ -f /usr/local/src/gigabyteio/install.sh ];
 then
   read -p "$(tput bold)$(tput setaf 3)Warning:$(tput sgr0) The GigabyteIO directory already exists! Delete it and continue the installation? [Y/N] " INSTALL_CHOICE
@@ -20,6 +20,5 @@ yum --quiet install git
 echo "* $(tput setaf 6)Cloning the GigabyteIO git repository to /usr/local/src/gigabyteio$(tput sgr0)"
 git clone -q https://github.com/GigabyteIO/WordPress-Droplet.git /usr/local/src/gigabyteio
 chmod +x /usr/local/src/gigabyteio/scripts/setup.sh
-echo "Step 2 of 7: Updating system and optimizing for CentminMod installation"
 echo "* $(tput setaf 6)Initializing setup script from /usr/local/src/gigabyteio/scripts/setup.sh$(tput sgr0)"
 /bin/bash /usr/local/src/gigabyteio/scripts/setup.sh
