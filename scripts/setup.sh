@@ -18,7 +18,6 @@ NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 
 echo ""
 echo "$(tput bold)$(tput setaf 2)Step 2 of 7:$(tput sgr0) Update system"
-echo ""
 echo "* $(tput setaf 6)Performing a system update (excluding kernel)$(tput sgr0)"
 yum -y --quiet --exclude=kernel* update
 echo "* $(tput setaf 6)Installing some dependencies (bc expect)$(tput sgr0)"
@@ -26,16 +25,13 @@ yum -y --quiet install bc expect
 # Change root user password
 #http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
 echo ""
-echo "$(tput bold)$(tput setaf 2)Step 3 of 7: Set up administrator account $(tput sgr0)"
+echo "$(tput bold)$(tput setaf 2)Step 3 of 7:$(tput sgr0) Set up administrator account"
 echo ""
-echo "$(tput bold)$(tput setaf 7)Notes:$(tput sgr0)"
-echo "Begin by changing the root password. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges. You should make this root password long and very hard to guess."
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Begin by changing the root password. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges. You should make this root password long and very hard to guess."
 echo ""
-printf "yo" && printf "this is a test"
-printf "promptyo" && passwd
+passwd
 echo ""
-echo "$(tput bold)$(tput setaf 7)Notes:$(tput sgr0)"
-echo "Now create a new user and password combination. This is the user that you will use when doing anything that requires root privileges. When doing something that requires root privileges with this new user, you will have to add 'sudo' to the beginning of the command."
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Now create a new user and password combination. This is the user that you will use when doing anything that requires root privileges. When doing something that requires root privileges with this new user, you will have to add 'sudo' to the beginning of the command."
 echo ""
 # Set up new root username and password for security purposes
 if [ $(id -u) -eq 0 ]; then
@@ -43,15 +39,15 @@ if [ $(id -u) -eq 0 ]; then
         read -s -p "Enter the new root users password: " NEW_ROOT_PASSWORD
         egrep "^$NEW_ROOT_USERNAME" /etc/passwd >/dev/null
         if [ $? -eq 0 ]; then
-                echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) $NEW_ROOT_USERNAME already exists!"
+                echo "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) $NEW_ROOT_USERNAME already exists!"
                 exit 1
         else
                 ENCRYPTED_NEW_ROOT_PASSWORD=$(perl -e 'print crypt($ARGV[0], "password")' $NEW_ROOT_PASSWORD)
                 useradd -m -p $ENCRYPTED_NEW_ROOT_PASSWORD $NEW_ROOT_USERNAME
-                [ $? -eq 0 ] && echo "* $(tput setaf 6)$NEW_ROOT_USERNAME added to user list$(tput sgr0)" || echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Failed to add $NEW_ROOT_USERNAME to the user list"
+                [ $? -eq 0 ] && echo "\n\n* $(tput setaf 6)$NEW_ROOT_USERNAME added to user list$(tput sgr0)" || echo "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Failed to add $NEW_ROOT_USERNAME to the user list"
         fi
 else
-        echo "You must be root to add a user to the system."
+        echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) You must be root to add a user to the system."
         exit 2
 fi
 # Add new root user to visudo list
@@ -62,8 +58,7 @@ echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USER_NAME$(tput sgr0
 chmod 644 visudo.sh
 echo ""
 echo ""
-echo "$(tput bold)$(tput setaf 7)Notes:$(tput sgr0)"
-echo "It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username ($NEW_ROOT_USERNAME). With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created ($NEW_ROOT_USERNAME)."
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username ($NEW_ROOT_USERNAME). With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created ($NEW_ROOT_USERNAME)."
 echo ""
 # Change the SSH key to be used with new root user
 read -p "Is this a Digital Ocean droplet created using an SSH key? [Y/N] " SSH_CHOICE
@@ -104,11 +99,11 @@ if [ "$SSH_CHOICE" == "yes" ]; then
         echo "* $(tput setaf 6)Increasing the ServerKeyBits to 2048$(tput sgr0)"
         perl -pi -e 's/#ServerKeyBits 1024/ServerKeyBits 2048/g' /etc/ssh/sshd_config
 fi
-echo "$(tput bold)$(tput setaf 2)Step 4 of 7: Configure and install CentminMod $(tput sgr0)"
+echo "$(tput bold)$(tput setaf 2)Step 4 of 7:$(tput sgr0) Configure and install CentminMod"
 # Download and set up CentminMod directory
 cd /$CENTMIN_DIR
 echo "* $(tput setaf 6)Downloading CentminMod from $CENTMIN_DOWNLOAD_URL$(tput sgr0)"
-wget $CENTMIN_DOWNLOAD_URL
+wget -q $CENTMIN_DOWNLOAD_URL
 echo "* $(tput setaf 6)Unzipping $CENTMIN_FILE_NAME to $CENTMIN_DIR$(tput sgr0)"
 unzip -q $CENTMIN_FILE_NAME
 echo "* $(tput setaf 6)Removing $CENTMIN_FILE_NAME$(tput sgr0)"
@@ -129,10 +124,9 @@ echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
 chmod +x centmin.sh
 
 echo ""
-echo "$(tput bold)$(tput setaf 7)Notes:$(tput sgr0)"
-echo "The initial set up is complete. If you restart the server or attempt to log in via SSH, you will only be able to connect via the server's IP address on port number $SSH_PORT_NUMBER (please note that the port number is changed at the end of the installation so if the script fails for whatever reason, the SSH port might still be 22). In addition, the only user that can login is your new root username ($NEW_ROOT_USERNAME). If for some reason you need to use the root user, you will have to login with your new root username ($NEW_ROOT_USERNAME) and then switch to the root user by entering 'su'.\n\nThe script will now compile the server via CentminMod. This process generally takes around 30 minutes. For the most part, it is an unattended installation."
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The initial set up is complete. If you restart the server or attempt to log in via SSH, you will only be able to connect via the server's IP address on port number $SSH_PORT_NUMBER (please note that the port number is changed at the end of the installation so if the script fails for whatever reason, the SSH port might still be 22). In addition, the only user that can login is your new root username ($NEW_ROOT_USERNAME). If for some reason you need to use the root user, you will have to login with your new root username ($NEW_ROOT_USERNAME) and then switch to the root user by entering 'su'.\n\nThe script will now compile the server via CentminMod. This process generally takes around 30 minutes. For the most part, it is an unattended installation."
 echo ""
-read -p "$(tput bold)$(tput setaf 2)Press any key to continue... $(tput sgr0)" -n1 -s
+read -p "$(tput bold)Press any key to continue... $(tput sgr0)" -n1 -s
 
 # Install CentminMod
 #expect \"New password for the MySQL \"root\" user:\"
