@@ -20,7 +20,7 @@ echo ""
 echo "$(tput bold)$(tput setaf 2)Step 2 of 7:$(tput sgr0) Update system"
 echo ""
 echo "* $(tput setaf 6)Performing a system update (excluding kernel)$(tput sgr0)"
-yum -y --quiet --exclude=kernel* update
+yum -y --quiet --exclude=kernel* --exclude=setup* update
 echo "* $(tput setaf 6)Installing some dependencies (bc expect)$(tput sgr0)"
 yum -y --quiet install bc expect
 # Change root user password
