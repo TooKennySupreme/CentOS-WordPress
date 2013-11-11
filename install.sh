@@ -16,7 +16,7 @@ then
 fi
 
 echo "* $(tput setaf 6)Installing git$(tput sgr0)"
-yum --quiet install git
+yum -y --quiet install git
 echo "* $(tput setaf 6)Cloning the GigabyteIO git repository to /usr/local/src/gigabyteio$(tput sgr0)"
 git clone -q https://github.com/GigabyteIO/WordPress-Droplet.git /usr/local/src/gigabyteio
 chmod +x /usr/local/src/gigabyteio/scripts/setup.sh
