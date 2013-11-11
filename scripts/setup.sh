@@ -1,12 +1,13 @@
 #!/bin/bash -x
 
+# Setting time zone has to be done manually for now - not exactly sure how to find and replace with a variable - if anyone could guide me in the right direction, I'll add this feature :)
 # Declare script variables for future portability
 CENTMIN_DIR='usr/local/src' # Directory where centmin is installed
 INSTALL_FOLDER_NAME='gigabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
 CONF_FOLDER='configs' # Name of folder in the GigabyteIO directory that holds the configuration files
 SCRIPTS_FOLDER='scripts' # Name of folder in the GigabyteIO directory that holds scripts
 WORDPRESS_FOLDER='wordpress' # Name of folder in the GigabyteIO directory that holds WordPress related files
-SSH_PORT_NUMBER=8388 # SSH port used - NOTE: NOT WORKING - SSH PORT is hardcoded as 8388 - Any help guys? Commits? :)
+SSH_PORT_NUMBER=8388 # SSH port used, this is changed automatically after the Centmin install finishes
 CENTMIN_FOLDER_NAME='centmin-v1.2.3mod' # Name of centmin folder
 CENTMIN_DOWNLOAD_URL='http://centminmod.com/download/centmin-v1.2.3-eva2000.04.zip' # Centmin download URL
 CENTMIN_FILE_NAME='centmin-v1.2.3-eva2000.04.zip' # Centmin zip file name
@@ -36,7 +37,6 @@ else
 fi
 
 # Add new root user to visudo list
-echo "What upppp?"
 echo $CENTMIN_DIR
 echo $INSTALL_FOLDER_NAME
 echo $SCRIPTS_FOLDER
@@ -78,16 +78,44 @@ if [ "$SSH_CHOICE" == "yes" ]; then
         perl -pi -e 's/#ServerKeyBits 1024/ServerKeyBits 2048/g' /etc/ssh/sshd_config
 fi
 
-# Download and set up CentminMod
+# Download and set up CentminMod directory
 cd /$CENTMIN_DIR
 wget $CENTMIN_DOWNLOAD_URL
 unzip $CENTMIN_FILE_NAME
 rm $CENTMIN_FILE_NAME
-echo "Spot 1"
 cd $CENTMIN_FOLDER_NAME
-echo "Spot 2"
-# Change time zone
+
+# Change time zone in centmin.sh
 perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 perl -pi -e 's/Brisbane/New_York/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
+
+# Change custom TCP packet header in centmin.sh
 perl -pi -e 's/nginx centminmod/GigabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
+
+# Change permissions of centmin.sh to executable
 chmod +x centmin.sh
+
+# Disable the menu system in centmin.sh
+perl -pi -e '/ENABLE_MENU=.y./ && s/y/n/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
+
+# Install CentminMod
+./centmin.sh install
+read -p "Centmin Install done. You ready to continue?: " RANDOMTHINGHERE
+# Change SSH port
+cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
+perl -pi -e 's/read -ep "Enter existing SSH port number \(default = 22 for fresh installs\): " EXISTPORTNUM/EXISTPORTNUM=22/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
+echo $SSH_PORT_NUMBER | ./centmin.sh sshdport
+
+# Restore centmin SSH config file to original state
+rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
+cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
+rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
+
+# Restore centmin.sh menu system (to keep centmin.sh in original condition
+# NOTE: Substitute (find and replace) "foo" with "bar" on lines that match "baz"
+# NOTE: perl -pe '/baz/ && s/foo/bar/'
+# NOTE: See http://www.catonmat.net/download/perl1line.txt for more tricks
+perl -pe '/ENABLE_MENU=.n./ && s/n/y/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
+
+# Change permissions of centmin.sh back to original
+chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
