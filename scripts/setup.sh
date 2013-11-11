@@ -99,6 +99,7 @@ if [ "$SSH_CHOICE" == "yes" ]; then
         echo "* $(tput setaf 6)Increasing the ServerKeyBits to 2048$(tput sgr0)"
         perl -pi -e 's/#ServerKeyBits 1024/ServerKeyBits 2048/g' /etc/ssh/sshd_config
 fi
+echo ""
 echo "$(tput bold)$(tput setaf 2)Step 4 of 7:$(tput sgr0) Configure and install CentminMod"
 # Download and set up CentminMod directory
 cd /$CENTMIN_DIR
@@ -196,3 +197,5 @@ echo ""
 echo "$(tput bold)$(tput setaf 6)Thanks for using CentOS WordPress by GigabyteIO$(tput sgr0)"
 echo "Home URL  : http://gigabyte.io"
 echo "Github URL: https://github.com/GigabyteIO/CentOS-WordPress"
+echo ""
+echo ""
