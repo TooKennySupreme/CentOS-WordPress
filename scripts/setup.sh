@@ -21,7 +21,7 @@ echo "$(tput bold)$(tput setaf 2)Step 2 of 7:$(tput sgr0) Update system"
 echo ""
 echo "* $(tput setaf 6)Performing a system update (excluding kernel)$(tput sgr0)"
 yum -y --quiet --exclude=kernel* --exclude=setup* update
-echo "* $(tput setaf 6)Installing some dependencies (bc expect)$(tput sgr0)"
+echo "* $(tput setaf 6)Installing some dependencies (bc and expect)$(tput sgr0)"
 yum -y --quiet install bc expect
 # Change root user password
 #http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
@@ -48,15 +48,16 @@ if [ $(id -u) -eq 0 ]; then
                 [ $? -eq 0 ] && echo -e "\n\n* $(tput setaf 6)$NEW_ROOT_USERNAME added to user list$(tput sgr0)" || echo -e "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Failed to add $NEW_ROOT_USERNAME to the user list"
         fi
 else
-        echo -e "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) You must be root to add a user to the system. Aborting installation."
+        echo -e "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) You must be the root user. Aborting installation."
         exit 2
 fi
 # Add new root user to visudo list
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
-echo "* $(tput setaf 6)Granting visudo.sh executable permissions
+echo "* $(tput setaf 6)Granting executable permissions to visudo.sh$(tput sgr0)"
 chmod +x visudo.sh
 echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USERNAME$(tput sgr0)"
 ./visudo.sh $NEW_ROOT_USERNAME
+echo "* $(tput setaf 6)Restoring visudo.sh permissions to original state$(tput sgr0)"
 chmod 644 visudo.sh
 echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username ($NEW_ROOT_USERNAME). With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created ($NEW_ROOT_USERNAME)."
