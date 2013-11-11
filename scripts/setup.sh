@@ -56,7 +56,7 @@ echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 echo "* $(tput setaf 6)Granting executable permissions to visudo.sh$(tput sgr0)"
 chmod +x visudo.sh
-echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USERNAME$ using visudo.sh(tput sgr0)"
+echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USERNAME using visudo.sh$(tput sgr0)"
 ./visudo.sh $NEW_ROOT_USERNAME
 echo "* $(tput setaf 6)Restoring visudo.sh permissions to original state$(tput sgr0)"
 chmod 644 visudo.sh
