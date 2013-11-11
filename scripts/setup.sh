@@ -128,17 +128,10 @@ chmod +x centmin.sh
 echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The initial set up is complete. If you restart the server or attempt to log in via SSH, you will only be able to connect via the server's IP address on port number $SSH_PORT_NUMBER (please note that the port number is changed at the end of the installation so if the script fails for whatever reason, the SSH port might still be 22). In addition, the only user that can login is your new root username ($NEW_ROOT_USERNAME). If for some reason you need to use the root user, you will have to login with your new root username ($NEW_ROOT_USERNAME) and then switch to the root user by entering 'su'.\n\nThe script will now compile the server via CentminMod. This process generally takes around 30 minutes. For the most part, it is an unattended installation."
 echo ""
-read -p "$(tput bold)Press any key to continue... $(tput sgr0)" -n1 -s
+read -p "$(tput bold)Press any key to continue and install CentminMod... $(tput sgr0)" -n1 -s
 
-# Install CentminMod
-#expect \"New password for the MySQL \"root\" user:\"
-#send \"ls\r\"
-CENTMIN_INSTALL_EXPECT=$(expect -c "
-spawn bash ./centmin.sh
-expect "Enter option \[ 1 - 21 ]"
-send "1\r"
-")
-echo "$CENTMIN_INSTALL_EXPECT"
+# Install CentminMod with expect script to automate user inputs
+./centmin-install.exp GigabyteIO password mysqlpass direct folder
 #expect "New password for the MySQL \"root\" user:"
 #send "PasswordHere\r"
 #expect "Repeat password for the MySQL \"root\" user:"
@@ -150,22 +143,6 @@ echo "$CENTMIN_INSTALL_EXPECT"
 #Reload privilege tables now? [Y/n]
 #(Type username your want to set and press Enter):
 #(Type password your want to set and press Enter):
-
-
-#cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
-#perl -pi -e 's/read -ep "Enter existing SSH port number \(default = 22 for fresh installs\): " EXISTPORTNUM/EXISTPORTNUM=22/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
-#perl -pi -e 's/read -ep "Enter the SSH port number you want to change to: " PORTNUM/PORTNUM=${SSH_PORT_NUMBER}/g' sshd.inc
-#./centmin.sh sshdport
-# Restore centmin SSH config file to original state
-#rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
-#cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc
-#rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
-
-# Restore centmin.sh menu system (to keep centmin.sh in original condition
-# NOTE: Substitute (find and replace) "foo" with "bar" on lines that match "baz"
-# NOTE: perl -pe '/baz/ && s/foo/bar/'
-# NOTE: See http://www.catonmat.net/download/perl1line.txt for more tricks
-#perl -pi -e '/ENABLE_MENU=.n./ && s/n/y/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change permissions of centmin.sh back to original
 echo "* $(tput setaf 6)Restoring centmin.sh permissions to original state$(tput sgr0)"
@@ -204,5 +181,6 @@ echo ""
 echo "$(tput bold)$(tput setaf 6)Thanks for using CentOS WordPress by GigabyteIO$(tput sgr0)"
 echo "Home URL  : http://gigabyte.io"
 echo "Github URL: https://github.com/GigabyteIO/CentOS-WordPress"
+echo "Author    : Brian Zalewski"
 echo ""
 echo ""
