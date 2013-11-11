@@ -136,14 +136,14 @@ read -p "$(tput bold)Press any key to continue... $(tput sgr0)" -n1 -s
 CENTMIN_INSTALL_EXPECT=$(expect -c "
 spawn bash ./centmin.sh
 expect \"Enter option [ 1 - 21 ]\"
-send \"1\r\"
-expect "New password for the MySQL \"root\" user:"
-send "PasswordHere\r"
-expect "Repeat password for the MySQL \"root\" user:"
-send "PasswordHere\r"
+send "1\r"
 expect eof
 ")
 echo "$CENTMIN_INSTALL_EXPECT"
+#expect "New password for the MySQL \"root\" user:"
+#send "PasswordHere\r"
+#expect "Repeat password for the MySQL \"root\" user:"
+#send "PasswordHere\r"
 #Remove anonymous users? [Y/n]
 # y
 # Disallow root login remotely? [Y/n]
