@@ -131,6 +131,7 @@ echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The initial set up is comp
 echo ""
 read -p "$(tput bold)Press any key to continue and install CentminMod... $(tput sgr0)" -n1 -s
 
+cd /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/$SCRIPTS_FOLDER
 # Install CentminMod with expect script to automate user inputs
 ./centmin-install.exp GigabyteIO password mysqlpass direct folder
 #expect "New password for the MySQL \"root\" user:"
