@@ -7,7 +7,7 @@ echo "GigabyteIO URL: http://gigabyte.io/"
 echo ""
 if [ -f /usr/local/src/gigabyteio/install.sh ];
 then
-  read -p "The GigabyteIO directory already exists! Delete it and continue the installation? [Y/N]" INSTALL_CHOICE
+  read -p "$(tput bold)$(tput setaf 6)Warning:$(tput sgr0) The GigabyteIO directory already exists! Delete it and continue the installation? [Y/N]" INSTALL_CHOICE
   case "$INSTALL_CHOICE" in
     y|Y ) rm -rf /usr/local/src/gigabyteio;;
     n|N ) exit 1;;
