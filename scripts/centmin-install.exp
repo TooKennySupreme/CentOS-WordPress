@@ -1,0 +1,46 @@
+!/usr/bin/expect -f
+# Usage: ./centmin-install.exp memcached_user_name memcached_user_password mysql_root_password directory_of_centmin_install centmin_folder_name
+
+# Make sure that 5 arguments are passed
+if {[llength $argv] != 5} {
+ 
+# Output error message to user
+puts "ERROR: centmin.exp did not receive the proper number of arguments"
+ 
+# Exit script with error code 1
+exit 1
+}
+ 
+# Set variables based on inputs
+set memcacheuser [lrange $argv 0 0]
+set memcachepass [lrange $argv 1 1]
+set mysqlpass [lrange $argv 2 2]
+set basedirectory [lrange $argv 3 3]
+set centminfolder [lrange $argv 4 4]
+ 
+# Makes it so that expect does not time out
+set timeout -1
+ 
+# Run the Centmin install
+spawn bash /$basedirectory/$centminfolder/centmin.sh
+
+# Set buffer size
+match_max 100000
+
+# Wait for initial prompt
+expect "Enter option [ 1 - 21 ]"
+
+# Send the install command
+send -- "install\r"
+
+# Now we expect to have a request for password:
+expect "This is Never Going to Be Anywhere so Why Would the Program ever end"
+
+# And we send our password:
+send -- "$password\r"
+ 
+# send blank line (\r) to make sure we get back to cli
+send -- "\r"
+ 
+#We have gave our "program" and now we expect that the remote server close the connection:
+expect eof
