@@ -2,7 +2,7 @@
 echo "$(tput sgr 0 1)$(tput setaf 6)Installing GigabyteIO...$(tput sgr0)"
 echo ""
 echo ""
-if [ -f /usr/local/src/gigabyteio ];
+if [ -f /usr/local/src/gigabyteio/install.sh ];
 then
   read -p "The GigabyteIO directory already exists! Do you want to delete it and continue the installation? (y/n)" INSTALL_CHOICE
   case "$INSTALL_CHOICE" in
