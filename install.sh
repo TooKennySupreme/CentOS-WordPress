@@ -15,7 +15,7 @@ then
 fi
 
 echo "* Installing git"
-yum -y --quiet install git
+yes | yum --quiet install git
 echo "* Cloning the GigabyteIO git repository to /usr/local/src/gigabyteio"
 git clone -q https://github.com/GigabyteIO/WordPress-Droplet.git /usr/local/src/gigabyteio
 chmod +x /usr/local/src/gigabyteio/scripts/setup.sh
