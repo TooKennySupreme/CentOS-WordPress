@@ -133,7 +133,7 @@ read -p "$(tput bold)Press any key to continue... $(tput sgr0)" -n1 -s
 #expect \"New password for the MySQL \"root\" user:\"
 #send \"ls\r\"
 CENTMIN_INSTALL_EXPECT=$(expect -c "
-spawn bash centmin.sh
+spawn bash ./centmin.sh
 expect \"Enter option [ 1 - 21 ]\"
 send \"1\r\"
 expect "New password for the MySQL \"root\" user:"
@@ -143,6 +143,13 @@ send "PasswordHere\r"
 expect eof
 ")
 echo "$CENTMIN_INSTALL_EXPECT"
+#Remove anonymous users? [Y/n]
+# y
+# Disallow root login remotely? [Y/n]
+#Remove test database and access to it? [Y/n]
+#Reload privilege tables now? [Y/n]
+#(Type username your want to set and press Enter):
+#(Type password your want to set and press Enter):
 
 
 #cp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd.inc /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/inc/sshd-backup
