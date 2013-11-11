@@ -63,11 +63,11 @@ echo ""
 # Change the SSH key to be used with new root user
 read -p "Is this a Digital Ocean droplet created using an SSH key? [Y/N] " SSH_CHOICE
 case "$SSH_CHOICE" in
-  y|Y ) echo "yes";;
-  n|N ) echo "no";;
+  y|Y ) SSH_CHOICE=yes;;
+  n|N ) SSH_CHOICE=no;;
   * ) echo "Invalid input.";;
 esac
-
+echo ""
 # Transfer SSH key credentials from root to new root user
 if [ "$SSH_CHOICE" == "yes" ]; then
         echo "* $(tput setaf 6)Copying root SSH key to $NEW_ROOT_USER_NAME's SSH key file$(tput sgr0)"
