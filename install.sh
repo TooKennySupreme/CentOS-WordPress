@@ -1,9 +1,11 @@
 #!/bin/bash
 echo ""
 echo ""
+echo ""
 echo "$(tput bold)$(tput setaf 6)CentOS WordPress by GigabyteIO$(tput sgr0)"
 echo "Home URL  : http://gigabyte.io"
 echo "Github URL: https://github.com/GigabyteIO/CentOS-WordPress"
+echo ""
 echo ""
 echo ""
 if [ -f /usr/local/src/gigabyteio/install.sh ];
