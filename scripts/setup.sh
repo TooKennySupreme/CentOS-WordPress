@@ -2,7 +2,7 @@
 
 # Setting time zone has to be done manually for now - not exactly sure how to find and replace with a variable - if anyone could guide me in the right direction, I'll add this feature :)
 # Declare script variables for future portability
-echo "* $(tput setaf 6)Declaring potentially customizable script variables at top of setup.sh$(tput sgr0)"
+echo "* $(tput setaf 6)Declaring potentially customizable script variables in setup.sh$(tput sgr0)"
 CENTMIN_DIR='usr/local/src' # Directory where centmin is installed
 INSTALL_FOLDER_NAME='gigabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
 CONF_FOLDER='configs' # Name of folder in the GigabyteIO directory that holds the configuration files
@@ -16,27 +16,21 @@ GITHUB_URL='https://github.com/GigabyteIO/WordPress-Droplet.git' # GigabyteIO gi
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 
-echo "$(tput bold)$(tput setaf 7)* Performing a system update (excluding kernel)$(tput sgr0)"
+echo "* $(tput setaf 6)Performing a system update (excluding kernel)$(tput sgr0)"
 yum -y --quiet --exclude=kernel* update
-echo "$(tput bold)$(tput setaf 7)* Installing some dependencies (bc expect)$(tput sgr0)"
+echo "* $(tput setaf 6)Installing some dependencies (bc expect)$(tput sgr0)"
 yum -y --quiet install bc expect
 # Change root user password
-echo ""
-echo ""
 #http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
-echo "$(tput bold)$(tput setaf 6)Thanks for using GigabyteIO (http://gigabyte.io)$(tput sgr0)"
 echo ""
-echo "$(tput sgr 0 1)This script has only been tested on a Digital Ocean 64-bit CentOS 6.4 VPS. Use at your own risk.$(tput sgr0)"
-echo ""
-echo ""
-echo "$(tput bold)Instructions/Notes:$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 7)Notes:$(tput sgr0)"
 echo "Begin by changing the root password. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges. You should make this root password long and very hard to guess."
 echo ""
-passwd
+printf "yo" && printf "this is a test"
+printf "promptyo" && passwd
 echo ""
-echo "$(tput bold)Instructions/Notes:$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 7)Notes:$(tput sgr0)"
 echo "Now create a new user and password combination. This is the user that you will use when doing anything that requires root privileges. When doing something that requires root privileges with this new user, you will have to add 'sudo' to the beginning of the command."
-echo ""
 echo ""
 # Set up new root username and password for security purposes
 if [ $(id -u) -eq 0 ]; then
@@ -44,12 +38,12 @@ if [ $(id -u) -eq 0 ]; then
         read -s -p "Enter the new root users password: " NEW_ROOT_PASSWORD
         egrep "^$NEW_ROOT_USERNAME" /etc/passwd >/dev/null
         if [ $? -eq 0 ]; then
-                echo "ERROR: $NEW_ROOT_USERNAME already exists!"
+                echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) $NEW_ROOT_USERNAME already exists!"
                 exit 1
         else
                 ENCRYPTED_NEW_ROOT_PASSWORD=$(perl -e 'print crypt($ARGV[0], "password")' $NEW_ROOT_PASSWORD)
                 useradd -m -p $ENCRYPTED_NEW_ROOT_PASSWORD $NEW_ROOT_USERNAME
-                [ $? -eq 0 ] && echo "* $NEW_ROOT_USERNAME added to user list" || echo "ERROR: Failed to add $NEW_ROOT_USERNAME to the user list."
+                [ $? -eq 0 ] && echo "* $(tput setaf 6)$NEW_ROOT_USERNAME added to user list$(tput sgr0)" || echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Failed to add $NEW_ROOT_USERNAME to the user list"
         fi
 else
         echo "You must be root to add a user to the system."
@@ -58,17 +52,16 @@ fi
 # Add new root user to visudo list
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
 chmod +x visudo.sh
-echo "$(tput bold)$(tput setaf 7)* Giving root permissions to $NEW_ROOT_USER_NAME$(tput sgr0)"
+echo "* $(tput bold)$(tput setaf 6)Giving root permissions to $NEW_ROOT_USER_NAME$(tput sgr0)"
 ./visudo.sh $NEW_ROOT_USERNAME
 chmod 644 visudo.sh
 echo ""
 echo ""
-echo "$(tput bold)Instructions/Notes:$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 7)Notes:$(tput sgr0)"
 echo "It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username ($NEW_ROOT_USERNAME). With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created ($NEW_ROOT_USERNAME)."
 echo ""
-echo ""
 # Change the SSH key to be used with new root user
-read -p "Is this a Digital Ocean droplet created using an SSH key (y/n)? " SSH_CHOICE
+read -p "Is this a Digital Ocean droplet created using an SSH key? [Y/N] " SSH_CHOICE
 case "$SSH_CHOICE" in
   y|Y ) echo "yes";;
   n|N ) echo "no";;
@@ -77,11 +70,11 @@ esac
 
 # Transfer SSH key credentials from root to new root user
 if [ "$SSH_CHOICE" == "yes" ]; then
-        echo "$(tput bold)$(tput setaf 7)* Copying root SSH key to $NEW_ROOT_USER_NAME's SSH key file$(tput sgr0)"
+        echo "* $(tput bold)$(tput setaf 6)Copying root SSH key to $NEW_ROOT_USER_NAME's SSH key file$(tput sgr0)"
         cp /root/.ssh/authorized_keys /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
-        echo "$(tput bold)$(tput setaf 7)* Removing root SSH key file$(tput sgr0)"
+        echo "* $(tput bold)$(tput setaf 6)Removing root SSH key file$(tput sgr0)"
         rm ~/.ssh/authorized_keys
-        echo "$(tput bold)$(tput setaf 7)* Applying appropriate permissions to $NEW_ROOT_USERNAME's SSH key file and directory$(tput sgr0)"
+        echo "* $(tput bold)$(tput setaf 6)Applying appropriate permissions to $NEW_ROOT_USERNAME's SSH key file and directory$(tput sgr0)"
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh
         chmod 700 /home/$NEW_ROOT_USERNAME/.ssh
         chown $NEW_ROOT_USERNAME:$NEW_ROOT_USERNAME /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
@@ -91,50 +84,50 @@ fi
 # Tweak SSH settings for security
 # Let CentminMod handle the changing of the port number so that there are no conflicts with the firewall
 # perl -pi -e 's/#Port 22/Port $SSH_PORT_NUMBER/g' /etc/ssh/sshd_config
-echo "$(tput bold)$(tput setaf 7)* Forcing SSH to only accept connections to server's IP address$(tput sgr0)"
+echo "* $(tput bold)$(tput setaf 6)Forcing SSH to only accept connections to server's IP address$(tput sgr0)"
 perl -pi -e 's/#UseDNS yes/UseDNS no/g' /etc/ssh/sshd_config
-echo "$(tput bold)$(tput setaf 7)* Disabling SSH login ability for the root user$(tput sgr0)"
+echo "* $(tput bold)$(tput setaf 6)Disabling SSH login ability for the root user$(tput sgr0)"
 perl -pi -e 's/#PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
-echo "$(tput bold)$(tput setaf 7)* Allowing only $NEW_ROOT_USERNAME to log in via SSH$(tput sgr0)"
+echo "* $(tput bold)$(tput setaf 6)Allowing only $NEW_ROOT_USERNAME to log in via SSH$(tput sgr0)"
 echo "AllowUsers $NEW_ROOT_USERNAME" >> /etc/ssh/sshd_config
 
 # Modifies sshd_config if an SSH key is being used instead of a password
 if [ "$SSH_CHOICE" == "yes" ]; then
-        echo "$(tput bold)$(tput setaf 7)* Disabling ability to login to SSH via password authentication$(tput sgr0)"
+        echo "* $(tput bold)$(tput setaf 6)Disabling ability to login to SSH via password authentication$(tput sgr0)"
         perl -pi -e 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
         # This probably doesn't do anything because it's supposedly just for SSH1 but let's change it anyway.
-        echo "$(tput bold)$(tput setaf 7)* Increasing the ServerKeyBits to 2048$(tput sgr0)"
+        echo "* $(tput bold)$(tput setaf 6)Increasing the ServerKeyBits to 2048$(tput sgr0)"
         perl -pi -e 's/#ServerKeyBits 1024/ServerKeyBits 2048/g' /etc/ssh/sshd_config
 fi
 
 # Download and set up CentminMod directory
 cd /$CENTMIN_DIR
-echo "$(tput bold)$(tput setaf 7)* Downloading CentminMod from $CENTMIN_DOWNLOAD_URL$(tput sgr0)"
+echo "* $(tput bold)$(tput setaf 6)Downloading CentminMod from $CENTMIN_DOWNLOAD_URL$(tput sgr0)"
 wget $CENTMIN_DOWNLOAD_URL
-echo "$(tput bold)$(tput setaf 7)* Unzipping $CENTMIN_FILE_NAME to $CENTMIN_DIR$(tput sgr0)"
+echo "* $(tput bold)$(tput setaf 6)Unzipping $CENTMIN_FILE_NAME to $CENTMIN_DIR$(tput sgr0)"
 unzip $CENTMIN_FILE_NAME
-echo "$(tput bold)$(tput setaf 7)* Removing $CENTMIN_FILE_NAME$(tput sgr0)"
+echo "* $(tput bold)$(tput setaf 6)Removing $CENTMIN_FILE_NAME$(tput sgr0)"
 rm $CENTMIN_FILE_NAME
 cd $CENTMIN_FOLDER_NAME
 
 # Change time zone in centmin.sh
-echo "$(tput bold)$(tput setaf 7)* Changing time zone to America/New_York in centmin.sh"
+echo "* $(tput bold)$(tput setaf 6)Changing time zone to America/New_York in centmin.sh"
 perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 perl -pi -e 's/Brisbane/New_York/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change custom TCP packet header in centmin.sh
-echo "$(tput bold)$(tput setaf 7)* Changing TCP packet header to GigabyteIO in centmin.sh$(tput sgr0)"
+echo "* $(tput bold)$(tput setaf 6)Changing TCP packet header to GigabyteIO in centmin.sh$(tput sgr0)"
 perl -pi -e 's/nginx centminmod/GigabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change permissions of centmin.sh to executable
-echo "$(tput bold)$(tput setaf 7)* Giving centmin.sh executable permissions$(tput sgr0)"
+echo "* $(tput bold)$(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
 chmod +x centmin.sh
 
 echo ""
-echo "$(tput bold)Instructions/Notes:$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 7)Notes:$(tput sgr0)"
 echo "The initial set up is complete. If you restart the server or attempt to log in via SSH, you will only be able to connect via the server's IP address on port number $SSH_PORT_NUMBER (please note that the port number is changed at the end of the installation so if the script fails for whatever reason, the SSH port might still be 22). In addition, the only user that can login is your new root username ($NEW_ROOT_USERNAME). If for some reason you need to use the root user, you will have to login with your new root username ($NEW_ROOT_USERNAME) and then switch to the root user by entering 'su'.\n\nThe script will now compile the server via CentminMod. This process generally takes around 30 minutes. For the most part, it is an unattended installation."
 echo ""
-read -p "$(tput bold)Press any key to continue... $(tput sgr0)" -n1 -s
+read -p "$(tput bold)$(tput setaf 2)Press any key to continue... $(tput sgr0)" -n1 -s
 
 # Install CentminMod
 CENTMIN_INSTALL_EXPECT=$(expect -c '
