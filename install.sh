@@ -1,9 +1,12 @@
 #!/bin/bash
-echo "$(tput bold)$(tput setaf 6)Installing GigabyteIO...$(tput sgr0)"
+echo ""
+echo "$(tput bold)$(tput setaf 6)Installing GigabyteIO for WordPress...$(tput sgr0)"
+echo "Github URL: https://github.com/GigabyteIO/WordPress-Droplet"
+echo "GigabyteIO URL: http://gigabyte.io/"
 echo ""
 if [ -f /usr/local/src/gigabyteio/install.sh ];
 then
-  read -p "The GigabyteIO directory already exists! Do you want to delete it and continue the installation? (y/n)" INSTALL_CHOICE
+  read -p "The GigabyteIO directory already exists! Delete it and continue the installation? [Y/N]" INSTALL_CHOICE
   case "$INSTALL_CHOICE" in
     y|Y ) rm -rf /usr/local/src/gigabyteio;;
     n|N ) exit 1;;
