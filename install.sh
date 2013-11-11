@@ -12,9 +12,9 @@ then
   esac
 fi
 echo "* Performing a system update (excluding kernel)"
-yum -q -y --exclude=kernel* update
+yum -y --quiet --exclude=kernel* update
 echo "* Installing some dependencies (git bc expect)"
-yum -q -y install git bc expect
+yum -y --quiet install git bc expect
 echo "* Cloning the GigabyteIO git repository to /usr/local/src/gigabyteio"
 git clone -q https://github.com/GigabyteIO/WordPress-Droplet.git /usr/local/src/gigabyteio
 chmod +x /usr/local/src/gigabyteio/scripts/setup.sh
