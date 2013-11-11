@@ -22,7 +22,7 @@ set centminfolder [lrange $argv 4 4]
 set timeout -1
  
 # Run the Centmin install
-spawn bash /$basedirectory/$centminfolder/centmin.sh
+spawn bash /usr/local/src/centmin-v1.2.3mod/centmin.sh
 
 # Set buffer size
 match_max 100000
