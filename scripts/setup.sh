@@ -161,8 +161,8 @@ echo "* $(tput setaf 6)Initializing the CentminMod install process via centmin-i
 #(Type password your want to set and press Enter):
 
 # Change permissions of centmin.sh and centmin-install.exp back to original
-echo "* $(tput setaf 6)Restoring centmin-install.exp permissions to original state$(tput sgr0)"
-chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
+echo "* $(tput setaf 6)Removing centmin-install.exp from CentminMod folder$(tput sgr0)"
+rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-install.exp
 echo "* $(tput setaf 6)Restoring centmin.sh permissions to original state$(tput sgr0)"
 chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
