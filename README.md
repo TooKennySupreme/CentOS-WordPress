@@ -1,7 +1,8 @@
-# CentOS WordPress by GigabyteIO
-**CentOS WordPress by GigabyteIO** is an installer for [CentminMod](http://centminmod.com/) (tested with a [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36)). **CentOS WordPress** adds a *bleeding-edge web server stack* to your CentOS-based VPS.
+# CentOS WordPress
+**CentOS WordPress by GigabyteIO** is an installer for [CentminMod](http://centminmod.com/) (tested with and built for a [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36)). CentOS WordPress adds a *bleeding-edge web server stack* to your CentOS-based VPS.
 
 ## Features
++ Easy installation and management
 + Compiles software from source
 + Caches WordPress into RAM
 + Intelligently configures server based on hardware
@@ -9,11 +10,10 @@
 + Bug fixes to CentminMod
 
 ## Instructions
-1. Instructions
-2. Set up a CentOS VPS (we built and tested CentOS WordPress with a 2GB 64-bit CentOS 6.4 [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36)
-3. Log into the VPS with PuTTY (or another SSH client)
-4. Enter `bash <(curl -s https://raw.github.com/GigabyteIO/CentOS-WordPress/master/install.sh)`
-5. Follow the prompts and prosper
+1. Set up a CentOS VPS (we built and tested CentOS WordPress with a 2GB 64-bit CentOS 6.4 [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36)
+2. Log into the VPS with PuTTY (or another SSH client)
+3. Enter `bash <(curl -s https://raw.github.com/GigabyteIO/CentOS-WordPress/master/install.sh)`
+4. Follow the prompts and prosper
 
 ## Benchmarks
 | Future test        | Other thing           | Cool  |
