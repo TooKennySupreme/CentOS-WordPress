@@ -30,3 +30,5 @@ send -- "$newport\r"
 # Wait for prompt again
 expect "Enter option ? 1 - 21 ?"
 send -- "exit\r"
+
+expect eof
