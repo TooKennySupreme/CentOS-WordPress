@@ -52,6 +52,5 @@ expect "(Type password your want to set and press Enter):"
 send -- "$memcachepass\r"
 
 expect "Centmin Mod install completed...."
-puts "backup script done"
 
 expect eof
