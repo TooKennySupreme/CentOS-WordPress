@@ -18,3 +18,11 @@ expect "Enter option ? 1 - 21 ?"
 
 # Send the install command
 send -- "16\r"
+
+expect ""
+
+send -- "$originalport\r"
+
+expect ""
+
+send -- "$newport\r"
