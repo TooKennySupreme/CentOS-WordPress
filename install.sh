@@ -24,4 +24,5 @@ echo "* $(tput setaf 6)Cloning the GigabyteIO git repository to /usr/local/src/g
 git clone -q https://github.com/GigabyteIO/WordPress-Droplet.git /usr/local/src/gigabyteio
 chmod +x /usr/local/src/gigabyteio/scripts/setup.sh
 echo "* $(tput setaf 6)Initializing setup script from /usr/local/src/gigabyteio/scripts/setup.sh$(tput sgr0)"
+echo ""
 /bin/bash /usr/local/src/gigabyteio/scripts/setup.sh
