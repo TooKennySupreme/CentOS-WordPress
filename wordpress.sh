@@ -89,7 +89,7 @@ cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH
 echo "* $(tput setaf 6)Downloading latest WordPress release from http://wordpress.org/latest.tar.gz$(tput sgr0)"
 wget -q http://wordpress.org/latest.tar.gz
 echo "* $(tput setaf 6)Decompressing latest.tar.gz$(tput sgr0)"
-tar -xzvf latest.tar.gz
+tar -xzvfq latest.tar.gz
 echo "* $(tput setaf 6)Copying files from decompressed folder to the backend path$(tput sgr0)"
 cp -Rf /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH/wordpress/* /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH/
 echo "* $(tput setaf 6)Removing copied files$(tput sgr0)"
@@ -106,6 +106,8 @@ echo "* $(tput setaf 6)Creating custom plugin directory$(tput sgr0)"
 mkdir addons
 echo "* $(tput setaf 6)Creating custom mu-plugin directory$(tput sgr0)"
 mkdir includes
+echo "* $(tput setaf 6)Creating themes directory in the custom wp-content directory$(tput sgr0)"
+mkdir content/themes
 
 # Download drop-in caching plugins from Git
 echo "* $(tput setaf 6)Changing directory to /$POOR_IO_HOME$(tput sgr0)"
