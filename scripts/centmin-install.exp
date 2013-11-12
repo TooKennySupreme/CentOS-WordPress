@@ -27,7 +27,7 @@ expect "Set root password? ?Y/n?"
 send -- "y\r"
 
 # MySQL password prompt
-expect "New password for the MySQL ?root? user:"
+expect "New password:"
 send -- "$mysqlpass\r"
 
 expect "Repeat password for the MySQL ?root? user:"
