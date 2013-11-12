@@ -40,7 +40,7 @@ echo ""
 read -p "$(tput bold)Press any key to run the unattended installation... $(tput sgr0)" -n1 -s
 echo ""
 echo ""
-echo "$(tput bold)$(tput setaf 2)Running the unattended installation$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 2)Installing CentOS WordPress by GigabyteIO$(tput sgr0)"
 echo ""
 # Setting time zone has to be done manually for now - not exactly sure how to find and replace with a variable - if anyone could guide me in the right direction, I'll add this feature :)
 # Declare script variables for future portability
