@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# Get website URL and backend path
+
+echo ""
+echo ""
+echo "$(tput bold)$(tput setaf 6)CentOS WordPress by GigabyteIO$(tput sgr0)"
+echo "Home URL : http://gigabyte.io"
+echo "Github URL: https://github.com/GigabyteIO/CentOS-WordPress"
+echo "Author : Brian Zalewski"
+echo ""
+echo ""
+read -p 'Enter WordPress homepage URL (e.g. yourwebsite.com): ' CLI_WEBSITE
+echo ""
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Using the following prompt you will specify the folder that the WordPress core files are installed to (e.g. http://yourwebsite.com/BACKEND_PATH_HERE/wp-login). This improves security, provides better organization, and makes updating WordPress easier for those who would like to clone the latest WordPress development release."
+echo ""
+read -p 'Enter a backend path for improved security: ' CLI_BACKEND_PATH
+echo ""
 # Get MySQL host from envoirnment variables
 CLI_DATABASE_HOST=$DATABASE_SERVER
 # Default for CentminMod - change if using custom directory schema
@@ -8,11 +24,6 @@ WEBSITE_INSTALL_DIRECTORY='home/nginx/domains'
 POOR_IO_HOME='usr/local/src/PoorIO'
 # Default location for nginx configuration files
 NGINX_CONF_DIR='usr/local/nginx/conf'
-
-# Get website URL and backend path
-read -p 'Enter WordPress homepage URL (IMPORTANT: Enter the URL in the following format - yourwebsite.com): ' CLI_WEBSITE
-read -p 'Enter a backend path for improved security (e.g. http://yourwebsite.com/BACKEND-PATH/wp-admin): ' CLI_BACKEND_PATH
-
 # Remove default error pages and create backend path directory
 rm -rf /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/*
 mkdir -v /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH
