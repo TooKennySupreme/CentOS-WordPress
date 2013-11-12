@@ -200,6 +200,12 @@ cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
 echo "* $(tput setaf 6)Getting custom version of Shoestrap$(tput sgr0)"
 git clone -q https://github.com/GigabyteIO/shoestrap.git
 
+# Add index file to base of public folder
+echo "* $(tput setaf 6)Adding index to base of public web folder$(tput sgr0)"
+cp /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$WORDPRESS_FOLDER/index-template.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/index.php
+echo "* $(tput setaf 6)Modifying index.php for the backend path$(tput sgr0)"
+sed -i "s/REPLACETHISHERE/${CLI_BACKEND_PATH}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/index.php
+
 # Set nginx as owner
 echo "* $(tput setaf 6)Recursively changing ownership of /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public to nginx$(tput sgr0)"
 chown -Rf nginx:nginx /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public
