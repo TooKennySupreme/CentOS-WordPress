@@ -92,11 +92,11 @@ define( 'SITECOOKIEPATH', '' );
 /* ***************************************** */
 
 
-define( 'CURRENT_SERVER', 'dev' ); // Set to dev for developement settings and live for production settings
+#define( 'CURRENT_SERVER', 'dev' ); // Set to dev for developement settings and live for production settings
 
-switch( CURRENT_SERVER ){
+#switch( CURRENT_SERVER ){
         
-case 'dev': // Development debug settings
+#case 'dev': // Development debug settings
         define( 'WP_CACHE', FALSE );
         define( 'WP_DEBUG', TRUE );
         define( 'DISALLOW_FILE_EDIT', FALSE );
@@ -124,21 +124,21 @@ echo "</pre>";
         define( 'WP_DEBUG_DISPLAY', TRUE );
         define( 'SCRIPT_DEBUG', TRUE );
         
-case 'live': // Production debug settings
-        define( 'WP_CACHE', TRUE );
-        define( 'WP_DEBUG', FALSE );
-        define( 'DISALLOW_FILE_EDIT', TRUE );
-        define( 'SAVEQUERIES', FALSE );
-        error_reporting(E_WARNING | E_ERROR);
-        // log errors in a file (content/debug.log), don't show them to end-users.
-        @ini_set('log_errors','On');
-        @ini_set('display_errors','Off');
-        define( 'WP_DEBUG_LOG', TRUE );
-        define( 'WP_DEBUG_DISPLAY', FALSE );
-        define( 'SCRIPT_DEBUG', FALSE );
-
-        break;
-}
+#case 'live': // Production debug settings
+#        define( 'WP_CACHE', TRUE );
+#        define( 'WP_DEBUG', FALSE );
+#        define( 'DISALLOW_FILE_EDIT', TRUE );
+#        define( 'SAVEQUERIES', FALSE );
+#        error_reporting(E_WARNING | E_ERROR);
+#        // log errors in a file (content/debug.log), don't show them to end-users.
+#        @ini_set('log_errors','On');
+#        @ini_set('display_errors','Off');
+#        define( 'WP_DEBUG_LOG', TRUE );
+#        define( 'WP_DEBUG_DISPLAY', FALSE );
+#        define( 'SCRIPT_DEBUG', FALSE );
+#
+#        break;
+#}
 
 
 /* ***************************************** */
