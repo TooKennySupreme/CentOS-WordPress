@@ -1,10 +1,11 @@
-#!/usr/bin/expect
+#!/usr/bin/expect -f
+# Usage: ./centmin-install.exp mysqlpass memcacheusername memcachepassword initialsshport finalsshport
 
-#set memcacheuser  [lindex $argv 0]
-#set memcachepass [lindex $argv 1]
-#set mysqlpass  [lindex $argv 2]
-#set basedirectory  [lindex $argv 3]
-#set centminfolder [lrange $argv 4 4]
+set mysqlpass    [lindex $argv 0]
+set memcacheuser [lindex $argv 1]
+set memcachepass [lindex $argv 2]
+set initialssh   [lindex $argv 3]
+set finalssh     [lindex $argv 4]
  
 # Makes it so that expect does not time out
 set timeout -1
@@ -21,15 +22,27 @@ expect "Enter option ? 1 - 21 ?"
 # Send the install command
 send -- "install\r"
 
-# Now we expect to have a request for password:
-expect "This is Never Going to Be Anywhere so Why Would the Program ever end"
-
-# And we send our password:
-send -- "$password\r"
- 
-# send blank line (\r) to make sure we get back to cli
+expect "Enter current password for root (enter for none):"
 send -- "\r"
- 
-wait
-#We have gave our "program" and now we expect that the remote server close the connection:
-expect eof
+
+# MySQL password prompt
+expect "New password for the MySQL ?root? user:"
+send -- "$mysqlpass\r"
+
+expect "Repeat password for the MySQL ?root? user:"
+send -- "$mysqlpass\r"
+
+expect "Disallow root login remotely? ?Y/n?"
+send -- "y\r"
+
+expect "Remove test database and access to it? ?Y/n?"
+send -- "y\r"
+
+expect "Reload privilege tables now? ?Y/n?"
+send -- "y\r"
+
+expect "(Type username your want to set and press Enter):"
+send -- "$memcacheuser\r"
+
+expect "(Type password your want to set and press Enter):"
+send -- "$memcachepass\r"
