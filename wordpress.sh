@@ -206,7 +206,7 @@ chown -Rf nginx:nginx /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public
 echo "* $(tput setaf 6)Removing the default nginx configuration for current website$(tput sgr0)"
 rm -f /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 echo "* $(tput setaf 6)Copying nginx configuration template from /$POOR_IO_HOME/files/wordpress-optimized-nginx-config.conf to /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf$(tput sgr0)"
-cp /$POOR_IO_HOME/files/wordpress-optimized-nginx-config.conf /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/wordpress-optimized-nginx-config.conf /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 echo "* $(tput setaf 6)Adjusting template for current website$(tput sgr0)"
 perl -pi -e 's/REPLACETHIS/$CLI_WEBSITE/g' /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 perl -pi -e 's/BACKENDPATH/$CLI_BACKEND_PATH/g' /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
