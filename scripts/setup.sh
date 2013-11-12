@@ -145,7 +145,8 @@ chmod +x centmin-install.exp
 echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
 chmod +x centmin.sh
 echo "* $(tput setaf 6)Initializing the CentminMod install process via centmin-install.exp$(tput sgr0)"
-./centmin-install.exp
+# Usage ./centmin-install.exp mysqlpass memcacheusername memcachepassword initialsshport finalsshport
+./centmin-install.exp "$NEW_ROOT_PASSWORD" "GigabyteIO" "$MEMCACHED_PWORD" "22" "$SSH_PORT_NUMBER"
 
 # Change permissions of centmin.sh and centmin-install.exp back to original
 echo "* $(tput setaf 6)Removing centmin-install.exp from CentminMod folder$(tput sgr0)"
