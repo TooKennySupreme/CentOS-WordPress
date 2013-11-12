@@ -42,7 +42,7 @@ chmod +x centmin-wordpress.exp
 echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
 chmod +x centmin.sh
 echo "* $(tput setaf 6)Initializing the CentminMod website setup via centmin-wordpress.exp$(tput sgr0)"
-./centmin-install.exp "$CLI_WEBSITE"
+./centmin-wordpress.exp "$CLI_WEBSITE"
 echo "* $(tput setaf 6)Removing centmin-wordpress.exp from CentminMod folder$(tput sgr0)"
 rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-wordpress.exp
 echo "* $(tput setaf 6)Restoring centmin.sh permissions to original state$(tput sgr0)"
