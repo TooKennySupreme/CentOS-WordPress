@@ -57,7 +57,7 @@ CENTMIN_FILE_NAME='centmin-v1.2.3-eva2000.04.zip' # Centmin zip file name
 GITHUB_URL='https://github.com/GigabyteIO/WordPress-Droplet.git' # GigabyteIO git repo
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
-echo "* $(tput setaf 6)Performing a system update (excluding kernel)$(tput sgr0)"
+echo "* $(tput setaf 6)Performing a system update (excluding kernel and setup)$(tput sgr0)"
 yum -y --quiet --exclude=kernel* --exclude=setup* update
 echo "* $(tput setaf 6)Installing some dependencies (bc and expect)$(tput sgr0)"
 yum -y --quiet install bc expect
