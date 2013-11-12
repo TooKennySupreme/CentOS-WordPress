@@ -1,24 +1,24 @@
 #!/bin/bash -x
 
-echo "$(tput bold)$(tput setaf 2)Prompt 1 of 4:$(tput sgr0) Assign new password to root"
+echo "$(tput bold)$(tput setaf 2)Prompt 1 of 4:$(tput sgr0) Assign the root user a new password"
 echo ""
 # Change root user password
 #http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
-echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Begin by changing the root password. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges. You should make this root password long and very hard to guess."
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Make the root password very long and hard to guess. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges."
 echo ""
 passwd
 echo ""
-echo "$(tput bold)$(tput setaf 2)Prompt 2 of 4:$(tput sgr0) Set up administrator account"
+echo "$(tput bold)$(tput setaf 2)Prompt 2 of 4:$(tput sgr0) Set up an administrator account with root privileges"
 echo ""
-echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Now create a new user and password combination. This is the user that you will use when doing anything that requires root privileges. When doing something that requires root privileges with this new user, you will have to add 'sudo' to the beginning of the command."
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) You will no longer be able to log into the server as the root user. Instead, you will log into the server using the administrator account. The administrator account will be able to run commands that require root privileges by adding 'sudo' in front of the command. The administrator password will also be used as the MySQL root password."
 echo ""
 read -p "Enter the administrator username: " NEW_ROOT_USERNAME
 read -s -p "Enter the administrator password: " NEW_ROOT_PASSWORD
 echo ""
 echo ""
-echo "$(tput bold)$(tput setaf 2)Prompt 3 of 4:$(tput sgr0) Configure Digital Ocean SSH key"
+echo "$(tput bold)$(tput setaf 2)Prompt 3 of 4:$(tput sgr0) Configure Digital Ocean SSH key for the administrator"
 echo ""
-echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username ($NEW_ROOT_USERNAME). With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created ($NEW_ROOT_USERNAME)."
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Logging in with an SSH key will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your administrator username. With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The SSH key file will be transferred from the root user to the administrator user."
 echo ""
 # Change the SSH key to be used with new root user
 read -p "Transfer the root users SSH key to the new root user? [Y/N] " SSH_CHOICE
@@ -30,12 +30,12 @@ esac
 echo ""
 echo "$(tput bold)$(tput setaf 2)Prompt 4 of 4:$(tput sgr0) Run the installation"
 echo ""
-echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The script will now configure the server. This process generally takes around 30 minutes. The installation will be run with the following variables (you should probably write these down):"
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The script will now configure the server. This process generally takes around $(tput bold)$(tput setaf 3)30 minutes$(tput sgr0). The installation will be run with the following variables (you should probably write these down):"
 echo ""
-echo "$(tput bold)$(tput setaf 3)MySQL Root Password:$(tput sgr0) Your Administrator Password"
-echo "$(tput bold)$(tput setaf 3)Memcached Username:$(tput sgr0) GigabyteIO"
+echo "$(tput bold)$(tput setaf 4)MySQL Root Password:$(tput sgr0) Your Administrator Password"
+echo "$(tput bold)$(tput setaf 4)Memcached Username:$(tput sgr0) GigabyteIO"
 MEMCACHED_PWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
-echo "$(tput bold)$(tput setaf 3)Memcached Password:$(tput sgr0) $MEMCACHED_PWORD"
+echo "$(tput bold)$(tput setaf 4)Memcached Password:$(tput sgr0) $MEMCACHED_PWORD"
 echo ""
 read -p "$(tput bold)Press any key to run the unattended installation... $(tput sgr0)" -n1 -s
 echo ""
