@@ -3,12 +3,7 @@
 # Get website URL and backend path
 
 echo ""
-echo ""
-echo "$(tput bold)$(tput setaf 6)CentOS WordPress by GigabyteIO$(tput sgr0)"
-echo "Home URL : http://gigabyte.io"
-echo "Github URL: https://github.com/GigabyteIO/CentOS-WordPress"
-echo "Author : Brian Zalewski"
-echo ""
+echo "$(tput bold)$(tput setaf 6)Setting up a new WordPress website...$(tput sgr0)"
 echo ""
 read -p 'Enter WordPress homepage URL (e.g. yourwebsite.com): ' CLI_WEBSITE
 echo ""
@@ -90,7 +85,7 @@ perl -pi -e 's/BACKEND_PATH_HANDLE/$CLI_BACKEND_PATH/g' /$WEBSITE_INSTALL_DIRECT
 echo "* $(tput setaf 6)Changing directory to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH$(tput sgr0)"
 cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH
 echo "* $(tput setaf 6)Downloading latest WordPress release from http://wordpress.org/latest.tar.gz$(tput sgr0)"
-wget http://wordpress.org/latest.tar.gz
+wget -q http://wordpress.org/latest.tar.gz
 echo "* $(tput setaf 6)Decompressing latest.tar.gz$(tput sgr0)"
 tar -xzvf latest.tar.gz
 echo "* $(tput setaf 6)Copying files from decompressed folder to the backend path$(tput sgr0)"
@@ -120,43 +115,43 @@ mkdir gitclones
 echo "* $(tput setaf 6)Changing directory to gitclones folder$(tput sgr0)"
 cd gitclones
 echo "* $(tput setaf 6)Cloning batcache plugin$(tput sgr0)"
-git clone https://github.com/Automattic/batcache.git
+git clone -q https://github.com/Automattic/batcache.git
 echo "* $(tput setaf 6)Cloning APC cache plugin$(tput sgr0)"
-git clone https://github.com/eremedia/APC.git
+git clone -q https://github.com/eremedia/APC.git
 
 # Add plugins
 echo "* $(tput setaf 6)Changing directory to custom plugins folder$(tput sgr0)"
 cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/addons
 echo "* $(tput setaf 6)Cloning Yoast WordPress SEO latest developement version plugin$(tput sgr0)"
-git clone https://github.com/Yoast/wordpress-seo.git wordpress-seo
+git clone -q https://github.com/Yoast/wordpress-seo.git wordpress-seo
 echo "* $(tput setaf 6)Downloading MP6 plugin from wordpress.org$(tput sgr0)"
-wget http://downloads.wordpress.org/plugin/mp6.zip
+wget -q http://downloads.wordpress.org/plugin/mp6.zip
 echo "* $(tput setaf 6)Unzipping mp6.zip$(tput sgr0)"
-unzip mp6.zip
+unzip -q mp6.zip
 echo "* $(tput setaf 6)Removing mp6.zip$(tput sgr0)"
 rm -f mp6.zip
 echo "* $(tput setaf 6)Downloading Google Authenticator plugin from wordpress.org$(tput sgr0)"
-wget http://downloads.wordpress.org/plugin/google-authenticator.0.44.zip
+wget -q http://downloads.wordpress.org/plugin/google-authenticator.0.44.zip
 echo "* $(tput setaf 6)Unzipping google-authenticator.0.44.zip$(tput sgr0)"
-unzip google-authenticator.0.44.zip
+unzip -q google-authenticator.0.44.zip
 echo "* $(tput setaf 6)Removing google-authenticator.0.44.zip$(tput sgr0)"
 rm -f google-authenticator.0.44.zip
 echo "* $(tput setaf 6)Downloading Pods plugin from wordpress.org$(tput sgr0)"
-wget http://downloads.wordpress.org/plugin/pods.2.3.18.zip
+wget -q http://downloads.wordpress.org/plugin/pods.2.3.18.zip
 echo "* $(tput setaf 6)Unzipping pods.2.3.18.zip$(tput sgr0)"
-unzip pods.2.3.18.zip
+unzip -q pods.2.3.18.zip
 echo "* $(tput setaf 6)Removing pods.2.3.18.zip$(tput sgr0)"
 rm -f pods.2.3.18.zip
 echo "* $(tput setaf 6)Downloading My Shortcodes plugin from wordpress.org$(tput sgr0)"
-wget http://downloads.wordpress.org/plugin/my-shortcodes.2.06.zip
+wget -q http://downloads.wordpress.org/plugin/my-shortcodes.2.06.zip
 echo "* $(tput setaf 6)Unzipping my-shortcodes.2.06.zip$(tput sgr0)"
-unzip my-shortcodes.2.06.zip
+unzip -q my-shortcodes.2.06.zip
 echo "* $(tput setaf 6)Removing my-shortcodes.2.06.zip$(tput sgr0)"
 rm -f my-shortcodes.2.06.zip
 echo "* $(tput setaf 6)Downloading SEO Automatic Links plugin from wordpress.org$(tput sgr0)"
-wget http://downloads.wordpress.org/plugin/seo-automatic-links.zip
+wget -q http://downloads.wordpress.org/plugin/seo-automatic-links.zip
 echo "* $(tput setaf 6)Unzipping seo-automatic-links.zip$(tput sgr0)"
-unzip seo-automatic-links.zip
+unzip -q seo-automatic-links.zip
 echo "* $(tput setaf 6)Removing seo-automatic-links.zip$(tput sgr0)"
 rm -f seo-automatic-links.zip
 #More research offline alternatives
@@ -172,13 +167,13 @@ rm -f seo-automatic-links.zip
 #unzip google-sitemap-generator.3.3.zip
 #rm -f google-sitemap-generator.3.3.zip
 echo "* $(tput setaf 6)Downloading Rename WP Login plugin from wordpress.org$(tput sgr0)"
-wget http://downloads.wordpress.org/plugin/rename-wp-login.1.7.zip
+wget -q http://downloads.wordpress.org/plugin/rename-wp-login.1.7.zip
 echo "* $(tput setaf 6)Unzipping rename-wp-login.1.7.zip$(tput sgr0)"
-unzip rename-wp-login.1.7.zip
+unzip -q rename-wp-login.1.7.zip
 echo "* $(tput setaf 6)Removing rename-wp-login.1.7.zip$(tput sgr0)"
 rm -f rename-wp-login.1.7.zip
 echo "* $(tput setaf 6)Cloning options-framework latest development version plugin$(tput sgr0)"
-git clone https://github.com/devinsays/options-framework-plugin.git options-framework
+git clone -q https://github.com/devinsays/options-framework-plugin.git options-framework
 
 # Add must-use plugins
 echo "* $(tput setaf 6)Adding php-widget.php to must-use plugin directory from /$POOR_IO_HOME/wordpress$(tput sgr0)"
@@ -197,7 +192,7 @@ cp /$POOR_IO_HOME/gitclones/APC/object-cache.php /$WEBSITE_INSTALL_DIRECTORY/$CL
 echo "* $(tput setaf 6)Changing directory to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes$(tput sgr0)"
 cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
 echo "* $(tput setaf 6)Cloning latest release of the Roots.IO theme$(tput sgr0)"
-git clone https://github.com/roots/roots.git
+git clone -q https://github.com/roots/roots.git
 
 # Set nginx as owner
 echo "* $(tput setaf 6)Recursively changing ownership of /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public to nginx$(tput sgr0)"
