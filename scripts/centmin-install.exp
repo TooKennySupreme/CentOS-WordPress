@@ -25,6 +25,9 @@ send -- "install\r"
 expect "Enter current password for root (enter for none):"
 send -- "\r"
 
+expect "Set root password? ?Y/n?"
+send -- "y\r"
+
 # MySQL password prompt
 expect "New password for the MySQL ?root? user:"
 send -- "$mysqlpass\r"
