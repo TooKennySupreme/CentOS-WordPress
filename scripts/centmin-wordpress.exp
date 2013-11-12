@@ -2,8 +2,6 @@
 # Usage: ./centmin-install.exp websitename
 
 set websitename [lindex $argv 0]
-set memcacheuser [lindex $argv 1]
-set memcachepass [lindex $argv 2]
  
 # Makes it so that expect does not time out
 set timeout -1
@@ -18,11 +16,12 @@ match_max 100000
 expect "Enter option ? 1 - 21 ?"
 
 # Send the install command
-send -- "install\r"
+send -- "addvhost\r"
 
-expect "Enter current password for root (enter for none):"
-send -- "\r"
+expect "Enter vhost domain name you want to add (without www. prefix):"
+send -- "$websitename\r"
 
-expect "Centmin Mod install completed...."
+expect "Enter option ? 1 - 21 ?"
+send -- "exit\r"
 
 expect eof
