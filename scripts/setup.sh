@@ -147,6 +147,9 @@ chmod +x centmin.sh
 echo "* $(tput setaf 6)Initializing the CentminMod install process via centmin-install.exp$(tput sgr0)"
 # Usage ./centmin-install.exp mysqlpass memcacheusername memcachepassword
 ./centmin-install.exp "$NEW_ROOT_PASSWORD" "GigabyteIO" "$MEMCACHED_PWORD"
+echo ""
+echo "$(tput bold)$(tput setaf 2)CentminMod base installation complete$(tput sgr0)"
+echo ""
 echo "* $(tput setaf 6)Copying centmin-ssh.exp from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
 cp /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-ssh.exp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-ssh.exp
 echo "* $(tput setaf 6)Giving centmin-ssh.exp executable permissions$(tput sgr0)"
