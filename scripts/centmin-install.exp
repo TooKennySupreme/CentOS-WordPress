@@ -53,5 +53,5 @@ send -- "$memcachepass\r"
 
 expect "Centmin Mod install completed...."
 puts "backup script done"
-wait
+
 expect eof
