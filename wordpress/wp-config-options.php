@@ -194,8 +194,6 @@ define( 'FTP_SSL', FALSE );
 
 
 define( 'CORE_UPGRADE_SKIP_NEW_BUNDLED', TRUE ); // Skip content directory when upgrading to a new WordPress version
-define( 'DISALLOW_FILE_MODS', TRUE ); // Disables file modifications - NOTE: Find out if this over-rides DISALLOW_FILE_EDIT
-
 
 /* Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
