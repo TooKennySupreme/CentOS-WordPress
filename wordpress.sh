@@ -36,7 +36,7 @@ NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 echo "* $(tput setaf 6)Copying centmin-wordpress.exp from /$POOR_IO_HOME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
 cp /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-wordpress.exp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-wordpress.exp
 echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$INSTALL_FOLDER_NAME$(tput sgr0)"
-cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME
+cd /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME
 echo "* $(tput setaf 6)Giving centmin-wordpress.exp executable permissions$(tput sgr0)"
 chmod +x centmin-wordpress.exp
 echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
