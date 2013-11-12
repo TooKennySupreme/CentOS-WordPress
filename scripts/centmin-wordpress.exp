@@ -1,0 +1,28 @@
+#!/usr/bin/expect -f
+# Usage: ./centmin-install.exp websitename
+
+set websitename [lindex $argv 0]
+set memcacheuser [lindex $argv 1]
+set memcachepass [lindex $argv 2]
+ 
+# Makes it so that expect does not time out
+set timeout -1
+ 
+# Run the Centmin install
+spawn "./centmin.sh"
+
+# Set buffer size
+match_max 100000
+
+# Wait for initial prompt
+expect "Enter option ? 1 - 21 ?"
+
+# Send the install command
+send -- "install\r"
+
+expect "Enter current password for root (enter for none):"
+send -- "\r"
+
+expect "Centmin Mod install completed...."
+
+expect eof
