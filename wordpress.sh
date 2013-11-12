@@ -79,7 +79,7 @@ perl -pi -e 's/TABLE_PREFIX_HANDLE/$CLI_PREFIX_RANDOM/g' /$WEBSITE_INSTALL_DIREC
 echo "* $(tput setaf 6)Inserting secure keys from https://api.wordpress.org/secret-key/1.1/salt/ into wp-config.php$(tput sgr0)"
 SALT=$(curl -L https://api.wordpress.org/secret-key/1.1/salt/)
 STRING='put your unique phrase here'
-printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s wp-config.php
+printf '%s\n' "g/$STRING/d" a "$SALT" . w | sed -s wp-config.php
 echo "* $(tput setaf 6)Inserting the backend path into wp-config.php$(tput sgr0)"
 perl -pi -e 's/BACKEND_PATH_HANDLE/$CLI_BACKEND_PATH/g' /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 
