@@ -65,15 +65,15 @@ yum -y --quiet install bc expect
 if [ $(id -u) -eq 0 ]; then
         egrep "^$NEW_ROOT_USERNAME" /etc/passwd >/dev/null
         if [ $? -eq 0 ]; then
-                echo -e "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) $NEW_ROOT_USERNAME already exists! Aborting installation."
+                echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) $NEW_ROOT_USERNAME already exists! Aborting installation."
                 exit 1
         else
                 ENCRYPTED_NEW_ROOT_PASSWORD=$(perl -e 'print crypt($ARGV[0], "password")' $NEW_ROOT_PASSWORD)
                 useradd -m -p $ENCRYPTED_NEW_ROOT_PASSWORD $NEW_ROOT_USERNAME
-                [ $? -eq 0 ] && echo -e "\n\n* $(tput setaf 6)$NEW_ROOT_USERNAME added to user list$(tput sgr0)" || echo -e "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Failed to add $NEW_ROOT_USERNAME to the user list"
+                [ $? -eq 0 ] && echo "* $(tput setaf 6)$NEW_ROOT_USERNAME added to user list$(tput sgr0)" || echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Failed to add $NEW_ROOT_USERNAME to the user list"
         fi
 else
-        echo -e "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) You must be the root user. Aborting installation."
+        echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) You must be the root user. Aborting installation."
         exit 2
 fi
 # Add new root user to visudo list
@@ -85,7 +85,6 @@ echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USERNAME using visud
 ./visudo.sh $NEW_ROOT_USERNAME
 echo "* $(tput setaf 6)Restoring visudo.sh permissions to original state$(tput sgr0)"
 chmod 644 visudo.sh
-echo ""
 # Transfer SSH key credentials from root to new root user
 if [ "$SSH_CHOICE" == "yes" ]; then
         echo "* $(tput setaf 6)Copying root SSH key to $NEW_ROOT_USER_NAME's SSH key file$(tput sgr0)"
