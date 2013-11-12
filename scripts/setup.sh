@@ -87,6 +87,8 @@ echo "* $(tput setaf 6)Restoring visudo.sh permissions to original state$(tput s
 chmod 644 visudo.sh
 # Transfer SSH key credentials from root to new root user
 if [ "$SSH_CHOICE" == "yes" ]; then
+        echo "* $(tput setaf 6)Creating .ssh directory in $NEW_ROOT_USER_NAME's home directory$(tput sgr0)"
+        mkdir /home/$NEW_ROOT_USERNAME/.ssh
         echo "* $(tput setaf 6)Copying root SSH key to $NEW_ROOT_USER_NAME's SSH key file$(tput sgr0)"
         cp /root/.ssh/authorized_keys /home/$NEW_ROOT_USERNAME/.ssh/authorized_keys
         echo "* $(tput setaf 6)Removing root SSH key file$(tput sgr0)"
