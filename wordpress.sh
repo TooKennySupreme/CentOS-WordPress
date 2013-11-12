@@ -180,10 +180,10 @@ echo "* $(tput setaf 6)Cloning options-framework latest development version plug
 git clone -q https://github.com/devinsays/options-framework-plugin.git options-framework
 
 # Add must-use plugins
-echo "* $(tput setaf 6)Adding php-widget.php to must-use plugin directory from /$POOR_IO_HOME/wordpress$(tput sgr0)"
-cp /$POOR_IO_HOME/wordpress/php-widget.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/includes/php-widget.php
-echo "* $(tput setaf 6)Adding default-settings-plugin.php to must-use plugin directory from /$POOR_IO_HOME/wordpress$(tput sgr0)"
-cp /$POOR_IO_HOME/wordpress/default-settings-plugin.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/includes/default-settings-plugin.php
+echo "* $(tput setaf 6)Adding php-widget.php to must-use plugin directory from /$POOR_IO_HOME/$WORDPRESS_FOLDER$(tput sgr0)"
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/php-widget.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/includes/php-widget.php
+echo "* $(tput setaf 6)Adding default-settings-plugin.php to must-use plugin directory from /$POOR_IO_HOME/$WORDPRESS_FOLDER$(tput sgr0)"
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/default-settings-plugin.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/includes/default-settings-plugin.php
 
 # Move caching plugin files to appropriate directories
 echo "* $(tput setaf 6)Installing batcache to appropriate folders$(tput sgr0)"
@@ -195,8 +195,8 @@ cp /$POOR_IO_HOME/gitclones/APC/object-cache.php /$WEBSITE_INSTALL_DIRECTORY/$CL
 # Add latest version of Roots IO (see http://roots.io/)
 echo "* $(tput setaf 6)Changing directory to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes$(tput sgr0)"
 cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
-echo "* $(tput setaf 6)Cloning latest release of the Roots.IO theme$(tput sgr0)"
-git clone -q https://github.com/roots/roots.git
+echo "* $(tput setaf 6)Getting custom version of Shoestrap$(tput sgr0)"
+git clone -q https://github.com/GigabyteIO/shoestrap.git
 
 # Set nginx as owner
 echo "* $(tput setaf 6)Recursively changing ownership of /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public to nginx$(tput sgr0)"
