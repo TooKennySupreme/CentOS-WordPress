@@ -26,3 +26,7 @@ send -- "$originalport\r"
 expect "Enter the SSH port number you want to change to:"
 
 send -- "$newport\r"
+
+# Wait for prompt again
+expect "Enter option ? 1 - 21 ?"
+send -- "exit\r"
