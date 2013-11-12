@@ -89,7 +89,7 @@ cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH
 echo "* $(tput setaf 6)Downloading latest WordPress release from http://wordpress.org/latest.tar.gz$(tput sgr0)"
 wget -q http://wordpress.org/latest.tar.gz
 echo "* $(tput setaf 6)Decompressing latest.tar.gz$(tput sgr0)"
-tar -xzvfq latest.tar.gz
+tar -xzf latest.tar.gz
 echo "* $(tput setaf 6)Copying files from decompressed folder to the backend path$(tput sgr0)"
 cp -Rf /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH/wordpress/* /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH/
 echo "* $(tput setaf 6)Removing copied files$(tput sgr0)"
@@ -176,8 +176,8 @@ echo "* $(tput setaf 6)Unzipping rename-wp-login.1.7.zip$(tput sgr0)"
 unzip -q rename-wp-login.1.7.zip
 echo "* $(tput setaf 6)Removing rename-wp-login.1.7.zip$(tput sgr0)"
 rm -f rename-wp-login.1.7.zip
-echo "* $(tput setaf 6)Cloning options-framework latest development version plugin$(tput sgr0)"
-git clone -q https://github.com/devinsays/options-framework-plugin.git options-framework
+#echo "* $(tput setaf 6)Cloning options-framework latest development version plugin$(tput sgr0)"
+#git clone -q https://github.com/devinsays/options-framework-plugin.git options-framework
 
 # Add must-use plugins
 echo "* $(tput setaf 6)Adding php-widget.php to must-use plugin directory from /$POOR_IO_HOME/$WORDPRESS_FOLDER$(tput sgr0)"
