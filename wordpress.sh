@@ -20,8 +20,8 @@ echo ""
 CLI_DATABASE_HOST=$DATABASE_SERVER
 # Default for CentminMod - change if using custom directory schema
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains'
-# Default location for PoorIO
-POOR_IO_HOME='usr/local/src/PoorIO'
+# Default location for GigabyteIO
+POOR_IO_HOME='usr/local/src/gigabyteio'
 # Default location for nginx configuration files
 NGINX_CONF_DIR='usr/local/nginx/conf'
 # Remove default error pages and create backend path directory
