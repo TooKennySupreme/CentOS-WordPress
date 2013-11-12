@@ -30,8 +30,11 @@ send -- "y\r"
 expect "New password:"
 send -- "$mysqlpass\r"
 
-expect "Repeat password for the MySQL ?root? user:"
+expect "Re-enter new password:"
 send -- "$mysqlpass\r"
+
+expect "Remove anonymous users? ?Y/n?"
+send -- "y\r"
 
 expect "Disallow root login remotely? ?Y/n?"
 send -- "y\r"
