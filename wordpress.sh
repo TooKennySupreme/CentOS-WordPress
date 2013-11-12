@@ -72,10 +72,10 @@ mysql -uroot -p --verbose -e "CREATE DATABASE $CLI_DATABASE_NAME; GRANT ALL PRIV
 echo "* $(tput setaf 6)Copying wp-config.php template from /$POOR_IO_HOME/$WORDPRESS_FOLDER/wp-config-options.php to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php$(tput sgr0)"
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/wp-config-options.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 echo "* $(tput setaf 6)Inserting database connection settings into wp-config.php$(tput sgr0)"
-perl -pi -e 's/DB_NAME_HANDLE/$CLI_DATABASE_NAME/ig' /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
-perl -pi -e 's/DB_USER_HANDLE/$CLI_DATABASE_USER/ig' /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
-perl -pi -e 's/DB_PASSWORD_HANDLE/$CLI_DATABASE_PASSWORD/ig' /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
-perl -pi -e 's/TABLE_PREFIX_HANDLE/$CLI_PREFIX_RANDOM/ig' /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
+sed "s/DB_NAME_HANDLE/$CLI_DATABASE_NAME/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
+sed "s/DB_USER_HANDLE/$CLI_DATABASE_USER/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
+sed "s/DB_PASSWORD_HANDLE/$CLI_DATABASE_PASSWORD/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
+sed "s/TABLE_PREFIX_HANDLE/$CLI_PREFIX_RANDOM/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 echo "* $(tput setaf 6)Installing ed$(tput sgr0)"
 yum -y --quiet install ed
 echo "* $(tput setaf 6)Inserting secure keys from https://api.wordpress.org/secret-key/1.1/salt/ into wp-config.php$(tput sgr0)"
@@ -83,7 +83,7 @@ SALT=$(curl -L https://api.wordpress.org/secret-key/1.1/salt/)
 STRING='put your unique phrase here'
 printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s wp-config.php
 echo "* $(tput setaf 6)Inserting the backend path into wp-config.php$(tput sgr0)"
-perl -pi -e 's/BACKEND_PATH_HANDLE/$CLI_BACKEND_PATH/ig' /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
+sed "s/BACKEND_PATH_HANDLE/$CLI_BACKEND_PATH/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 
 # Download WordPress core files
 echo "* $(tput setaf 6)Changing directory to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH$(tput sgr0)"
@@ -210,8 +210,8 @@ rm -f /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 echo "* $(tput setaf 6)Copying nginx configuration template from /$POOR_IO_HOME/$CONF_FOLDER/wordpress-optimized-nginx-config.conf to /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf$(tput sgr0)"
 cp /$POOR_IO_HOME/$CONF_FOLDER/wordpress-optimized-nginx-config.conf /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 echo "* $(tput setaf 6)Adjusting template for current website$(tput sgr0)"
-perl -pi -e 's/REPLACETHIS/$CLI_WEBSITE/ig' /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
-perl -pi -e 's/BACKENDPATH/$CLI_BACKEND_PATH/ig' /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
+sed "s/REPLACETHIS/$CLI_WEBSITE/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
+sed "s/BACKENDPATH/$CLI_BACKEND_PATH/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 # Chown it up here.
 echo "* $(tput setaf 6)Restarting nginx to update configuration settings$(tput sgr0)"
 service nginx restart
