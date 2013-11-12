@@ -136,27 +136,16 @@ echo "$(tput bold)$(tput setaf 3)Memcached Monitor Password:$(tput sgr0) $MEMCAC
 echo ""
 read -p "$(tput bold)Press any key to continue and install CentminMod... $(tput sgr0)" -n1 -s
 echo ""
+
 # Install CentminMod with expect script to automate user inputs
 echo "* $(tput setaf 6)Copying centmin-install.exp from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
 cp /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-install.exp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-install.exp
 echo "* $(tput setaf 6)Giving centmin-install.exp executable permissions$(tput sgr0)"
 chmod +x centmin-install.exp
-# Change permissions of centmin.sh to executable
 echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
 chmod +x centmin.sh
 echo "* $(tput setaf 6)Initializing the CentminMod install process via centmin-install.exp$(tput sgr0)"
 ./centmin-install.exp
-#expect "New password for the MySQL \"root\" user:"
-#send "PasswordHere\r"
-#expect "Repeat password for the MySQL \"root\" user:"
-#send "PasswordHere\r"
-#Remove anonymous users? [Y/n]
-# y
-# Disallow root login remotely? [Y/n]
-#Remove test database and access to it? [Y/n]
-#Reload privilege tables now? [Y/n]
-#(Type username your want to set and press Enter):
-#(Type password your want to set and press Enter):
 
 # Change permissions of centmin.sh and centmin-install.exp back to original
 echo "* $(tput setaf 6)Removing centmin-install.exp from CentminMod folder$(tput sgr0)"
