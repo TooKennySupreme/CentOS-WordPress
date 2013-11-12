@@ -15,12 +15,13 @@ echo ""
 read -p "Enter a new root username: " NEW_ROOT_USERNAME
 read -s -p "Enter the new root users password: " NEW_ROOT_PASSWORD
 echo ""
+echo ""
 echo "$(tput bold)$(tput setaf 2)Prompt 3 of 4:$(tput sgr0) Configure Digital Ocean SSH key"
 echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username ($NEW_ROOT_USERNAME). With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created ($NEW_ROOT_USERNAME)."
 echo ""
 # Change the SSH key to be used with new root user
-read -p "Is this a Digital Ocean droplet created using an SSH key? [Y/N] " SSH_CHOICE
+read -p "Transfer the root users SSH key to the new root user? [Y/N] " SSH_CHOICE
 case "$SSH_CHOICE" in
   y|Y ) SSH_CHOICE=yes;;
   n|N ) SSH_CHOICE=no;;
@@ -31,12 +32,15 @@ echo "$(tput bold)$(tput setaf 2)Prompt 4 of 4:$(tput sgr0) Run the installation
 echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The script will now configure the server. This process generally takes around 30 minutes. The installation will be run with the following variables (you should probably write these down):"
 echo ""
-echo "$(tput bold)$(tput setaf 3)MySQL root password:$(tput sgr0) Your Root Password"
-echo "$(tput bold)$(tput setaf 3)Memcached Monitor Username:$(tput sgr0) GigabyteIO"
+echo "$(tput bold)$(tput setaf 3)MySQL Root Password:$(tput sgr0) Your Root Password"
+echo "$(tput bold)$(tput setaf 3)Memcached Username:$(tput sgr0) GigabyteIO"
 MEMCACHED_PWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
-echo "$(tput bold)$(tput setaf 3)Memcached Monitor Password:$(tput sgr0) $MEMCACHED_PWORD"
+echo "$(tput bold)$(tput setaf 3)Memcached Password:$(tput sgr0) $MEMCACHED_PWORD"
 echo ""
 read -p "$(tput bold)Press any key to run the unattended installation... $(tput sgr0)" -n1 -s
+echo ""
+echo ""
+echo "$(tput bold)$(tput setaf 7)Running the unattended installation$(tput sgr0)"
 echo ""
 # Setting time zone has to be done manually for now - not exactly sure how to find and replace with a variable - if anyone could guide me in the right direction, I'll add this feature :)
 # Declare script variables for future portability
