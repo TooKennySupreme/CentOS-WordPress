@@ -10,7 +10,7 @@
 set timeout -1
  
 # Run the Centmin install
-send -- "./centmin.sh\r"
+spawn "./centmin.sh"
 
 # Set buffer size
 match_max 100000
