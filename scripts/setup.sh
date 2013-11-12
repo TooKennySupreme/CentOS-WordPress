@@ -12,8 +12,8 @@ echo "$(tput bold)$(tput setaf 2)Prompt 2 of 4:$(tput sgr0) Set up administrator
 echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Now create a new user and password combination. This is the user that you will use when doing anything that requires root privileges. When doing something that requires root privileges with this new user, you will have to add 'sudo' to the beginning of the command."
 echo ""
-read -p "Enter a new root username: " NEW_ROOT_USERNAME
-read -s -p "Enter the new root users password: " NEW_ROOT_PASSWORD
+read -p "Enter the administrator username: " NEW_ROOT_USERNAME
+read -s -p "Enter the administrator password: " NEW_ROOT_PASSWORD
 echo ""
 echo ""
 echo "$(tput bold)$(tput setaf 2)Prompt 3 of 4:$(tput sgr0) Configure Digital Ocean SSH key"
@@ -32,7 +32,7 @@ echo "$(tput bold)$(tput setaf 2)Prompt 4 of 4:$(tput sgr0) Run the installation
 echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The script will now configure the server. This process generally takes around 30 minutes. The installation will be run with the following variables (you should probably write these down):"
 echo ""
-echo "$(tput bold)$(tput setaf 3)MySQL Root Password:$(tput sgr0) Your Root Password"
+echo "$(tput bold)$(tput setaf 3)MySQL Root Password:$(tput sgr0) Your Administrator Password"
 echo "$(tput bold)$(tput setaf 3)Memcached Username:$(tput sgr0) GigabyteIO"
 MEMCACHED_PWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
 echo "$(tput bold)$(tput setaf 3)Memcached Password:$(tput sgr0) $MEMCACHED_PWORD"
