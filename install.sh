@@ -7,18 +7,17 @@ echo "Github URL: https://github.com/GigabyteIO/CentOS-WordPress"
 echo "Author    : Brian Zalewski"
 echo ""
 echo ""
+echo "$(tput bold)$(tput setaf 2)Running preliminary tasks$(tput sgr0)"
+echo ""
 if [ -f /usr/local/src/gigabyteio/install.sh ];
 then
   read -p "$(tput bold)$(tput setaf 3)Warning:$(tput sgr0) The GigabyteIO directory already exists! Delete it and continue the installation? [Y/N] " INSTALL_CHOICE
   case "$INSTALL_CHOICE" in
-    y|Y ) echo "" && echo "* $(tput setaf 6)Removing /usr/local/src/gigabyteio$(tput sgr0)" && rm -rf /usr/local/src/gigabyteio;;
+    y|Y ) echo "" && echo "* $(tput setaf 6)Removing /usr/local/src/gigabyteio$(tput sgr0)" && echo "" && rm -rf /usr/local/src/gigabyteio;;
     n|N ) exit 1;;
     * ) echo "Invalid input.";;
   esac
 fi
-echo ""
-echo "$(tput bold)$(tput setaf 2)Step 1 of 7:$(tput sgr0) Setting up $(tput bold)GigabyteIO$(tput sgr0)"
-echo ""
 echo "* $(tput setaf 6)Installing git$(tput sgr0)"
 yum -y --quiet install git
 echo "* $(tput setaf 6)Cloning the GigabyteIO git repository to /usr/local/src/gigabyteio$(tput sgr0)"
