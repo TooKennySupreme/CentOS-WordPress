@@ -1,11 +1,9 @@
 #!/usr/bin/expect -f
-# Usage: ./centmin-install.exp mysqlpass memcacheusername memcachepassword initialsshport finalsshport
+# Usage: ./centmin-install.exp mysqlpass memcacheusername memcachepassword
 
 set mysqlpass    [lindex $argv 0]
 set memcacheuser [lindex $argv 1]
 set memcachepass [lindex $argv 2]
-set initialssh   [lindex $argv 3]
-set finalssh     [lindex $argv 4]
  
 # Makes it so that expect does not time out
 set timeout -1
