@@ -19,10 +19,10 @@ expect "Enter option ? 1 - 21 ?"
 # Send the install command
 send -- "16\r"
 
-expect ""
+expect "Enter existing SSH port number (default = 22 for fresh installs):"
 
 send -- "$originalport\r"
 
-expect ""
+expect "Enter the SSH port number you want to change to:"
 
 send -- "$newport\r"
