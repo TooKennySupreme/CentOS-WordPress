@@ -16,7 +16,29 @@ echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Using the following prompt
 echo ""
 read -p 'Enter a backend path for improved security: ' CLI_BACKEND_PATH
 echo ""
-echo "* $(tput setaf 6)Copying centmin-wordpress.exp from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
+echo "* $(tput setaf 6)Declaring potentially customizable script variables in wordpress.sh$(tput sgr0)"
+# NOTE: NOT ALL OF THESE VARIABLES ARE REQUIRED... THEY WERE COPIED FROM setup.sh
+# Get MySQL host from envoirnment variables
+CLI_DATABASE_HOST=$DATABASE_SERVER
+# Default for CentminMod - change if using custom directory schema
+WEBSITE_INSTALL_DIRECTORY='home/nginx/domains'
+# Default location for GigabyteIO
+POOR_IO_HOME='usr/local/src/gigabyteio'
+# Default location for nginx configuration files
+NGINX_CONF_DIR='usr/local/nginx/conf'
+CENTMIN_DIR='usr/local/src' # Directory where centmin is installed
+INSTALL_FOLDER_NAME='gigabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
+CONF_FOLDER='configs' # Name of folder in the GigabyteIO directory that holds the configuration files
+SCRIPTS_FOLDER='scripts' # Name of folder in the GigabyteIO directory that holds scripts
+WORDPRESS_FOLDER='wordpress' # Name of folder in the GigabyteIO directory that holds WordPress related files
+SSH_PORT_NUMBER=8388 # SSH port used, this is changed automatically after the Centmin install finishes
+CENTMIN_FOLDER_NAME='centmin-v1.2.3mod' # Name of centmin folder
+CENTMIN_DOWNLOAD_URL='http://centminmod.com/download/centmin-v1.2.3-eva2000.04.zip' # Centmin download URL
+CENTMIN_FILE_NAME='centmin-v1.2.3-eva2000.04.zip' # Centmin zip file name
+GITHUB_URL='https://github.com/GigabyteIO/WordPress-Droplet.git' # GigabyteIO git repo
+WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
+NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
+echo "* $(tput setaf 6)Copying centmin-wordpress.exp from /$POOR_IO_HOME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
 cp /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-wordpress.exp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-wordpress.exp
 echo "* $(tput setaf 6)Giving centmin-wordpress.exp executable permissions$(tput sgr0)"
 chmod +x centmin-wordpress.exp
@@ -28,15 +50,7 @@ echo "* $(tput setaf 6)Removing centmin-wordpress.exp from CentminMod folder$(tp
 rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-wordpress.exp
 echo "* $(tput setaf 6)Restoring centmin.sh permissions to original state$(tput sgr0)"
 chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
-echo "* $(tput setaf 6)Declaring potentially customizable script variables in wordpress.sh$(tput sgr0)"
-# Get MySQL host from envoirnment variables
-CLI_DATABASE_HOST=$DATABASE_SERVER
-# Default for CentminMod - change if using custom directory schema
-WEBSITE_INSTALL_DIRECTORY='home/nginx/domains'
-# Default location for GigabyteIO
-POOR_IO_HOME='usr/local/src/gigabyteio'
-# Default location for nginx configuration files
-NGINX_CONF_DIR='usr/local/nginx/conf'
+
 # Remove default error pages and create backend path directory
 echo "* $(tput setaf 6)Removing default website files from /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public$(tput sgr0)"
 rm -rf /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/*
