@@ -52,7 +52,7 @@ chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 echo "* $(tput setaf 6)Removing default website files from /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public$(tput sgr0)"
 rm -rf /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/*
 echo "* $(tput setaf 6)Creating backend path directory$(tput sgr0)"
-mkdir -v /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH
+mkdir /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH
 
 # Generate random MySQL credentials and create the database
 echo "* $(tput setaf 6)Generating random ~8 character database name$(tput sgr0)"
