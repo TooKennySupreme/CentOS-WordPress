@@ -1,5 +1,43 @@
 #!/bin/bash -x
 
+echo "$(tput bold)$(tput setaf 2)Prompt 1 of 4:$(tput sgr0) Assign new password to root"
+echo ""
+# Change root user password
+#http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Begin by changing the root password. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges. You should make this root password long and very hard to guess."
+echo ""
+passwd
+echo ""
+echo "$(tput bold)$(tput setaf 2)Prompt 2 of 4:$(tput sgr0) Set up administrator account"
+echo ""
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Now create a new user and password combination. This is the user that you will use when doing anything that requires root privileges. When doing something that requires root privileges with this new user, you will have to add 'sudo' to the beginning of the command."
+echo ""
+read -p "Enter a new root username: " NEW_ROOT_USERNAME
+read -s -p "Enter the new root users password: " NEW_ROOT_PASSWORD
+echo ""
+echo "$(tput bold)$(tput setaf 2)Prompt 3 of 4:$(tput sgr0) Configure Digital Ocean SSH key"
+echo ""
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username ($NEW_ROOT_USERNAME). With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created ($NEW_ROOT_USERNAME)."
+echo ""
+# Change the SSH key to be used with new root user
+read -p "Is this a Digital Ocean droplet created using an SSH key? [Y/N] " SSH_CHOICE
+case "$SSH_CHOICE" in
+  y|Y ) SSH_CHOICE=yes;;
+  n|N ) SSH_CHOICE=no;;
+  * ) echo "Invalid input.";;
+esac
+echo ""
+echo "$(tput bold)$(tput setaf 2)Prompt 4 of 4:$(tput sgr0) Run the installation"
+echo ""
+echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The script will now configure the server. This process generally takes around 30 minutes. The installation will be run with the following variables (you should probably write these down):"
+echo ""
+echo "$(tput bold)$(tput setaf 3)MySQL root password:$(tput sgr0) Your Root Password"
+echo "$(tput bold)$(tput setaf 3)Memcached Monitor Username:$(tput sgr0) GigabyteIO"
+MEMCACHED_PWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
+echo "$(tput bold)$(tput setaf 3)Memcached Monitor Password:$(tput sgr0) $MEMCACHED_PWORD"
+echo ""
+read -p "$(tput bold)Press any key to run the unattended installation... $(tput sgr0)" -n1 -s
+echo ""
 # Setting time zone has to be done manually for now - not exactly sure how to find and replace with a variable - if anyone could guide me in the right direction, I'll add this feature :)
 # Declare script variables for future portability
 echo "* $(tput setaf 6)Declaring potentially customizable script variables in setup.sh$(tput sgr0)"
@@ -15,29 +53,12 @@ CENTMIN_FILE_NAME='centmin-v1.2.3-eva2000.04.zip' # Centmin zip file name
 GITHUB_URL='https://github.com/GigabyteIO/WordPress-Droplet.git' # GigabyteIO git repo
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
-
-echo ""
-echo "$(tput bold)$(tput setaf 2)Step 2 of 7:$(tput sgr0) Update system"
-echo ""
 echo "* $(tput setaf 6)Performing a system update (excluding kernel)$(tput sgr0)"
 yum -y --quiet --exclude=kernel* --exclude=setup* update
 echo "* $(tput setaf 6)Installing some dependencies (bc and expect)$(tput sgr0)"
 yum -y --quiet install bc expect
-# Change root user password
-#http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
-echo ""
-echo "$(tput bold)$(tput setaf 2)Step 3 of 7:$(tput sgr0) Set up administrator account"
-echo ""
-echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Begin by changing the root password. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges. You should make this root password long and very hard to guess."
-echo ""
-passwd
-echo ""
-echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Now create a new user and password combination. This is the user that you will use when doing anything that requires root privileges. When doing something that requires root privileges with this new user, you will have to add 'sudo' to the beginning of the command."
-echo ""
 # Set up new root username and password for security purposes
 if [ $(id -u) -eq 0 ]; then
-        read -p "Enter a new root username: " NEW_ROOT_USERNAME
-        read -s -p "Enter the new root users password: " NEW_ROOT_PASSWORD
         egrep "^$NEW_ROOT_USERNAME" /etc/passwd >/dev/null
         if [ $? -eq 0 ]; then
                 echo -e "\n\n$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) $NEW_ROOT_USERNAME already exists! Aborting installation."
@@ -60,16 +81,6 @@ echo "* $(tput setaf 6)Giving root permissions to $NEW_ROOT_USERNAME using visud
 ./visudo.sh $NEW_ROOT_USERNAME
 echo "* $(tput setaf 6)Restoring visudo.sh permissions to original state$(tput sgr0)"
 chmod 644 visudo.sh
-echo ""
-echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) It is highly recommended to log into your server with an SSH key. This will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your username ($NEW_ROOT_USERNAME). With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The login credentials will also be transferred from the root user to the new root user we just created ($NEW_ROOT_USERNAME)."
-echo ""
-# Change the SSH key to be used with new root user
-read -p "Is this a Digital Ocean droplet created using an SSH key? [Y/N] " SSH_CHOICE
-case "$SSH_CHOICE" in
-  y|Y ) SSH_CHOICE=yes;;
-  n|N ) SSH_CHOICE=no;;
-  * ) echo "Invalid input.";;
-esac
 echo ""
 # Transfer SSH key credentials from root to new root user
 if [ "$SSH_CHOICE" == "yes" ]; then
@@ -102,9 +113,6 @@ if [ "$SSH_CHOICE" == "yes" ]; then
         echo "* $(tput setaf 6)Increasing the ServerKeyBits to 2048$(tput sgr0)"
         perl -pi -e 's/#ServerKeyBits 1024/ServerKeyBits 2048/g' /etc/ssh/sshd_config
 fi
-echo ""
-echo "$(tput bold)$(tput setaf 2)Step 4 of 7:$(tput sgr0) Configure and install CentminMod"
-echo ""
 # Download and set up CentminMod directory
 echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR$(tput sgr0)"
 cd /$CENTMIN_DIR
@@ -125,17 +133,6 @@ perl -pi -e 's/Brisbane/New_York/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.s
 # Change custom TCP packet header in centmin.sh
 echo "* $(tput setaf 6)Changing TCP packet header to GigabyteIO in centmin.sh$(tput sgr0)"
 perl -pi -e 's/nginx centminmod/GigabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
-
-echo ""
-echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The initial set up is complete. The script will now compile the server via CentminMod. This process generally takes around 30 minutes. The installation will be run with the following variables (you should probably write these down):"
-echo ""
-echo "$(tput bold)$(tput setaf 3)MySQL root password:$(tput sgr0) Your Root Password"
-echo "$(tput bold)$(tput setaf 3)Memcached Monitor Username:$(tput sgr0) GigabyteIO"
-MEMCACHED_PWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
-echo "$(tput bold)$(tput setaf 3)Memcached Monitor Password:$(tput sgr0) $MEMCACHED_PWORD"
-echo ""
-read -p "$(tput bold)Press any key to continue and install CentminMod... $(tput sgr0)" -n1 -s
-echo ""
 
 # Install CentminMod with expect script to automate user inputs
 echo "* $(tput setaf 6)Copying centmin-install.exp from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
