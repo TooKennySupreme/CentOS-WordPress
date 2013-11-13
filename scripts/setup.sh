@@ -17,10 +17,14 @@ echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) You will no longer be able
 echo ""
 read -p "Enter the administrator username: " NEW_ROOT_USERNAME
 read -s -p "Enter the administrator password: " NEW_ROOT_PASSWORD
+echo ""
 read -s -p "Re-enter the administrator password: " PASSWORD_CHECK
 while [ "$NEW_ROOT_PASSWORD" != "$PASSWORD_CHECK" ]; do 
+    echo ""
     echo "Passwords did not match. Try again."
+    echo ""
     read -s -p "Enter the administrator password: " NEW_ROOT_PASSWORD
+    echo ""
     read -s -p "Re-enter the administrator password: " PASSWORD_CHECK
 done
 echo ""
