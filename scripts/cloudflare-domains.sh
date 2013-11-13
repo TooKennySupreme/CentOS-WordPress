@@ -2,6 +2,14 @@
 # Deletes all records and points records to IP address
 # ./cloudflare-domains.sh e-mail api-key type name content
 githubid=gigabyteio
+zero=0
+google_apps_cnames=0
+github_cname=0
+tumblr_cname=0
+bitbucket_cname=0
+blogger_cname=1
+google_apps_mx=0
+google_apps_srv=0
 result=($( php -f /usr/local/src/gigabyteio/cloudflare/get-domains.php $1 $2 ))
 for i in "${result[@]}"
 do
@@ -26,6 +34,7 @@ do
                 do
                         echo $j
                 done
+        if [[ $google_apps_cnames -eq $zero ]]; then
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME calendar ghs.googlehosted.com ))
                 for j in "${create_status[@]}"
                 do
@@ -47,30 +56,40 @@ do
                 do
                         echo $j
                 done
+        fi
+        if [[ $github_cname -eq $zero ]]; then
                 #https://help.github.com/articles/setting-up-a-custom-domain-with-pages $githubid.github.io
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME github $githubid.github.io ))
                 for j in "${create_status[@]}"
                 do
                         echo $j
                 done
+        fi
+        if [[ $tumblr_cname -eq $zero ]]; then
                 #http://www.tumblr.com/docs/en/custom_domains
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME tumblr domains.tumblr.com ))
                 for j in "${create_status[@]}"
                 do
                         echo $j
                 done
+        fi
+        if [[ $bitbucket_cname -eq $zero ]]; then
                 #Bitbucket
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME bitbucket bitbucket.org ))
                 for j in "${create_status[@]}"
                 do
                         echo $j
                 done
+        fi
+        if [[ $blogger_cname -eq $zero ]]; then
                 #Blogger
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME blogger ghs.google.com ))
                 for j in "${create_status[@]}"
                 do
                         echo $j
                 done
+        fi
+        if [[ $google_apps_mx -eq $zero ]]; then
         #Create Google Apps mail MX records
         create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX @ ASPMX.L.GOOGLE.COM 1 ))
                 for j in "${create_status[@]}"
@@ -97,12 +116,16 @@ do
                 do
                         echo $j
                 done
+        fi
+        if [[ $google_apps_srv -eq $zero ]]; then
         # Creating SRV records for Google Apps chat compatibility
-        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i MX @ ASPMX3.GOOGLEMAIL.COM 10 ))
-                for j in "${create_status[@]}"
-                do
-                        echo $j
-                done
+        # What is Piro?
+        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i SRV $i 3600 1 1 _xmpp-client thebestsites.com tcp 0 5222 talk.l.google.com ))
+               for j in "${create_status[@]}"
+               do
+                       echo $j
+              done
+        fi
 #v=spf1 a include:_spf.google.com ~all
         # Add GigabyteIO label
         create_gigatxt_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i TXT gigabyteio "Powered by GigabyteIO (http://gigabyte.io/)" ))
