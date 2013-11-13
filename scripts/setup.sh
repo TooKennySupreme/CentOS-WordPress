@@ -58,7 +58,7 @@ case "$CLOUDFLARE_YESNO" in
         done
         read -p "Enter your Cloudflare API key: " CLOUDFLARE_API_KEY
         until [[ ${#CLOUDFLARE_API_KEY} = 32 ]]; do
-          echo "API key is the incorrect length. Cloudflare API keys must be 32 characters long. Try again."
+          echo "API key entered is the incorrect length. Cloudflare API keys are 32 characters long. Try again."
           echo ""
           read -p "Enter your Cloudflare API key: " CLOUDFLARE_API_KEY
         done
