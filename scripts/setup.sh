@@ -68,6 +68,7 @@ case "$CLOUDFLARE_YESNO" in
   n|N ) ;;
   * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
 esac
+echo ""
 echo "$(tput bold)$(tput setaf 2)Step 5 of 6:$(tput sgr0) Configure an SSH key login"
 echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Logging in with an SSH key will encrypt all data communications (preventing clear text passwords), make it much harder for hackers to target you, and allow you to login to your server without typing your administrator username. With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The SSH key file will be transferred from the root user to the administrator user."
