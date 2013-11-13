@@ -1,14 +1,14 @@
 <?php
 /*
-Plugin Name: PoorIO default WordPress settings
-Plugin URI: http://poor.io/
-Description: Readjusts default settings.
+Plugin Name: GigabyteIO default WordPress settings and installer
+Plugin URI: http://gigabyte.io/
+Description: Readjusts default settings and activates plugins
 Version: 0.9
 Author: Brian Zalewski
-Author URI: http://poor.io/
+Author URI: http://gigabyte.io/
 */
 
-function poor_io_defaults()
+function gigabyteio_defaults()
 {
     $o = array(
         'avatar_default' => 'mystery',
@@ -39,34 +39,29 @@ function poor_io_defaults()
 
     return;
 }
-register_activation_hook(__FILE__, 'poor_io_defaults'); // Fires when plugin is activated
-?>
 
 
-
-
-
-
-
-function toggle_plugin() {
-
+function toggle_plugins() {
+// Defines plugins to be activated
+$arr = array("one", "two", "three");
 // Full path to WordPress from the root
+$website_base = 'INSERTWEBSITEBASEHERE'
 $wordpress_path = '/full/path/to/wordpress/';
 
 // Absolute path to plugins dir
-$plugin_path = $wordpress_path.'wp-content/plugins/';
-
+$plugin_path = $wordpress_path.'addons/';
+foreach ($arr as $value) {
 // Absolute path to your specific plugin
-$my_plugin = $plugin_path.'my_plugin/my_plugin.php';
+$my_plugin = $plugin_path.$value;
 
-// Check to see if plugin is already active
+// 
 if(is_plugin_active($my_plugin)) {
 
 // Deactivate plugin
 // Note that deactivate_plugins() will also take an
 // array of plugin paths as a parameter instead of
 // just a single string.
-deactivate_plugins($my_plugin);
+echo "$value is already active.";
 }
 else {
 
@@ -74,3 +69,7 @@ else {
 activate_plugin($my_plugin);
 }
 }
+}
+// register_activation_hook(__FILE__, 'toggle_plugins');
+register_activation_hook(__FILE__, 'gigabyteio_defaults'); // Fires when this plugin is activated
+?>
