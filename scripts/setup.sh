@@ -6,7 +6,10 @@ echo ""
 #http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Make the root password very long and hard to guess. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges."
 echo ""
-passwd
+until passwd -o -q
+do
+  echo "Passwords did not match. Try again."
+done
 echo ""
 echo "$(tput bold)$(tput setaf 2)Prompt 2 of 4:$(tput sgr0) Set up an administrator account with root privileges"
 echo ""
@@ -14,6 +17,12 @@ echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) You will no longer be able
 echo ""
 read -p "Enter the administrator username: " NEW_ROOT_USERNAME
 read -s -p "Enter the administrator password: " NEW_ROOT_PASSWORD
+read -s -p "Re-enter the administrator password: " PASSWORD_CHECK
+while [ "$NEW_ROOT_PASSWORD" != "$PASSWORD_CHECK" ]; do 
+    echo "Passwords did not match. Try again."
+    read -s -p "Enter the administrator password: " NEW_ROOT_PASSWORD
+    read -s -p "Re-enter the administrator password: " PASSWORD_CHECK
+done
 echo ""
 echo ""
 echo "$(tput bold)$(tput setaf 2)Prompt 3 of 4:$(tput sgr0) Configure Digital Ocean SSH key for the administrator"
