@@ -66,7 +66,7 @@ case "$CLOUDFLARE_YESNO" in
         #done
         # Add test here for cloudflare
         echo ""
-        read -p "Automatically install GigabyteIO's WordPress to all Cloudflare domains? [Y/N] " CLOUDFLARE_WP_YESNO
+        read -p "Automatically install GigabyteIO's custom WordPress configuration to all Cloudflare domains? [Y/N] " CLOUDFLARE_WP_YESNO
         case "$CLOUDFLARE_WP_YESNO" in
           y|Y ) CLOUDFLARE_WP_YESNO=yes;;
           n|N ) CLOUDFLARE_WP_YESNO=no;;
