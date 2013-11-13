@@ -15,7 +15,7 @@ then
   read -p "$(tput bold)$(tput setaf 3)Warning:$(tput sgr0) The GigabyteIO directory already exists! Delete it and continue the installation? [Y/N] " INSTALL_CHOICE
   case "$INSTALL_CHOICE" in
     y|Y ) echo "" && echo "* $(tput setaf 6)Removing /usr/local/src/gigabyteio$(tput sgr0)" && rm -rf /usr/local/src/gigabyteio;;
-    n|N ) echo "Installation aborted." && exit;;
+    n|N ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Installation aborted by user." && exit;;
     * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
   esac
 fi
