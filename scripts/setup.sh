@@ -57,6 +57,11 @@ case "$CLOUDFLARE_YESNO" in
           read -p "Enter your Cloudflare e-mail address (press enter to use administrator's e-mail address): " CLOUDFLARE_EMAIL_ADDRESS
         done
         read -p "Enter your Cloudflare API key: " CLOUDFLARE_API_KEY
+        until [[ ${#CLOUDFLARE_API_KEY} = 32 ]]; do
+          echo "API key is the incorrect length. Cloudflare API keys must be 32 characters long. Try again."
+          echo ""
+          read -p "Enter your Cloudflare API key: " CLOUDFLARE_API_KEY
+        done
         # Add test here for cloudflare
         echo ""
         read -p "Automatically install GigabyteIO's custom WordPress set up on all domains after the installation? [Y/N] " CLOUDFLARE_WP_YESNO
