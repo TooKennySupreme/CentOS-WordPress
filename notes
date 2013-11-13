@@ -1,3 +1,6 @@
+# TASK LIST
 Use cloudflare for set up
 Finish wordpress installation of single sites
 Add password check for admin user
+Add prompt/config for IP address blocking
+Add IP address to host list -- follow guide for advanced settings
