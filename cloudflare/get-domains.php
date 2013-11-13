@@ -1,7 +1,7 @@
 <?php
 
-$apikey = $argv[1];
-$email = $argv[2];
+$email = $argv[1];
+$apikey = $argv[2];
 
 require( dirname(__FILE__) . '/cloudflare-api.php' );
 
