@@ -38,7 +38,6 @@ until [[ "$ADMIN_EMAIL_ADDRESS" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2
     echo "$ADMIN_EMAIL_ADDRESS is an invalid e-mail address format. Try again."
     echo ""
     read -p "Enter the administrator's e-mail address: " ADMIN_EMAIL_ADDRESS
-    CLOUDFLARE_EMAIL_ADDRESS=$ADMIN_EMAIL_ADDRESS
 done
     #echo "$ADMIN_EMAIL_ADDRESS is a valid e-mail address format."
 echo ""
@@ -49,6 +48,9 @@ echo ""
 read -p "Do you want to automatically set up your DNS using the Cloudflare API? [Y/N] " CLOUDFLARE_YESNO
 case "$CLOUDFLARE_YESNO" in
   y|Y ) read -p "Enter your Cloudflare e-mail address (press enter to use administrator's e-mail address): " CLOUDFLARE_EMAIL_ADDRESS
+        if [ $CLOUDFLARE_EMAIL_ADDRESS = "" ]; then
+          CLOUDFLARE_EMAIL_ADDRESS=$ADMIN_EMAIL_ADDRESS
+        fi
         until [[ "$CLOUDFLARE_EMAIL_ADDRESS" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$ ]]; do
           echo "$CLOUDFLARE_EMAIL_ADDRESS is an invalid e-mail address format. Try again."
           echo ""
