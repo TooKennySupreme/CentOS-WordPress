@@ -63,7 +63,7 @@ case "$CLOUDFLARE_YESNO" in
           * ) echo "Invalid input.";;
         esac;;
   n|N ) ;;
-  * ) echo "Invalid input.";;
+  #* ) echo "Invalid input.";;
 esac
 echo "$(tput bold)$(tput setaf 2)Step 5 of 6:$(tput sgr0) Configure an SSH key login"
 echo ""
