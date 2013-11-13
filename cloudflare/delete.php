@@ -9,4 +9,4 @@ require( dirname(__FILE__) . '/cloudflare-api.php' );
 
 $cf = new cloudflare_api("$email", "$apikey");
 $response = $cf->delete_dns_record($domain, $id);
-echo $response->result
+echo $response->result;
