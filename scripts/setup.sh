@@ -48,7 +48,7 @@ echo ""
 read -p "Do you want to automatically set up your DNS using the Cloudflare API? [Y/N] " CLOUDFLARE_YESNO
 case "$CLOUDFLARE_YESNO" in
   y|Y ) read -p "Enter your Cloudflare e-mail address (press enter to use administrator's e-mail address): " CLOUDFLARE_EMAIL_ADDRESS
-        if [ $CLOUDFLARE_EMAIL_ADDRESS = "" ]; then
+        if [[ -z "$CLOUDFLARE_EMAIL_ADDRESS" ]]; then
           CLOUDFLARE_EMAIL_ADDRESS=$ADMIN_EMAIL_ADDRESS
         fi
         until [[ "$CLOUDFLARE_EMAIL_ADDRESS" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$ ]]; do
