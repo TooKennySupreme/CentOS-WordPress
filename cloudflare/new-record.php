@@ -12,4 +12,4 @@ require( dirname(__FILE__) . '/cloudflare-api.php' );
 
 $cf = new cloudflare_api("$email", "$apikey");
 $response = $cf->rec_new("$domain", "$type", "$name", "$content");
-echo $response->result
+echo $response->result;
