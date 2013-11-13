@@ -112,19 +112,7 @@ do
                 done
         
 done
-
-
-
-
-
-
-
-; SRV
-_xmpp-server._tcp.@	1	IN	SRV	20	0	5269	alt4.xmpp-server.l.google.com
-_xmpp-server._tcp.@	1	IN	SRV	5	0	5269	xmpp-server.l.google.com
-_xmpp-server._tcp.@	1	IN	SRV	20	0	5269	alt2.xmpp-server.l.google.com
-_xmpp-server._tcp.@	1	IN	SRV	20	0	5269	alt3.xmpp-server.l.google.com
-_xmpp-server._tcp.@	1	IN	SRV	20	0	5269	alt1.xmpp-server.l.google.com
+# http://www.olark.com/gtalk/check_srv
 # https://support.google.com/a/answer/112038 < --- Domain verify stuff from Google
 # Github stuff from github
 # https://support.google.com/a/answer/174124?hl=en&ref_topic=2752442 < -- DKIM stuff email verification
