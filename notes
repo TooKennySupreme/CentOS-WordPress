@@ -5,3 +5,4 @@ Add password check for admin user
 Add prompt/config for IP address blocking
 Add IP address to host list -- follow guide for advanced settings
 Add email prompt for admin + add to various services
+Assign the root user a random password prompt
