@@ -2,13 +2,13 @@
 **CentOS WordPress by GigabyteIO** is an installer for [CentminMod](http://centminmod.com/) (tested with and built for a [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36)). CentOS WordPress adds a *bleeding-edge web server stack* to your CentOS-based VPS.
 
 ## Features
-+ Automatically configures your DNS with the Cloudflare API
 + Easy installation and management
 + Compiles software from source
 + Caches WordPress into RAM
 + Intelligently configures server based on hardware
 + Best security practices
-+ Bug fixes to CentminMod
++ Automatically configures your DNS with the Cloudflare API
++ Improvements and bug fixes to CentminMod
 
 ## Instructions
 1. Set up a CentOS VPS (we built and tested CentOS WordPress with a 2GB 64-bit CentOS 6.4 [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36)
