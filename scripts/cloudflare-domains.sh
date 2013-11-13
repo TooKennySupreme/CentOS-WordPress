@@ -14,4 +14,8 @@ do
                 done
         done
         create_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i $3 $4 $5 ))
+                for j in "${create_status[@]}"
+                do
+                        echo $j
+                done
 done
