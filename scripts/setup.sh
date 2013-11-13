@@ -6,7 +6,7 @@ echo ""
 #http://linuxtidbits.wordpress.com/2008/08/11/output-color-on-bash-scripts/
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Make the root password very long and hard to guess. After the installation, there will be no reason to use the root user. We will instead execute root commands using a different user account with root privileges."
 echo ""
-until passwd -o -q
+until passwd
 do
   echo "Passwords did not match. Try again."
 done
