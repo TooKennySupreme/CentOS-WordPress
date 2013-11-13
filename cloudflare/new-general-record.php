@@ -10,5 +10,6 @@ $weight = $argv[6];
 require( dirname(__FILE__) . '/cloudflare-api.php' );
 
 $cf = new cloudflare_api("$email", "$apikey");
-$response = $cf->rec_new("$domain", "SRV", "$name", "$content", "3600", "$weight", 1, 1);
+$response = $cf->rec_new($domain, $type, $id, $name, $content, $ttl, $mode, $piro, $service, $srvname, $protocol, $weight, $port, $target);
+#php -f new-srv-record.php($1)
 echo $response->result;
