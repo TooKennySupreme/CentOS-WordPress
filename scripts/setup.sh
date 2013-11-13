@@ -61,10 +61,10 @@ case "$CLOUDFLARE_YESNO" in
         case "$CLOUDFLARE_WP_YESNO" in
           y|Y ) CLOUDFLARE_WP_YESNO=yes;;
           n|N ) CLOUDFLARE_WP_YESNO=no;;
-          * ) echo "ERROR: Invalid input." && exit;;
+          * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
         esac;;
   n|N ) ;;
-  * ) echo "ERROR: Invalid input." && exit;;
+  * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
 esac
 echo "$(tput bold)$(tput setaf 2)Step 5 of 6:$(tput sgr0) Configure an SSH key login"
 echo ""
@@ -75,7 +75,7 @@ read -p "Transfer the root users SSH key to the new root user? [Y/N] " SSH_CHOIC
 case "$SSH_CHOICE" in
   y|Y ) SSH_CHOICE=yes;;
   n|N ) SSH_CHOICE=no;;
-  * ) echo "ERROR: Invalid input." && exit;;
+  * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
 esac
 echo ""
 echo "$(tput bold)$(tput setaf 2)Prompt 4 of 4:$(tput sgr0) Run the installation"
