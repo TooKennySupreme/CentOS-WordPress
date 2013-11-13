@@ -16,7 +16,7 @@ then
   case "$INSTALL_CHOICE" in
     y|Y ) echo "" && echo "* $(tput setaf 6)Removing /usr/local/src/gigabyteio$(tput sgr0)" && rm -rf /usr/local/src/gigabyteio;;
     n|N ) exit 1;;
-    * ) echo "Invalid input.";;
+    * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
   esac
 fi
 echo "* $(tput setaf 6)Installing git$(tput sgr0)"
