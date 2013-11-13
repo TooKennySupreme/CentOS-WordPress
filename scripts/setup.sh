@@ -57,14 +57,16 @@ case "$CLOUDFLARE_YESNO" in
           read -p "Enter your Cloudflare e-mail address (press enter to use administrator's e-mail address): " CLOUDFLARE_EMAIL_ADDRESS
         done
         read -p "Enter your Cloudflare API key: " CLOUDFLARE_API_KEY
-        until [[ ${#CLOUDFLARE_API_KEY} = 32 ]]; do
-          echo "API key entered is the incorrect length. Cloudflare API keys are 32 characters long. Try again."
-          echo ""
-          read -p "Enter your Cloudflare API key: " CLOUDFLARE_API_KEY
-        done
+        # Not sure how long the Cloudflare API client key is so I'm taking this check out
+        # Are they keys always 37 chars? Or do they vary?
+        #until [[ ${#CLOUDFLARE_API_KEY} = 32 ]]; do
+        #  echo "API key entered is the incorrect length. Cloudflare API keys are 32 characters long. Try again."
+        #  echo ""
+        #  read -p "Enter your Cloudflare API key: " CLOUDFLARE_API_KEY
+        #done
         # Add test here for cloudflare
         echo ""
-        read -p "Automatically install GigabyteIO's custom WordPress set up on all domains after the installation? [Y/N] " CLOUDFLARE_WP_YESNO
+        read -p "Automatically install GigabyteIO's WordPress to all Cloudflare domains? [Y/N] " CLOUDFLARE_WP_YESNO
         case "$CLOUDFLARE_WP_YESNO" in
           y|Y ) CLOUDFLARE_WP_YESNO=yes;;
           n|N ) CLOUDFLARE_WP_YESNO=no;;
