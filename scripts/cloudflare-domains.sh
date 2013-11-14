@@ -10,6 +10,9 @@ bitbucket_cname=0
 blogger_cname=1
 google_apps_mx=0
 google_apps_srv=0
+ttl=3600 # Add this in
+direct_connect=0
+
 result=($( php -f /usr/local/src/gigabyteio/cloudflare/get-domains.php $1 $2 ))
 for i in "${result[@]}"
 do
@@ -73,6 +76,14 @@ do
                         echo $j
                 done
         fi
+        if [[ $direct_connect -eq $zero ]]; then
+                #http://www.tumblr.com/docs/en/custom_domains
+        create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME direct $i ))
+                for j in "${create_status[@]}"
+                do
+                        echo $j
+                done
+        fi
         if [[ $bitbucket_cname -eq $zero ]]; then
                 #Bitbucket
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME bitbucket bitbucket.org ))
@@ -91,27 +102,27 @@ do
         fi
         if [[ $google_apps_mx -eq $zero ]]; then
         #Create Google Apps mail MX records
-        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX @ ASPMX.L.GOOGLE.COM 1 ))
+        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX.L.GOOGLE.COM "1" ))
                 for j in "${create_status[@]}"
                 do
                         echo $j
                 done
-        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX @ ALT1.ASPMX.L.GOOGLE.COM 5 ))
+        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ALT1.ASPMX.L.GOOGLE.COM "5" ))
                 for j in "${create_status[@]}"
                 do
                         echo $j
                 done
-        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX @ ALT2.ASPMX.L.GOOGLE.COM 5 ))
+        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ALT2.ASPMX.L.GOOGLE.COM "5" ))
                 for j in "${create_status[@]}"
                 do
                         echo $j
                 done
-        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX @ ASPMX2.GOOGLEMAIL.COM 10 ))
+        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX2.GOOGLEMAIL.COM "10" ))
                 for j in "${create_status[@]}"
                 do
                         echo $j
                 done
-        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX @ ASPMX3.GOOGLEMAIL.COM 10 ))
+        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX3.GOOGLEMAIL.COM "10" ))
                 for j in "${create_status[@]}"
                 do
                         echo $j
@@ -120,11 +131,13 @@ do
         if [[ $google_apps_srv -eq $zero ]]; then
         # Creating SRV records for Google Apps chat compatibility
         # What is Piro?
-        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i SRV $i 3600 1 1 _xmpp-client thebestsites.com tcp 0 5222 talk.l.google.com ))
+        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i SRV $i "3600" "1" "1" _xmpp-client thebestsites.com tcp "0" "5222" talk.l.google.com ))
                for j in "${create_status[@]}"
                do
                        echo $j
               done
+        fi
+        if [[ $google_apps_spf -eq $zero ]]; then
         fi
 #v=spf1 a include:_spf.google.com ~all
         # Add GigabyteIO label
@@ -137,5 +150,5 @@ do
 done
 # http://www.olark.com/gtalk/check_srv
 # https://support.google.com/a/answer/112038 < --- Domain verify stuff from Google
-# Github stuff from github
+# Github stuff from github Github API automatic setup
 # https://support.google.com/a/answer/174124?hl=en&ref_topic=2752442 < -- DKIM stuff email verification
