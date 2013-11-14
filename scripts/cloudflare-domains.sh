@@ -21,36 +21,36 @@ do
         do
                 delete_status=($( php -f /usr/local/src/gigabyteio/cloudflare/delete.php $1 $2 $i $j ))
                 if [ $delete_status = success ]; then
-                        j = "$(tput bold)$(tput setaf 2)$j TESTYO$(tput sgr0)"
+                        delete_status="$(tput bold)$(tput setaf 2)$delete_status$(tput sgr0)"
                 else
-                        j = "$(tput bold)$(tput setaf 1)$j NUMBA2$(tput sgr0)"
+                        delete_status="$(tput bold)$(tput setaf 1)$delete_status$(tput sgr0)"
                         fi
                 echo "* $(tput setaf 6)Removing record ID $j from $i's zone file: $delete_status$(tput sgr0)"
         done
         # Create A name pointing to IP address
         create_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i A $i $3 ))
-                for j in "${create_status[@]}"
-                do
-                        echo $j
-                done
+                if [ $create_status = success ]; then
+                        create_status="$(tput bold)$(tput setaf 2)$create_status$(tput sgr0)"
+                else
+                        create_status="$(tput bold)$(tput setaf 1)$create_status$(tput sgr0)"
+                        fi
+                echo "* $(tput setaf 6)Adding A record pointing $i to this server's IP address ($3): $create_status$(tput sgr0)"
         # Create CNAME records
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME www $i ))
-                for j in "${create_status[@]}"
-                do
-                        echo $j
-                done
+                if [ $create_cname_status = success ]; then
+                        create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
+                else
+                        delete_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
+                        fi
+                echo "* $(tput setaf 6)Pointing www.$i to $i: $create_cname_status$(tput sgr0)"
         if [[ $google_apps_cnames -eq $zero ]]; then
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME calendar ghs.googlehosted.com ))
-                for j in "${create_status[@]}"
-                do
-                        if [ $j = success ]; then
-                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
-                        else
-                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                if [ $create_cname_status = success ]; then
+                        create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
+                else
+                        delete_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
-                        echo "* $(tput setaf 6)Pointing drive.$i to Google Apps: $j$(tput sgr0)"
-                        echo $j
-                done
+                echo "* $(tput setaf 6)Pointing calendar.$i to Google Apps: $create_cname_status$(tput sgr0)"
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME drive ghs.googlehosted.com ))
                 for j in "${create_status[@]}"
                 do
