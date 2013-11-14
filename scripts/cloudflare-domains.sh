@@ -183,7 +183,7 @@ do
                 else
                         create_srv_status="$(tput bold)$(tput setaf 1)$create_srv_status$(tput sgr0)"
                 fi
-                echo "* $(tput setaf 6)Adding SRV record for $i (TTL: $srv_ttl Service: ${service[$n]} $protocol Priority: ${priority[$n]} Weight: $weight Port: ${port[$n]} Target: ${target[$i]}):  $create_srv_status$(tput sgr0)"
+                echo "* $(tput setaf 6)Adding SRV record for $i \(TTL: $srv_ttl Service: ${service[$n]} $protocol Priority: ${priority[$n]} Weight: $weight Port: ${port[$n]} Target: ${target[$i]}):  $create_srv_status$(tput sgr0)"
                 #(TTL: $srv_ttl Service: ${service[$n]} $protocol Priority: ${priority[$n]} Weight: $weight Port: ${port[$n]} Target: ${target[$i]})
         done
         fi
