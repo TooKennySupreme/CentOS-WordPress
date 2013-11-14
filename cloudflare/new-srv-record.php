@@ -28,3 +28,8 @@ echo json_encode($response);
 #print_r(json_decode(json_encode($response)));
 #print_r(json_encode($response));
 #print_r(var_dump($get_object_vars));
+echo json_decode(json_encode($response));
+echo json_decode(json_encode($response))->result;
+echo $response[2]->result;
+echo var_dump($response);
+echo get_object_vars(var_dump($response));
