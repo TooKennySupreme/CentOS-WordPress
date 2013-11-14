@@ -14,7 +14,7 @@ srv_ttl=3600 # one hour
 a_ttl=604800 # one week
 cname_ttl=86400 # one day
 direct_connect=0
-echo "* $(tput setaf 6)Getting server's public IP address using ipconfig.me$(tput sgr0)"
+echo "* $(tput setaf 6)Getting server's public IP address using ifconfig.me$(tput sgr0)"
 ip_address=$(curl ifconfig.me) #get public ip from ipconfig website
 result=($( php -f /usr/local/src/gigabyteio/cloudflare/get-domains.php $1 $2 ))
 total_sites=${#result[@]} # might be useful
