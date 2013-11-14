@@ -167,13 +167,13 @@ do
         fi
         if [[ $google_apps_srv -eq $zero ]]; then
         # Creating SRV records for Google Apps chat compatibility
-        service=( "_xmpp-server" "_xmpp-server" "_xmpp-server" "_xmpp-server" "_xmpp-server" "_jabber" "_jabber" "_jabber" "_jabber" "_jabber" "_xmpp-client" "_xmpp-client" "_xmpp-client" "_xmpp-client" "_xmpp-client" )
+        service=( '_xmpp-server' '_xmpp-server' '_xmpp-server' '_xmpp-server' '_xmpp-server' '_jabber' '_jabber' '_jabber' '_jabber' '_jabber' '_xmpp-client' '_xmpp-client' '_xmpp-client' '_xmpp-client' '_xmpp-client' )
         priority=( "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" )
         weight="0"
         protocol="tcp"
         srvname="googleapps"
-        port=( "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5222" "5222" "5222" "5222" "5222" )
-        target=( "xmpp-server.l.google.com" "alt1.xmpp-server.l.google.com" "alt2.xmpp-server.l.google.com" "alt3.xmpp-server.l.google.com" "alt4.xmpp-server.l.google.com" "xmpp-server.l.google.com" "alt1.xmpp-server.l.google.com" "alt2.xmpp-server.l.google.com" "alt3.xmpp-server.l.google.com" "alt4.xmpp-server.l.google.com" "xmpp.l.google.com" "alt1.xmpp.l.google.com" "alt2.xmpp.l.google.com" "alt3.xmpp.l.google.com" "alt4.xmpp.l.google.com" )
+        port=( '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5222' '5222' '5222' '5222' '5222' )
+        target=( 'xmpp-server.l.google.com' 'alt1.xmpp-server.l.google.com' 'alt2.xmpp-server.l.google.com' 'alt3.xmpp-server.l.google.com' 'alt4.xmpp-server.l.google.com' 'xmpp-server.l.google.com' 'alt1.xmpp-server.l.google.com' 'alt2.xmpp-server.l.google.com' 'alt3.xmpp-server.l.google.com' 'alt4.xmpp-server.l.google.com' 'xmpp.l.google.com' 'alt1.xmpp.l.google.com' 'alt2.xmpp.l.google.com' 'alt3.xmpp.l.google.com' 'alt4.xmpp.l.google.com' )
         for ((n=0;n<15;n++))
         do
         # email apikey domain priority service servicename protocol weight port
