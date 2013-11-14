@@ -129,35 +129,35 @@ do
         fi
         if [[ $google_apps_mx -eq $zero ]]; then
         #Create Google Apps mail MX records
-        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX.L.GOOGLE.COM "1" ))
+        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX.L.GOOGLE.COM '1' ))
                 if [ $create_mx_status = success ]; then
                         create_mx_status="$(tput bold)$(tput setaf 2)$create_mx_status$(tput sgr0)"
                 else
                         create_mx_status="$(tput bold)$(tput setaf 1)$create_mx_status$(tput sgr0)"
                         fi
                 echo "* $(tput setaf 6)Adding mail server record for $i pointing to ASPMX.L.GOOGLE.COM with a priority of 1: $create_mx_status$(tput sgr0)"
-        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ALT1.ASPMX.L.GOOGLE.COM "5" ))
+        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ALT1.ASPMX.L.GOOGLE.COM '5' ))
                  if [ $create_mx_status = success ]; then
                         create_mx_status="$(tput bold)$(tput setaf 2)$create_mx_status$(tput sgr0)"
                 else
                         create_mx_status="$(tput bold)$(tput setaf 1)$create_mx_status$(tput sgr0)"
                         fi
                 echo "* $(tput setaf 6)Adding mail server record for $i pointing to ALT1.ASPMX.L.GOOGLE.COM with a priority of 5: $create_mx_status$(tput sgr0)"
-        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ALT2.ASPMX.L.GOOGLE.COM "5" ))
+        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ALT2.ASPMX.L.GOOGLE.COM '5' ))
                 if [ $create_mx_status = success ]; then
                         create_mx_status="$(tput bold)$(tput setaf 2)$create_mx_status$(tput sgr0)"
                 else
                         create_mx_status="$(tput bold)$(tput setaf 1)$create_mx_status$(tput sgr0)"
                         fi
                 echo "* $(tput setaf 6)Adding mail server record for $i pointing to ALT2.ASPMX.L.GOOGLE.COM with a priority of 5: $create_mx_status$(tput sgr0)"
-        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX2.GOOGLEMAIL.COM "10" ))
+        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX2.GOOGLEMAIL.COM '10' ))
                 if [ $create_mx_status = success ]; then
                         create_mx_status="$(tput bold)$(tput setaf 2)$create_mx_status$(tput sgr0)"
                 else
                         create_mx_status="$(tput bold)$(tput setaf 1)$create_mx_status$(tput sgr0)"
                         fi
                 echo "* $(tput setaf 6)Adding mail server record for $i pointing to ASPMX2.GOOGLEMAIL.COM with a priority of 10: $create_mx_status$(tput sgr0)"
-        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX3.GOOGLEMAIL.COM "10" ))
+        create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX3.GOOGLEMAIL.COM '10' ))
                 if [ $create_mx_status = success ]; then
                         create_mx_status="$(tput bold)$(tput setaf 2)$create_mx_status$(tput sgr0)"
                 else
@@ -168,9 +168,9 @@ do
         if [[ $google_apps_srv -eq $zero ]]; then
         # Creating SRV records for Google Apps chat compatibility
         service=( '_xmpp-server' '_xmpp-server' '_xmpp-server' '_xmpp-server' '_xmpp-server' '_jabber' '_jabber' '_jabber' '_jabber' '_jabber' '_xmpp-client' '_xmpp-client' '_xmpp-client' '_xmpp-client' '_xmpp-client' )
-        priority=( "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" )
-        weight="0"
-        protocol="_tcp"
+        priority=( '5' '20' '20' '20' '20' '5' '20' '20' '20' '20' '5' '20' '20' '20' '20' )
+        weight='0'
+        protocol='_tcp'
         port=( '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5222' '5222' '5222' '5222' '5222' )
         target=( 'xmpp-server.l.google.com' 'alt1.xmpp-server.l.google.com' 'alt2.xmpp-server.l.google.com' 'alt3.xmpp-server.l.google.com' 'alt4.xmpp-server.l.google.com' 'xmpp-server.l.google.com' 'alt1.xmpp-server.l.google.com' 'alt2.xmpp-server.l.google.com' 'alt3.xmpp-server.l.google.com' 'alt4.xmpp-server.l.google.com' 'xmpp.l.google.com' 'alt1.xmpp.l.google.com' 'alt2.xmpp.l.google.com' 'alt3.xmpp.l.google.com' 'alt4.xmpp.l.google.com' )
         for ((n=0;n<15;n++))
