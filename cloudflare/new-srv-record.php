@@ -21,7 +21,6 @@ require( dirname(__FILE__) . '/cloudflare-api.php' );
 
 $cf = new cloudflare_api("$email", "$apikey");
 $response = $cf->rec_new("$domain", 'SRV', "$name", "", '3600', "", "$priority", "$service", "$srvname", "$protocol", "$weight", "$port", "$target");
-#echo json_encode($response); not tested
-#var_dump($response);
-#print_r($response);
-echo get_object_vars($response);
+# For debugging purposes:
+$get_object_vars = get_object_vars($response);
+var_dump($get_object_vars);
