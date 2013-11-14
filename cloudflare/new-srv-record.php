@@ -23,4 +23,5 @@ $cf = new cloudflare_api("$email", "$apikey");
 $response = $cf->rec_new("$domain", 'SRV', "$name", "", '3600', "", "$priority", "$service", "$srvname", "$protocol", "$weight", "$port", "$target");
 #echo json_encode($response); not tested
 #var_dump($response);
-print_r($response);
+#print_r($response);
+get_object_vars($response);
