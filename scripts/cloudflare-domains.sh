@@ -189,10 +189,12 @@ do
 #v=spf1 a include:_spf.google.com ~all
         # Add GigabyteIO label
         create_gigatxt_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i TXT gigabyteio "Powered by GigabyteIO (http://gigabyte.io/)" ))
-                for j in "${create_status[@]}"
-                do
-                        echo $j
-                done
+                if [ $create_gigatxt_status = success ]; then
+                        create_gigatxt_status="$(tput bold)$(tput setaf 2)$create_gigatxt_status$(tput sgr0)"
+                else
+                        create_gigatxt_status="$(tput bold)$(tput setaf 1)$create_gigatxt_status$(tput sgr0)"
+                        fi
+                echo "* $(tput setaf 6)Adding GigabyteIO text label: $create_gigatxt_status$(tput sgr0)"
         
 done
 # http://www.olark.com/gtalk/check_srv
