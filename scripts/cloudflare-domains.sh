@@ -170,14 +170,13 @@ do
         service=( '_xmpp-server' '_xmpp-server' '_xmpp-server' '_xmpp-server' '_xmpp-server' '_jabber' '_jabber' '_jabber' '_jabber' '_jabber' '_xmpp-client' '_xmpp-client' '_xmpp-client' '_xmpp-client' '_xmpp-client' )
         priority=( "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" )
         weight="0"
-        protocol="tcp"
-        srvname="googleapps"
+        protocol="_tcp"
         port=( '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5269' '5222' '5222' '5222' '5222' '5222' )
         target=( 'xmpp-server.l.google.com' 'alt1.xmpp-server.l.google.com' 'alt2.xmpp-server.l.google.com' 'alt3.xmpp-server.l.google.com' 'alt4.xmpp-server.l.google.com' 'xmpp-server.l.google.com' 'alt1.xmpp-server.l.google.com' 'alt2.xmpp-server.l.google.com' 'alt3.xmpp-server.l.google.com' 'alt4.xmpp-server.l.google.com' 'xmpp.l.google.com' 'alt1.xmpp.l.google.com' 'alt2.xmpp.l.google.com' 'alt3.xmpp.l.google.com' 'alt4.xmpp.l.google.com' )
         for ((n=0;n<15;n++))
         do
         # email apikey domain priority service servicename protocol weight port
-        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i ${priority[$n]} ${service[$n]} $srvname $protocol $weight ${port[$n]} ${target[$n]} ))
+        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i ${priority[$n]} ${service[$n]} $i $protocol $weight ${port[$n]} ${target[$n]} ))
                 if [ $create_srv_status = success ]; then
                         create_srv_status="$(tput bold)$(tput setaf 2)$create_srv_status$(tput sgr0)"
                 else
