@@ -23,13 +23,8 @@ $cf = new cloudflare_api("$email", "$apikey");
 $response = $cf->rec_new("$domain", 'SRV', "$name", "", '3600', "", "$priority", "$service", "$srvname", "$protocol", "$weight", "$port", "$target");
 # For debugging purposes:
 #echo get_object_vars($response->result);
-echo json_encode($response);
 #echo json_decode(json_encode($response));
 #print_r(json_decode(json_encode($response)));
 #print_r(json_encode($response));
 #print_r(var_dump($get_object_vars));
-echo json_decode(json_encode($response));
-echo json_decode(json_encode($response))->result;
-echo $response[2]->result;
-echo var_dump($response);
-echo get_object_vars(var_dump($response));
+echo json_decode(json_encode($response->result));
