@@ -196,7 +196,19 @@ do
                         create_gigatxt_status="$(tput bold)$(tput setaf 1)$create_gigatxt_status$(tput sgr0)"
                         fi
                 echo "* $(tput setaf 6)Adding GigabyteIO text label: $create_gigatxt_status$(tput sgr0)"
-        
+        security_level=med #help|high|med|low|eoff
+        cache_level=agg #agg|basic
+        ipv6_mode=0 #0\1
+        rocket_load=a #0|a|m    a =  automatic/ m = manual
+        minify=7 #0 off | 1 js only | 2 css only | 3 js + css | 4 html only | 5 js + html | 6 css + html | 7 css js html
+        adjust_settings_status=($( php -f /usr/local/src/gigabyteio/cloudflare/change-settings.php $1 $2 $i $security_level $cache_level $ipv6_mode $rocket_load $minify ))
+                if [ $adjust_settings_status = successsuccesssuccesssuccesssuccess ]; then
+                        adjust_settings_status="$(tput bold)$(tput setaf 2)$adjust_settings_status$(tput sgr0)"
+                else
+                        adjust_settings_status="$(tput bold)$(tput setaf 1)$adjust_settings_status$(tput sgr0)"
+                fi
+                echo "* $(tput setaf 6)Adding GigabyteIO text label: $adjust_settings_status$(tput sgr0)"
+
 done
 # http://www.olark.com/gtalk/check_srv
 # https://support.google.com/a/answer/112038 < --- Domain verify stuff from Google
