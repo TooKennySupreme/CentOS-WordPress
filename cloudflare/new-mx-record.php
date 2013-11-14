@@ -12,5 +12,5 @@ $weight = $argv[7];
 require( dirname(__FILE__) . '/cloudflare-api.php' );
 
 $cf = new cloudflare_api("$email", "$apikey");
-$response = $cf->rec_new("$domain", "$type", "$name", "$content", "3600", "$weight");
+$response = $cf->rec_new("$domain", "$type", "$name", "$content", "3600", "", "$weight");
 echo $response->result;
