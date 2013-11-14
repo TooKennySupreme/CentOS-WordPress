@@ -14,6 +14,7 @@ srv_ttl=3600 # one hour
 a_ttl=604800 # one week
 cname_ttl=86400 # one day
 direct_connect=0
+ip_address=$(curl -silent ifconfig.me) #get public ip from ipconfig website
 result=($( php -f /usr/local/src/gigabyteio/cloudflare/get-domains.php $1 $2 ))
 total_sites=${#result[@]} # might be useful
 for i in "${result[@]}"
@@ -30,13 +31,13 @@ do
                 echo "* $(tput setaf 6)Removing record ID $j from $i's zone file: $delete_status$(tput sgr0)"
         done
         # Create A name pointing to IP address
-        create_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i A $i $3 ))
+        create_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i A $i $ip_address ))
                 if [ $create_status = success ]; then
                         create_status="$(tput bold)$(tput setaf 2)$create_status$(tput sgr0)"
                 else
                         create_status="$(tput bold)$(tput setaf 1)$create_status$(tput sgr0)"
                         fi
-                echo "* $(tput setaf 6)Adding A record pointing $i to this server's IP address ($3): $create_status$(tput sgr0)"
+                echo "* $(tput setaf 6)Adding A record pointing $i to this server's IP address ($ip_address): $create_status$(tput sgr0)"
         # Create CNAME records
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME www $i ))
                 if [ $create_cname_status = success ]; then
