@@ -177,13 +177,13 @@ do
         for ((n=0;n<15;n++))
         do
         # email apikey domain priority service servicename protocol weight port
-        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i $priority[$n] $service[$n] $srvname $protocol $weight $port[$n] $target[$n] ))
+        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i ${priority[$n]} ${service[$n]} $srvname $protocol $weight ${port[$n]} ${target[$n]} ))
                 if [ $create_srv_status = success ]; then
                         create_srv_status="$(tput bold)$(tput setaf 2)$create_srv_status$(tput sgr0)"
                 else
                         create_srv_status="$(tput bold)$(tput setaf 1)$create_srv_status$(tput sgr0)"
                         fi
-                echo "* $(tput setaf 6)Adding SRV record for $i (TTL: $srv_ttl Service: $service[$n] $protocol Priority: $priority[$n] Weight: $weight Port: $port[$n] Target: $target[$i]): $create_srv_status$(tput sgr0)"
+                echo "* $(tput setaf 6)Adding SRV record for $i (TTL: $srv_ttl Service: ${service[$n]} $protocol Priority: ${priority[$n]} Weight: $weight Port: ${port[$n]} Target: ${target[$i]}): $create_srv_status$(tput sgr0)"
         done
         fi
         #if [[ $google_apps_spf -eq $zero ]]; then
@@ -204,8 +204,10 @@ do
         minify=7 #0 off | 1 js only | 2 css only | 3 js + css | 4 html only | 5 js + html | 6 css + html | 7 css js html
         adjust_settings_status=($( php -f /usr/local/src/gigabyteio/cloudflare/change-settings.php $1 $2 $i $security_level $cache_level $ipv6_mode $rocket_load $minify ))
                 if [ $adjust_settings_status = successsuccesssuccesssuccesssuccess ]; then
+                        adjust_settings_status=success
                         adjust_settings_status="$(tput bold)$(tput setaf 2)$adjust_settings_status$(tput sgr0)"
                 else
+                        adjust_settings_status=FAILED
                         adjust_settings_status="$(tput bold)$(tput setaf 1)$adjust_settings_status$(tput sgr0)"
                 fi
                 echo "* $(tput setaf 6)Adding GigabyteIO text label: $adjust_settings_status$(tput sgr0)"
