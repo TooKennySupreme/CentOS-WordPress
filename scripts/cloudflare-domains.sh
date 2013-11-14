@@ -12,10 +12,15 @@ google_apps_mx=0
 google_apps_srv=0
 ttl=3600 # Add this in
 direct_connect=0
+cname_names=( calendar drive mail sites github tumblr bitbucket blogger )
+cname_domains=( ghs.googlehosted.com ghs.googlehosted.com ghs.googlehosted.com ghs.googlehosted.com $githubid.github.io domains.tumblr.com bitbucket.org ghs.google.com )
 
 result=($( php -f /usr/local/src/gigabyteio/cloudflare/get-domains.php $1 $2 ))
+counter=
 for i in "${result[@]}"
 do
+echo "HEREHEREHRHEHRHEHRE ${#result[$i]}"
+echo $i
         records=($( php -f /usr/local/src/gigabyteio/cloudflare/get-records.php $1 $2 $i ))
         for j in "${records[@]}"
         do
@@ -184,8 +189,8 @@ do
                        echo $j
               done
         fi
-        if [[ $google_apps_spf -eq $zero ]]; then
-        fi
+        #if [[ $google_apps_spf -eq $zero ]]; then
+        #fi
 #v=spf1 a include:_spf.google.com ~all
         # Add GigabyteIO label
         create_gigatxt_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i TXT gigabyteio "Powered by GigabyteIO (http://gigabyte.io/)" ))
