@@ -211,7 +211,7 @@ do
                         adjust_settings_status=FAILED
                         adjust_settings_status="$(tput bold)$(tput setaf 1)$adjust_settings_status$(tput sgr0)"
                 fi
-                echo "* $(tput setaf 6)Adjusting settings (Security-Level: Medium, Cache-Level: Aggressive, IPv6-Support: Off, Rocket-Loading: Automatic, Minify: HTML/JS/CSS): $adjust_settings_status$(tput sgr0)"
+                echo "* $(tput setaf 6)Adjusting settings for $i (Security-Level: Medium, Cache-Level: Aggressive, IPv6-Support: Off, Rocket-Loading: Automatic, Minify: HTML/JS/CSS): $adjust_settings_status$(tput sgr0)"
 
 done
 # http://www.olark.com/gtalk/check_srv
