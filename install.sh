@@ -14,6 +14,7 @@ echo "* $(tput setaf 6)Changing directory to current users home directory$(tput 
 cd ~
 if [ -f /usr/local/src/gigabyteio/install.sh ];
 then
+  echo ""
   read -p "$(tput bold)$(tput setaf 3)Warning:$(tput sgr0) The GigabyteIO directory already exists! Delete it and continue the installation? [Y/N] " INSTALL_CHOICE
   case "$INSTALL_CHOICE" in
     y|Y ) echo "" && echo "* $(tput setaf 6)Removing /usr/local/src/gigabyteio$(tput sgr0)" && rm -rf /usr/local/src/gigabyteio;;
