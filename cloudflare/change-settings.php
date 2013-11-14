@@ -34,7 +34,7 @@ $response = $cf->sec_lvl($domain, $security);
 echo $response->result;
 $response = $cf->cache_lvl($domain, $cache);
 echo $response->result;
-$response = $cf->ipv6($domain, $ipv6);
+$response = $cf->ipv46($domain, $ipv6);
 echo $response->result;
 $response = $cf->async($domain, $rocket);
 echo $response->result;
