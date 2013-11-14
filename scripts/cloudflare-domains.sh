@@ -176,7 +176,7 @@ do
         for ((n=0;n<15;n++))
         do
         # email apikey domain priority service servicename protocol weight port
-        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i $priority[$n] $service[$n] $srvname $protocol $weight $port[$n] ))
+        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i $priority[$n] $service[$n] $srvname $protocol $weight $port[$n] $target[$n] ))
                 if [ $create_srv_status = success ]; then
                         create_srv_status="$(tput bold)$(tput setaf 2)$create_srv_status$(tput sgr0)"
                 else
