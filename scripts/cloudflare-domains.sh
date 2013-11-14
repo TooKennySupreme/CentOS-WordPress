@@ -10,7 +10,9 @@ bitbucket_cname=0
 blogger_cname=1
 google_apps_mx=0
 google_apps_srv=0
-ttl=3600 # Add this in
+srv_ttl=3600 # one hour
+a_ttl=604800 # one week
+cname_ttl=86400 # one day
 direct_connect=0
 result=($( php -f /usr/local/src/gigabyteio/cloudflare/get-domains.php $1 $2 ))
 total_sites=${#result[@]} # might be useful
@@ -40,7 +42,7 @@ do
                 if [ $create_cname_status = success ]; then
                         create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
                 else
-                        delete_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
+                        create_cname_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
                 echo "* $(tput setaf 6)Pointing www.$i to $i: $create_cname_status$(tput sgr0)"
         if [[ $google_apps_cnames -eq $zero ]]; then
@@ -48,149 +50,137 @@ do
                 if [ $create_cname_status = success ]; then
                         create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
                 else
-                        delete_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
+                        create_cname_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
                 echo "* $(tput setaf 6)Pointing calendar.$i to Google Apps: $create_cname_status$(tput sgr0)"
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME drive ghs.googlehosted.com ))
-                for j in "${create_status[@]}"
-                do
-                        if [ $j = success ]; then
-                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
-                        else
-                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                if [ $create_cname_status = success ]; then
+                        create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
+                else
+                        create_cname_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
-                        echo "* $(tput setaf 6)Pointing drive.$i to Google Apps: $j$(tput sgr0)"
-                        echo $j
-                done
+                echo "* $(tput setaf 6)Pointing drive.$i to Google Apps: $create_cname_status$(tput sgr0)"
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME mail ghs.googlehosted.com ))
-                for j in "${create_status[@]}"
-                do
-                        if [ $j = success ]; then
-                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
-                        else
-                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                if [ $create_cname_status = success ]; then
+                        create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
+                else
+                        create_cname_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
-                        echo "* $(tput setaf 6)Pointing mail.$i to Google Apps: $j$(tput sgr0)"
-                        echo $j
-                done
+                echo "* $(tput setaf 6)Pointing mail.$i to Google Apps: $create_cname_status$(tput sgr0)"
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME sites ghs.googlehosted.com ))
-                for j in "${create_status[@]}"
-                do
-                        if [ $j = success ]; then
-                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
-                        else
-                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                 if [ $create_cname_status = success ]; then
+                        create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
+                else
+                        create_cname_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
-                        echo "* $(tput setaf 6)Pointing sites.$i to Google Apps: $j$(tput sgr0)"
-                        echo $j
-                done
+                echo "* $(tput setaf 6)Pointing sites.$i to Google Apps: $create_cname_status$(tput sgr0)"
         fi
         if [[ $github_cname -eq $zero ]]; then
                 #https://help.github.com/articles/setting-up-a-custom-domain-with-pages $githubid.github.io
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME github $githubid.github.io ))
-                for j in "${create_status[@]}"
-                do
-                        if [ $j = success ]; then
-                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
-                        else
-                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                if [ $create_cname_status = success ]; then
+                        create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
+                else
+                        create_cname_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
-                        echo "* $(tput setaf 6)Pointing github.$i to $githubid.github.io: $j$(tput sgr0)"
-                        echo $j
-                done
+                echo "* $(tput setaf 6)Pointing github.$i to $githubid.github.io: $create_cname_status$(tput sgr0)"
         fi
         if [[ $tumblr_cname -eq $zero ]]; then
                 #http://www.tumblr.com/docs/en/custom_domains
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME tumblr domains.tumblr.com ))
-                for j in "${create_status[@]}"
-                do
-                        if [ $j = success ]; then
-                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
-                        else
-                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                if [ $create_cname_status = success ]; then
+                        create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
+                else
+                        create_cname_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
-                        echo "* $(tput setaf 6)Pointing tumblr.$i to domains.tumblr.com: $j$(tput sgr0)"
-                        echo $j
-                done
+                echo "* $(tput setaf 6)Pointing tumblr.$i to domains.tumblr.com: $create_cname_status$(tput sgr0)"
         fi
         if [[ $direct_connect -eq $zero ]]; then
                 #http://www.tumblr.com/docs/en/custom_domains
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME direct $i ))
-                for j in "${create_status[@]}"
-                do
-                        if [ $j = success ]; then
-                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
-                        else
-                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                if [ $create_cname_status = success ]; then
+                        create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
+                else
+                        create_cname_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
-                        echo "* $(tput setaf 6)Pointing direct.$i to $i with Cloudflare disabled: $j$(tput sgr0)"
-                        echo $j
-                done
+                echo "* $(tput setaf 6)Pointing direct.$i to $i with Cloudflare disabled: $create_cname_status$(tput sgr0)"
         fi
         if [[ $bitbucket_cname -eq $zero ]]; then
                 #Bitbucket
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME bitbucket bitbucket.org ))
-                for j in "${create_status[@]}"
-                do
-                        if [ $j = success ]; then
-                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
-                        else
-                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                if [ $create_cname_status = success ]; then
+                        create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
+                else
+                        create_cname_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
-                        echo "* $(tput setaf 6)Pointing bitbucket.$i to bitbucket.org: $j$(tput sgr0)"
-                        echo $j
-                done
+                echo "* $(tput setaf 6)Pointing bitbucket.$i to bitbucket.org: $create_cname_status$(tput sgr0)"
         fi
         if [[ $blogger_cname -eq $zero ]]; then
                 #Blogger
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME blogger ghs.google.com ))
-                for j in "${create_status[@]}"
-                do
-                        if [ $j = success ]; then
-                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
-                        else
-                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                if [ $create_cname_status = success ]; then
+                        create_cname_status="$(tput bold)$(tput setaf 2)$create_cname_status$(tput sgr0)"
+                else
+                        create_cname_status="$(tput bold)$(tput setaf 1)$create_cname_status$(tput sgr0)"
                         fi
-                        echo "* $(tput setaf 6)Pointing blogger.$i to ghs.google.com: $j$(tput sgr0)"
-                        echo $j
-                done
+                echo "* $(tput setaf 6)Pointing blogger.$i to ghs.google.com: $create_cname_status$(tput sgr0)"
         fi
         if [[ $google_apps_mx -eq $zero ]]; then
         #Create Google Apps mail MX records
         create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX.L.GOOGLE.COM "1" ))
-                for j in "${create_status[@]}"
-                do
-                        echo $j
-                done
+                if [ $create_mx_status = success ]; then
+                        create_mx_status="$(tput bold)$(tput setaf 2)$create_mx_status$(tput sgr0)"
+                else
+                        create_mx_status="$(tput bold)$(tput setaf 1)$create_mx_status$(tput sgr0)"
+                        fi
+                echo "* $(tput setaf 6)Adding mail server record for $i pointing to ASPMX.L.GOOGLE.COM with a priority of 1: $create_mx_status$(tput sgr0)"
         create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ALT1.ASPMX.L.GOOGLE.COM "5" ))
-                for j in "${create_status[@]}"
-                do
-                        echo $j
-                done
+                 if [ $create_mx_status = success ]; then
+                        create_mx_status="$(tput bold)$(tput setaf 2)$create_mx_status$(tput sgr0)"
+                else
+                        create_mx_status="$(tput bold)$(tput setaf 1)$create_mx_status$(tput sgr0)"
+                        fi
+                echo "* $(tput setaf 6)Adding mail server record for $i pointing to ALT1.ASPMX.L.GOOGLE.COM with a priority of 5: $create_mx_status$(tput sgr0)"
         create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ALT2.ASPMX.L.GOOGLE.COM "5" ))
-                for j in "${create_status[@]}"
-                do
-                        echo $j
-                done
+                if [ $create_mx_status = success ]; then
+                        create_mx_status="$(tput bold)$(tput setaf 2)$create_mx_status$(tput sgr0)"
+                else
+                        create_mx_status="$(tput bold)$(tput setaf 1)$create_mx_status$(tput sgr0)"
+                        fi
+                echo "* $(tput setaf 6)Adding mail server record for $i pointing to ALT2.ASPMX.L.GOOGLE.COM with a priority of 5: $create_mx_status$(tput sgr0)"
         create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX2.GOOGLEMAIL.COM "10" ))
-                for j in "${create_status[@]}"
-                do
-                        echo $j
-                done
+                if [ $create_mx_status = success ]; then
+                        create_mx_status="$(tput bold)$(tput setaf 2)$create_mx_status$(tput sgr0)"
+                else
+                        create_mx_status="$(tput bold)$(tput setaf 1)$create_mx_status$(tput sgr0)"
+                        fi
+                echo "* $(tput setaf 6)Adding mail server record for $i pointing to ASPMX2.GOOGLEMAIL.COM with a priority of 10: $create_mx_status$(tput sgr0)"
         create_mx_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-mx-record.php $1 $2 $i MX $i ASPMX3.GOOGLEMAIL.COM "10" ))
-                for j in "${create_status[@]}"
-                do
-                        echo $j
-                done
+                if [ $create_mx_status = success ]; then
+                        create_mx_status="$(tput bold)$(tput setaf 2)$create_mx_status$(tput sgr0)"
+                else
+                        create_mx_status="$(tput bold)$(tput setaf 1)$create_mx_status$(tput sgr0)"
+                        fi
+                echo "* $(tput setaf 6)Adding mail server record for $i pointing to ASPMX3.GOOGLEMAIL.COM with a priority of 10: $create_mx_status$(tput sgr0)"
         fi
         if [[ $google_apps_srv -eq $zero ]]; then
         # Creating SRV records for Google Apps chat compatibility
-        # What is Piro?
-        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i SRV $i "3600" "1" "1" _xmpp-client thebestsites.com tcp "0" "5222" talk.l.google.com ))
-               for j in "${create_status[@]}"
-               do
-                       echo $j
-              done
+        srv_ttl="3600"
+        service=( "_xmpp-server" "_xmpp-server" "_xmpp-server" "_xmpp-server" "_xmpp-server" "_jabber" "_jabber" "_jabber" "_jabber" "_jabber" "_xmpp-client" "_xmpp-client" "_xmpp-client" "_xmpp-client" "_xmpp-client" )
+        priority=( "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" )
+        weight="0"
+        port=( "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5222" "5222" "5222" "5222" "5222" )
+        target=( "xmpp-server.l.google.com" "alt1.xmpp-server.l.google.com" "alt2.xmpp-server.l.google.com" "alt3.xmpp-server.l.google.com" "alt4.xmpp-server.l.google.com" "xmpp-server.l.google.com" "alt1.xmpp-server.l.google.com" "alt2.xmpp-server.l.google.com" "alt3.xmpp-server.l.google.com" "alt4.xmpp-server.l.google.com" "xmpp.l.google.com" "alt1.xmpp.l.google.com" "alt2.xmpp.l.google.com" "alt3.xmpp.l.google.com" "alt4.xmpp.l.google.com" )
+        for ((n=0;n<15;n++))
+        do
+        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i SRV $i $srv_ttl "1" "1" $service thebestsites.com tcp "0" "5222" talk.l.google.com ))
+                if [ $create_srv_status = success ]; then
+                        create_srv_status="$(tput bold)$(tput setaf 2)$create_srv_status$(tput sgr0)"
+                else
+                        create_srv_status="$(tput bold)$(tput setaf 1)$create_srv_status$(tput sgr0)"
+                        fi
+                echo "* $(tput setaf 6)Adding SRV record for $i (TTL: $srv_ttl Service: $service[$n] Priority: $priority[$n] Weight: $weight Port: $port[$n] Target: $target[$i]): $create_srv_status$(tput sgr0)"
+        done
         fi
         #if [[ $google_apps_spf -eq $zero ]]; then
         #fi
