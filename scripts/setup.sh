@@ -119,6 +119,7 @@ WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 SSH_CLIENT_IP_ADDRESS=$(echo $SSH_CONNECTION | cut -f1 -d' ')
 SSH_SERVER_IP_ADDRESS=$(echo $SSH_CONNECTION | cut -f3 -d' ')
+IP_ADDRESS=ip_address=$(curl -silent ifconfig.me) #get public ip from ipconfig website
 echo "* $(tput setaf 6)Performing a system update (excluding kernel and setup)$(tput sgr0)"
 yum -y --quiet --exclude=kernel* --exclude=setup* update
 echo "* $(tput setaf 6)Installing some dependencies (bc and expect)$(tput sgr0)"
