@@ -41,22 +41,45 @@ do
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME calendar ghs.googlehosted.com ))
                 for j in "${create_status[@]}"
                 do
+                        if [ $j = success ]; then
+                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
+                        else
+                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                        fi
+                        echo "* $(tput setaf 6)Pointing drive.$i to Google Apps: $j$(tput sgr0)"
                         echo $j
                 done
-                
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME drive ghs.googlehosted.com ))
                 for j in "${create_status[@]}"
                 do
+                        if [ $j = success ]; then
+                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
+                        else
+                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                        fi
+                        echo "* $(tput setaf 6)Pointing drive.$i to Google Apps: $j$(tput sgr0)"
                         echo $j
                 done
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME mail ghs.googlehosted.com ))
                 for j in "${create_status[@]}"
                 do
+                        if [ $j = success ]; then
+                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
+                        else
+                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                        fi
+                        echo "* $(tput setaf 6)Pointing mail.$i to Google Apps: $j$(tput sgr0)"
                         echo $j
                 done
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME sites ghs.googlehosted.com ))
                 for j in "${create_status[@]}"
                 do
+                        if [ $j = success ]; then
+                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
+                        else
+                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                        fi
+                        echo "* $(tput setaf 6)Pointing sites.$i to Google Apps: $j$(tput sgr0)"
                         echo $j
                 done
         fi
@@ -65,6 +88,12 @@ do
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME github $githubid.github.io ))
                 for j in "${create_status[@]}"
                 do
+                        if [ $j = success ]; then
+                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
+                        else
+                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                        fi
+                        echo "* $(tput setaf 6)Pointing github.$i to $githubid.github.io: $j$(tput sgr0)"
                         echo $j
                 done
         fi
@@ -73,6 +102,12 @@ do
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME tumblr domains.tumblr.com ))
                 for j in "${create_status[@]}"
                 do
+                        if [ $j = success ]; then
+                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
+                        else
+                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                        fi
+                        echo "* $(tput setaf 6)Pointing tumblr.$i to domains.tumblr.com: $j$(tput sgr0)"
                         echo $j
                 done
         fi
@@ -81,6 +116,12 @@ do
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME direct $i ))
                 for j in "${create_status[@]}"
                 do
+                        if [ $j = success ]; then
+                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
+                        else
+                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                        fi
+                        echo "* $(tput setaf 6)Pointing direct.$i to $i with Cloudflare disabled: $j$(tput sgr0)"
                         echo $j
                 done
         fi
@@ -89,6 +130,12 @@ do
         create_cname_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i CNAME bitbucket bitbucket.org ))
                 for j in "${create_status[@]}"
                 do
+                        if [ $j = success ]; then
+                        j = "$(tput bold)$(tput setaf 2)$j$(tput sgr0)"
+                        else
+                        j = "$(tput bold)$(tput setaf 1)$j$(tput sgr0)"
+                        fi
+                        echo "* $(tput setaf 6)Pointing bitbucket.$i to bitbucket.org: $j$(tput sgr0)"
                         echo $j
                 done
         fi
