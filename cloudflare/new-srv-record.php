@@ -20,5 +20,5 @@ $target = $argv[10];
 require( dirname(__FILE__) . '/cloudflare-api.php' );
 
 $cf = new cloudflare_api("$email", "$apikey");
-$response = $cf->rec_new($domain, $type, $name, $content, $ttl, $mode, $piro, $service, $srvname, $protocol, $weight, $port, $target);
+$response = $cf->rec_new($domain, $type, $name, $content, $ttl, $mode, $priority, $service, $srvname, $protocol, $weight, $port, $target);
 echo $response->result;
