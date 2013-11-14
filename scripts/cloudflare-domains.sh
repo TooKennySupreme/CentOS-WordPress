@@ -165,21 +165,23 @@ do
         fi
         if [[ $google_apps_srv -eq $zero ]]; then
         # Creating SRV records for Google Apps chat compatibility
-        srv_ttl="3600"
         service=( "_xmpp-server" "_xmpp-server" "_xmpp-server" "_xmpp-server" "_xmpp-server" "_jabber" "_jabber" "_jabber" "_jabber" "_jabber" "_xmpp-client" "_xmpp-client" "_xmpp-client" "_xmpp-client" "_xmpp-client" )
         priority=( "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" )
         weight="0"
+        protocol="tcp"
+        srvname="Google Apps"
         port=( "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5222" "5222" "5222" "5222" "5222" )
         target=( "xmpp-server.l.google.com" "alt1.xmpp-server.l.google.com" "alt2.xmpp-server.l.google.com" "alt3.xmpp-server.l.google.com" "alt4.xmpp-server.l.google.com" "xmpp-server.l.google.com" "alt1.xmpp-server.l.google.com" "alt2.xmpp-server.l.google.com" "alt3.xmpp-server.l.google.com" "alt4.xmpp-server.l.google.com" "xmpp.l.google.com" "alt1.xmpp.l.google.com" "alt2.xmpp.l.google.com" "alt3.xmpp.l.google.com" "alt4.xmpp.l.google.com" )
         for ((n=0;n<15;n++))
         do
-        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i SRV $i $srv_ttl "1" "1" $service thebestsites.com tcp "0" "5222" talk.l.google.com ))
+        # email apikey domain priority service servicename protocol weight port
+        create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i $priority[$n] $service[$n] $srvname $protocol $weight $port[$n] ))
                 if [ $create_srv_status = success ]; then
                         create_srv_status="$(tput bold)$(tput setaf 2)$create_srv_status$(tput sgr0)"
                 else
                         create_srv_status="$(tput bold)$(tput setaf 1)$create_srv_status$(tput sgr0)"
                         fi
-                echo "* $(tput setaf 6)Adding SRV record for $i (TTL: $srv_ttl Service: $service[$n] Priority: $priority[$n] Weight: $weight Port: $port[$n] Target: $target[$i]): $create_srv_status$(tput sgr0)"
+                echo "* $(tput setaf 6)Adding SRV record for $i (TTL: $srv_ttl Service: $service[$n] $protocol Priority: $priority[$n] Weight: $weight Port: $port[$n] Target: $target[$i]): $create_srv_status$(tput sgr0)"
         done
         fi
         #if [[ $google_apps_spf -eq $zero ]]; then
