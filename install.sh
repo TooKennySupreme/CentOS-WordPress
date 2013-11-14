@@ -10,6 +10,8 @@ echo ""
 echo ""
 echo "$(tput bold)$(tput setaf 2)Running preliminary tasks$(tput sgr0)"
 echo ""
+echo "* $(tput setaf 6)Changing directory to current users home directory$(tput sgr0)"
+cd ~
 if [ -f /usr/local/src/gigabyteio/install.sh ];
 then
   read -p "$(tput bold)$(tput setaf 3)Warning:$(tput sgr0) The GigabyteIO directory already exists! Delete it and continue the installation? [Y/N] " INSTALL_CHOICE
@@ -19,8 +21,6 @@ then
     * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
   esac
 fi
-echo "* $(tput setaf 6)Changing directory to current users home directory$(tput sgr0)"
-cd ~
 echo "* $(tput setaf 6)Installing git$(tput sgr0)"
 yum -y --quiet install git
 echo "* $(tput setaf 6)Cloning the GigabyteIO git repository to /usr/local/src/gigabyteio$(tput sgr0)"
