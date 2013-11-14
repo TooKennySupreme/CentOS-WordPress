@@ -182,8 +182,9 @@ do
                         create_srv_status="$(tput bold)$(tput setaf 2)$create_srv_status$(tput sgr0)"
                 else
                         create_srv_status="$(tput bold)$(tput setaf 1)$create_srv_status$(tput sgr0)"
-                        fi
-                echo "* $(tput setaf 6)Adding SRV record for $i (TTL: $srv_ttl Service: ${service[$n]} $protocol Priority: ${priority[$n]} Weight: $weight Port: ${port[$n]} Target: ${target[$i]}): $create_srv_status$(tput sgr0)"
+                fi
+                echo "* $(tput setaf 6)Adding SRV record for $i: $create_srv_status$(tput sgr0)"
+                #(TTL: $srv_ttl Service: ${service[$n]} $protocol Priority: ${priority[$n]} Weight: $weight Port: ${port[$n]} Target: ${target[$i]})
         done
         fi
         #if [[ $google_apps_spf -eq $zero ]]; then
@@ -195,7 +196,7 @@ do
                         create_gigatxt_status="$(tput bold)$(tput setaf 2)$create_gigatxt_status$(tput sgr0)"
                 else
                         create_gigatxt_status="$(tput bold)$(tput setaf 1)$create_gigatxt_status$(tput sgr0)"
-                        fi
+                fi
                 echo "* $(tput setaf 6)Adding GigabyteIO text label: $create_gigatxt_status$(tput sgr0)"
         security_level=med #help|high|med|low|eoff
         cache_level=agg #agg|basic
