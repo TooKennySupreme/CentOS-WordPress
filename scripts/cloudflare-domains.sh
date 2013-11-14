@@ -20,10 +20,12 @@ do
         for j in "${records[@]}"
         do
                 delete_status=($( php -f /usr/local/src/gigabyteio/cloudflare/delete.php $1 $2 $i $j ))
-                for k in "${delete_status[@]}"
-                do
-                        echo $k
-                done
+                if [ $delete_status = success ]; then
+                        j = "$(tput bold)$(tput setaf 2)$j TESTYO$(tput sgr0)"
+                else
+                        j = "$(tput bold)$(tput setaf 1)$j NUMBA2$(tput sgr0)"
+                        fi
+                echo "* $(tput setaf 6)Removing record ID $j from $i's zone file: $delete_status$(tput sgr0)"
         done
         # Create A name pointing to IP address
         create_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i A $i $3 ))
