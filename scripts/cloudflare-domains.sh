@@ -171,7 +171,7 @@ do
         priority=( "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" "5" "20" "20" "20" "20" )
         weight="0"
         protocol="tcp"
-        srvname="Google Apps"
+        srvname="googleapps"
         port=( "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5269" "5222" "5222" "5222" "5222" "5222" )
         target=( "xmpp-server.l.google.com" "alt1.xmpp-server.l.google.com" "alt2.xmpp-server.l.google.com" "alt3.xmpp-server.l.google.com" "alt4.xmpp-server.l.google.com" "xmpp-server.l.google.com" "alt1.xmpp-server.l.google.com" "alt2.xmpp-server.l.google.com" "alt3.xmpp-server.l.google.com" "alt4.xmpp-server.l.google.com" "xmpp.l.google.com" "alt1.xmpp.l.google.com" "alt2.xmpp.l.google.com" "alt3.xmpp.l.google.com" "alt4.xmpp.l.google.com" )
         for ((n=0;n<15;n++))
