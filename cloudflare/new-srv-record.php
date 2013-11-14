@@ -24,4 +24,4 @@ $response = $cf->rec_new("$domain", 'SRV', "$name", "", '3600', "", "$priority",
 #echo json_encode($response); not tested
 #var_dump($response);
 #print_r($response);
-get_object_vars($response);
+echo get_object_vars($response);
