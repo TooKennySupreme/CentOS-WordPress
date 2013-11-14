@@ -3,11 +3,11 @@
 $email = $argv[1];
 $apikey = $argv[2];
 $domain = $argv[3];
-$type = "SRV";
+#$type = "SRV";
 $name = $argv[3];
 $content = $argv[3];
-$ttl = "3600"; # Recommended by google
-$mode = "0"; # Disabled cloudflare
+#$ttl = "3600"; # Recommended by google
+#$mode = "0"; # Disabled cloudflare
 $priority = $argv[4];
 $service = $argv[5];
 $srvname = $argv[6];
@@ -20,6 +20,6 @@ $target = $argv[10];
 require( dirname(__FILE__) . '/cloudflare-api.php' );
 
 $cf = new cloudflare_api("$email", "$apikey");
-$response = $cf->rec_new($domain, $type, $name, $content, $ttl, $mode, $priority, $service, $srvname, $protocol, $weight, $port, $target);
+$response = $cf->rec_new($domain, SRV, $name, $content, 3600, 0, $priority, $service, $srvname, $protocol, $weight, $port, $target);
 echo var_dump($response);
 echo $response->result;
