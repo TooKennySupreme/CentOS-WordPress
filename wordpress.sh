@@ -7,9 +7,17 @@ echo "$(tput bold)$(tput setaf 6)Setting up a new WordPress website...$(tput sgr
 echo ""
 read -p 'Enter WordPress homepage URL (e.g. yourwebsite.com): ' CLI_WEBSITE
 echo ""
+read -p "Enter a website title for $CLI_WEBSITE: " SITE_TITLE
+echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Using the following prompt you will specify the folder that the WordPress core files are installed to (e.g. http://yourwebsite.com/BACKEND_PATH_HERE/wp-login). This improves security, provides better organization, and makes updating WordPress easier for those who would like to clone the latest WordPress development release."
 echo ""
 read -p 'Enter a backend path for improved security: ' CLI_BACKEND_PATH
+echo ""
+read -p "Enter the administrator's user name: " ADMIN_USER
+echo ""
+read -p -s "Enter the administrator's password: " ADMIN_PASSWORD
+echo ""
+read -p "Enter the administrator's e-mail address: " ADMIN_EMAIL
 echo ""
 echo "* $(tput setaf 6)Declaring potentially customizable script variables in wordpress.sh$(tput sgr0)"
 # NOTE: NOT ALL OF THESE VARIABLES ARE REQUIRED... THEY WERE COPIED FROM setup.sh
@@ -72,10 +80,10 @@ mysql -uroot -p --verbose -e "CREATE DATABASE $CLI_DATABASE_NAME; GRANT ALL PRIV
 echo "* $(tput setaf 6)Copying wp-config.php template from /$POOR_IO_HOME/$WORDPRESS_FOLDER/wp-config-options.php to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php$(tput sgr0)"
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/wp-config-options.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 echo "* $(tput setaf 6)Inserting database connection settings into wp-config.php$(tput sgr0)"
-sed -i "s/DB_NAME_HANDLE/${CLI_DATABASE_NAME}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
-sed -i "s/DB_USER_HANDLE/${CLI_DATABASE_USER}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
-sed -i "s/DB_PASSWORD_HANDLE/${CLI_DATABASE_PASSWORD}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
-sed -i "s/TABLE_PREFIX_HANDLE/${CLI_PREFIX_RANDOM}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
+sed -i "s/DB_NAME_HANDLE/$CLI_DATABASE_NAME/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
+sed -i "s/DB_USER_HANDLE/$CLI_DATABASE_USER/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
+sed -i "s/DB_PASSWORD_HANDLE/$CLI_DATABASE_PASSWORD/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
+sed -i "s/TABLE_PREFIX_HANDLE/$CLI_PREFIX_RANDOM/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 echo "* $(tput setaf 6)Inserting secure keys from https://api.wordpress.org/secret-key/1.1/salt/ into wp-config.php$(tput sgr0)"
 perl -i -pe '
   BEGIN { 
@@ -83,9 +91,8 @@ perl -i -pe '
   } 
   s/{AUTH-KEYS-SALTS}/$keysalts/g
 ' /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
-echo "* $(tput setaf 6)Inserting the backend path into wp-config.php$(tput sgr0)"
-sed -i "s/BACKEND_PATH_HANDLE/${CLI_BACKEND_PATH}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
-
+echo "* $(tput setaf 6)Inserting the backend path ($CLI_BACKEND_PATH) into wp-config.php$(tput sgr0)"
+sed -i "s/BACKEND_PATH_HANDLE/$CLI_BACKEND_PATH/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 # Download WordPress core files
 echo "* $(tput setaf 6)Changing directory to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH$(tput sgr0)"
 cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH
@@ -198,8 +205,8 @@ cp /$POOR_IO_HOME/gitclones/APC/object-cache.php /$WEBSITE_INSTALL_DIRECTORY/$CL
 # Add latest version of Shoestrap
 echo "* $(tput setaf 6)Changing directory to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes$(tput sgr0)"
 cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
-echo "* $(tput setaf 6)Getting custom version of Shoestrap$(tput sgr0)"
-git clone -q https://github.com/GigabyteIO/shoestrap.git
+echo "* $(tput setaf 6)Getting custom version of Roots.IO$(tput sgr0)"
+git clone -q https://github.com/GigabyteIO/roots.git
 
 # Remove default configuration and add new, optimized one
 echo "* $(tput setaf 6)Removing the default nginx configuration for current website$(tput sgr0)"
@@ -212,14 +219,17 @@ echo "* $(tput setaf 6)Copying index.php from /$POOR_IO_HOME/$WORDPRESS_FOLDER t
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index-template.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/index.php
 echo "* $(tput setaf 6)Adjusting index.php to point to custom WordPress directory$(tput sgr0)"
 sed -i "s/BACKENDPATH/$CLI_BACKEND_PATH/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/index.php
-echo "* $(tput setaf 6)Adjusting wp-config template for current website$(tput sgr0)"
+echo "* $(tput setaf 6)Adjusting nginx configuration for current website$(tput sgr0)"
 sed -i "s/REPLACETHIS/$CLI_WEBSITE/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 sed -i "s/BACKENDPATH/$CLI_BACKEND_PATH/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
+
 echo "* $(tput setaf 6)Adding \"Silence is golden\" index.php file to all custom directories$(tput sgr0)"
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/addons
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/includes
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
+echo "* $(tput setaf 6)Installing WordPress for $CLI_WEBSITE$(tput sgr0)"
+/root/.wp-cli/bin/wp core install --path=$CLI_BACKEND_PATH --url=$CLI_WEBSITE --title=$SITE_TITLE --admin_user=$ADMIN_USER --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL
 # Set nginx as owner
 echo "* $(tput setaf 6)Recursively changing ownership of /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public to nginx$(tput sgr0)"
 chown -Rf nginx:nginx /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public
