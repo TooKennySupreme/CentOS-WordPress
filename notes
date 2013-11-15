@@ -1,5 +1,4 @@
 # TASK LIST
-Use cloudflare for set up
 Finish wordpress installation of single sites
 Add password check for admin user
 Add prompt/config for IP address blocking
@@ -11,3 +10,6 @@ Figure out how to move uploads folder to root directory
 Figure out how custom folder structure affects caching with batcache.php/apc.php
 Finish prompts for wp admin/email nd stuff
 WP-CLI plugins nd wordpress setup
+Add .exp for wordpress setup
+
+Add outlook dns set up (if any centmin people ask for it - or pull for it;) )
