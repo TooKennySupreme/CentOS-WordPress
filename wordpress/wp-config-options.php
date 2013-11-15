@@ -25,14 +25,7 @@ $table_prefix = 'TABLE_PREFIX_HANDLE_';
 
 /* Authentication keys and salts */
 // Key generator tool: https://api.wordpress.org/secret-key/1.1/salt/
-define( 'AUTH_KEY', 'put your unique phrase here' );
-define( 'SECURE_AUTH_KEY', 'put your unique phrase here' );
-define( 'LOGGED_IN_KEY', 'put your unique phrase here' );
-define( 'NONCE_KEY', 'put your unique phrase here' );
-define( 'AUTH_SALT', 'AUTH_SALT_HANDLE' );
-define( 'SECURE_AUTH_SALT', 'SECURE_AUTH_SALT_HANDLE' );
-define( 'LOGGED_IN_SALT', 'LOGGED_IN_SALT_HANDLE' );
-define( 'NONCE_SALT', 'NONCE_SALT_HANDLE' );
+{AUTH-KEYS-SALTS}
 
 /* Security tweaks */
 define( 'DISALLOW_FILE_MODS', TRUE ); // Experiment with this for security purposes:
