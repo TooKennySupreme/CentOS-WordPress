@@ -1,0 +1,44 @@
+#!/usr/bin/expect -f
+# Usage: ./centmin-install.exp websiteurl "websitetitle" backendpath wpadminname wppass adminemail
+
+set $websiteurl [lindex $argv 0]
+set $websitetitle [lindex $argv 1]
+set $backendpath [lindex $argv 2]
+set $wpadminname [lindex $argv 3]
+set $wppass [lindex $argv 4]
+set $adminemail [lindex $argv 5] 
+ 
+# Makes it so that expect does not time out
+set timeout -1
+ 
+# Run the Centmin install
+spawn "bash /usr/local/src/gigabyteio/wordpress.sh"
+
+# Set buffer size
+match_max 100000
+
+# Wait for initial prompt
+expect "Enter WordPress homepage URL (e.g. yourwebsite.com): "
+
+# Send the install command
+send -- "$websiteurl\r"
+
+expect "Enter a website title for "
+send -- "$websitetitle\r"
+
+expect "Enter a backend path for improved security: "
+send -- "$backendpath\r"
+
+expect "Enter the WordPress administrator's user name: "
+send -- "$wpadminname\r"
+
+expect "Enter the WordPress administrator's password: "
+send -- "$wppass\r"
+
+expect "Re-enter the WordPress administrator password: "
+send -- "$wppass\r"
+
+expect "Enter the WordPress administrator's e-mail address: "
+send -- "$adminemail\r"
+
+expect eof
