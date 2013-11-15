@@ -1,15 +1,29 @@
 #!/bin/bash
 # Deletes all records and points records to IP address
 # ./cloudflare-domains.sh e-mail api-key type name content
+# SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off NOT FULLY IMPLEMENTED, YOU CAN ONLY CHOOSE] [github ID yyourID|off]
+if [ $3 != off ]; then
 githubid=gigabyteio
-zero=0
-google_apps_cnames=0
 github_cname=0
+else
+github_cname=off
+fi
+zero=0
+# These Cname records can be disabled by changing the 0 to something else
 tumblr_cname=0
 bitbucket_cname=0
 blogger_cname=1
+if [ $3 = google ]; then
 google_apps_mx=0
+google_apps_cnames=0
 google_apps_srv=0
+google_apps_spf=0
+else
+google_apps_mx=off
+google_apps_cnames=off
+google_apps_srv=off
+google_apps_spf=off
+fi
 srv_ttl=3600 # one hour
 a_ttl=604800 # one week
 cname_ttl=86400 # one day
@@ -19,10 +33,21 @@ echo "$(tput bold)$(tput setaf 2)Setting Up DNS via Cloudflare API$(tput sgr0)"
 echo ""
 echo "* $(tput setaf 6)Getting server's public IP address using ifconfig.me$(tput sgr0)"
 ip_address=$(curl ifconfig.me) #get public ip from ipconfig website
+echo "* $(tput setaf 6)IP address received: $ip_address$(tput sgr0)"
+echo "* $(tput setaf 6)Requesting list of domains from Cloudflare$(tput sgr0)"
 result=($( php -f /usr/local/src/gigabyteio/cloudflare/get-domains.php $1 $2 ))
+echo "* $(tput setaf 6)Response from Cloudflare received: $result$(tput sgr0)"
 total_sites=${#result[@]} # might be useful
 for i in "${result[@]}"
 do
+if [ $4 = on ]
+echo ""
+read -p "Configure DNS for $i? [Y/N] " SKIP_TO_NEXT_DOMAIN
+case "$SKIP_TO_NEXT_DOMAIN" in
+  y|Y ) echo "" && continue;;
+  n|N ) echo "" && echo "$(tput setaf 2)Configuring DNS Records for $i(tput sgr0)" && echo "";;
+  * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
+esac
         records=($( php -f /usr/local/src/gigabyteio/cloudflare/get-records.php $1 $2 $i ))
         for j in "${records[@]}"
         do
@@ -201,13 +226,23 @@ do
                         create_gigatxt_status="$(tput bold)$(tput setaf 1)$create_gigatxt_status$(tput sgr0)"
                 fi
                 echo "* $(tput setaf 6)Adding GigabyteIO text label: $create_gigatxt_status$(tput sgr0)"
+        if [[ $google_apps_spf -eq $zero ]]; then
         create_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i SPF spf "v=spf1 include:_spf.google.com +a +mx ~all" ))
                 if [ $create_status = success ]; then
                         create_status="$(tput bold)$(tput setaf 2)$create_status$(tput sgr0)"
                 else
                         create_status="$(tput bold)$(tput setaf 1)$create_status$(tput sgr0)"
                 fi
+                echo "* $(tput setaf 6)Adding Google Apps SPF entry: $create_status$(tput sgr0)"
+        else
+        create_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i SPF spf "v=spf1 +a +mx ~all" ))
+                if [ $create_status = success ]; then
+                        create_status="$(tput bold)$(tput setaf 2)$create_status$(tput sgr0)"
+                else
+                        create_status="$(tput bold)$(tput setaf 1)$create_status$(tput sgr0)"
+                fi
                 echo "* $(tput setaf 6)Adding SPF entry: $create_status$(tput sgr0)"
+        fi
         security_level=med #help|high|med|low|eoff
         cache_level=agg #agg|basic
         ipv6_mode=0 #0\1
