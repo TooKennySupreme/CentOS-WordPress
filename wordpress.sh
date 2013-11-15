@@ -14,7 +14,7 @@ echo ""
 echo "* $(tput setaf 6)Declaring potentially customizable script variables in wordpress.sh$(tput sgr0)"
 # NOTE: NOT ALL OF THESE VARIABLES ARE REQUIRED... THEY WERE COPIED FROM setup.sh
 # Get MySQL host from envoirnment variables
-CLI_DATABASE_HOST=$DATABASE_SERVER
+CLI_DATABASE_HOST='localhost'
 # Default for CentminMod - change if using custom directory schema
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains'
 # Default location for GigabyteIO
