@@ -7,3 +7,5 @@ Add IP address to host list -- follow guide for advanced settings
 Add email prompt for admin + add to various services
 Figure out DKIM SPF policy for Google Apps email + also allow server to send signed emails (not receive)
 Apply everything at http://www.unlocktheinbox.com/
+Figure out how to move uploads folder to root directory
+Figure out how custom folder structure affects caching with batcache.php/apc.php
