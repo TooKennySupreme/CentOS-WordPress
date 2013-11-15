@@ -79,9 +79,12 @@ sed -i "s/TABLE_PREFIX_HANDLE/${CLI_PREFIX_RANDOM}/g" /$WEBSITE_INSTALL_DIRECTOR
 echo "* $(tput setaf 6)Installing ed$(tput sgr0)"
 yum -y --quiet install ed
 echo "* $(tput setaf 6)Inserting secure keys from https://api.wordpress.org/secret-key/1.1/salt/ into wp-config.php$(tput sgr0)"
-SALT=$(curl -L https://api.wordpress.org/secret-key/1.1/salt/)
-STRING='put your unique phrase here'
-printf '%s\n' "g/$STRING/d" a "$SALT" . w | ed -s wp-config.php
+perl -i -pe '
+  BEGIN { 
+    $keysalts = qx(curl -sS https://api.wordpress.org/secret-key/1.1/salt) 
+  } 
+  s/{AUTH-KEYS-SALTS}/$keysalts/g
+' wp-config.php
 echo "* $(tput setaf 6)Inserting the backend path into wp-config.php$(tput sgr0)"
 sed -i "s/BACKEND_PATH_HANDLE/${CLI_BACKEND_PATH}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 
