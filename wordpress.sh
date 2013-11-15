@@ -76,15 +76,15 @@ sed -i "s/DB_NAME_HANDLE/${CLI_DATABASE_NAME}/g" /$WEBSITE_INSTALL_DIRECTORY/$CL
 sed -i "s/DB_USER_HANDLE/${CLI_DATABASE_USER}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 sed -i "s/DB_PASSWORD_HANDLE/${CLI_DATABASE_PASSWORD}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 sed -i "s/TABLE_PREFIX_HANDLE/${CLI_PREFIX_RANDOM}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
-echo "* $(tput setaf 6)Installing ed$(tput sgr0)"
-yum -y --quiet install ed
+#echo "* $(tput setaf 6)Installing ed$(tput sgr0)"
+#yum -y --quiet install ed
 echo "* $(tput setaf 6)Inserting secure keys from https://api.wordpress.org/secret-key/1.1/salt/ into wp-config.php$(tput sgr0)"
 perl -i -pe '
   BEGIN { 
     $keysalts = qx(curl -sS https://api.wordpress.org/secret-key/1.1/salt) 
   } 
   s/{AUTH-KEYS-SALTS}/$keysalts/g
-' wp-config.php
+' /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 echo "* $(tput setaf 6)Inserting the backend path into wp-config.php$(tput sgr0)"
 sed -i "s/BACKEND_PATH_HANDLE/${CLI_BACKEND_PATH}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 
