@@ -63,7 +63,7 @@ case "$CLOUDFLARE_YESNO" in
         echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Responding yes to the following prompt will make this installer automatically set up your DNS settings at the end of the installation. If you respond with no then you will be prompted at the end for each website."
         echo ""
         read -p "Change DNS settings for all domains managed by Cloudflare? [Y/N] " CLOUDFLARE_ALL_WEBSITES
-        case "$CLOUDFLARE_WP_YESNO" in
+        case "$CLOUDFLARE_ALL_WEBSITES" in
           y|Y ) CLOUDFLARE_ALL_WEBSITES=off
                 read -p "Enable Google Apps DNS settings? [Y/N] " APPS_SETTINGS
                 case "$APPS_SETTINGS" in
