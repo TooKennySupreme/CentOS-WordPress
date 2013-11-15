@@ -206,18 +206,28 @@ cp /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$WORDPRESS_FOLDER/index-template.php /$WEB
 echo "* $(tput setaf 6)Modifying index.php for the backend path$(tput sgr0)"
 sed -i "s/REPLACETHISHERE/${CLI_BACKEND_PATH}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/index.php
 
-# Set nginx as owner
-echo "* $(tput setaf 6)Recursively changing ownership of /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public to nginx$(tput sgr0)"
-chown -Rf nginx:nginx /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public
-
 # Remove default configuration and add new, optimized one
 echo "* $(tput setaf 6)Removing the default nginx configuration for current website$(tput sgr0)"
 rm -f /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 echo "* $(tput setaf 6)Copying nginx configuration template from /$POOR_IO_HOME/$CONF_FOLDER/wordpress-optimized-nginx-config.conf to /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf$(tput sgr0)"
 cp /$POOR_IO_HOME/$CONF_FOLDER/wordpress-optimized-nginx-config.conf /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
-echo "* $(tput setaf 6)Adjusting template for current website$(tput sgr0)"
+echo "* $(tput setaf 6)Copying robots.txt from /$POOR_IO_HOME/$WORDPRESS_FOLDER to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public$(tput sgr0)"
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/robots.txt /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public
+echo "* $(tput setaf 6)Copying index.php from /$POOR_IO_HOME/$WORDPRESS_FOLDER to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public$(tput sgr0)"
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index-template.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/index.php
+echo "* $(tput setaf 6)Adjusting index.php template for current website$(tput sgr0)"
+sed -i "s/BACKENDPATH/${CLI_BACKEND_PATH}/g" /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php
+echo "* $(tput setaf 6)Adjusting wp-config template for current website$(tput sgr0)"
 sed -i "s/REPLACETHIS/${CLI_WEBSITE}/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 sed -i "s/BACKENDPATH/${CLI_BACKEND_PATH}/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
+echo "* $(tput setaf 6)Adding \"Silence is golden\" index.php file to all custom directories$(tput sgr0)"
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/addons
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/includes
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
+# Set nginx as owner
+echo "* $(tput setaf 6)Recursively changing ownership of /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public to nginx$(tput sgr0)"
+chown -Rf nginx:nginx /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public
 # Chown it up here.
 echo "* $(tput setaf 6)Restarting nginx to update configuration settings$(tput sgr0)"
 service nginx restart
