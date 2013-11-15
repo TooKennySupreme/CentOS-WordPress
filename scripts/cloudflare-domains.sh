@@ -48,6 +48,7 @@ case "$SKIP_TO_NEXT_DOMAIN" in
   n|N ) echo "" && echo "$(tput setaf 2)Configuring DNS Records for $i(tput sgr0)" && echo "";;
   * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
 esac
+fi
         records=($( php -f /usr/local/src/gigabyteio/cloudflare/get-records.php $1 $2 $i ))
         for j in "${records[@]}"
         do
