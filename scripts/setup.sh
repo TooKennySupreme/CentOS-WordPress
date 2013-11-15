@@ -1,5 +1,6 @@
 #!/bin/bash -x
-
+# Changing this will change the CNAME created for pages.. will work something out with this later (maybe integrate the API for auto set up)
+GITHUB_ID=gigabyteio
 echo "$(tput bold)$(tput setaf 2)Step 1 of 4:$(tput sgr0) Assign the root user a new password"
 echo ""
 # Change root user password
@@ -57,6 +58,22 @@ case "$CLOUDFLARE_YESNO" in
           read -p "Enter your Cloudflare e-mail address (press enter to use administrator's e-mail address): " CLOUDFLARE_EMAIL_ADDRESS
         done
         read -p "Enter your Cloudflare API key: " CLOUDFLARE_API_KEY
+        CLOUDFLARE_YESNO=yes
+        echo ""
+        echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Responding yes to the following prompt will make this installer automatically set up your DNS settings at the end of the installation. If you respond with no then you will be prompted at the end for each website."
+        echo ""
+        read -p "Change DNS settings for all domains managed by Cloudflare? [Y/N] " CLOUDFLARE_ALL_WEBSITES
+        case "$CLOUDFLARE_WP_YESNO" in
+          y|Y ) CLOUDFLARE_ALL_WEBSITES=off
+                read -p "Enable Google Apps DNS settings? [Y/N] " APPS_SETTINGS
+                case "$APPS_SETTINGS" in
+                y|Y ) APPS_SETTINGS=google;;
+                n|N ) APPS_SETTINGS=off;;
+                * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
+            esac;;;;
+          n|N ) CLOUDFLARE_ALL_WEBSITES=on && APPS_SETTINGS=off;;
+          * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
+        esac;;
         # Not sure how long the Cloudflare API client key is so I'm taking this check out
         # Are they keys always 37 chars? Or do they vary?
         #until [[ ${#CLOUDFLARE_API_KEY} = 32 ]]; do
@@ -66,13 +83,13 @@ case "$CLOUDFLARE_YESNO" in
         #done
         # Add test here for cloudflare
         echo ""
-        read -p "Automatically install GigabyteIO's custom WordPress configuration to all Cloudflare domains? [Y/N] " CLOUDFLARE_WP_YESNO
+        read -p "Automatically install GigabyteIO's starter WordPress configuration for all Cloudflare domains? [Y/N] " CLOUDFLARE_WP_YESNO
         case "$CLOUDFLARE_WP_YESNO" in
           y|Y ) CLOUDFLARE_WP_YESNO=yes;;
           n|N ) CLOUDFLARE_WP_YESNO=no;;
           * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
         esac;;
-  n|N ) ;;
+  n|N ) CLOUDFLARE_YESNO=no;;
   * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
 esac
 echo ""
@@ -262,6 +279,10 @@ echo "* $(tput setaf 6)Restoring tweaks.sh permissions to original state$(tput s
 chmod 644 tweaks.sh
 echo "* $(tput setaf 6)Restoring whitelist.sh permissions to original state$(tput sgr0)"
 chmod 644 whitelist.sh
+if [ $CLOUDFLARE_YESNO = yes ]; then
+echo "* $(tput setaf 6)Opening the Cloudflare DNS configuration script$(tput sgr0)"
+bash cloudflare-domains.sh $CLOUDFLARE_EMAIL_ADDRESS $CLOUDFLARE_API_KEY $APPS_SETTINGS $CLOUDFLARE_ALL_WEBSITES $GITHUB_ID
+fi
 echo ""
 echo ""
 echo "$(tput bold)$(tput setaf 2)Installation Complete$(tput sgr0)"
