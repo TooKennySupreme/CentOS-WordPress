@@ -48,14 +48,14 @@ echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) To take advantage of this 
 echo ""
 read -p "Do you want to automatically set up your DNS using the Cloudflare API? [Y/N] " CLOUDFLARE_YESNO
 case "$CLOUDFLARE_YESNO" in
-  y|Y ) read -p "Enter your Cloudflare e-mail address (press enter to use administrator's e-mail address): " CLOUDFLARE_EMAIL_ADDRESS
+  y|Y ) read -p "Enter your Cloudflare e-mail address (press enter to use $ADMIN_EMAIL_ADDRESS): " CLOUDFLARE_EMAIL_ADDRESS
         if [[ -z "$CLOUDFLARE_EMAIL_ADDRESS" ]]; then
           CLOUDFLARE_EMAIL_ADDRESS=$ADMIN_EMAIL_ADDRESS
         fi
         until [[ "$CLOUDFLARE_EMAIL_ADDRESS" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$ ]]; do
           echo "$CLOUDFLARE_EMAIL_ADDRESS is an invalid e-mail address format. Try again."
           echo ""
-          read -p "Enter your Cloudflare e-mail address (press enter to use administrator's e-mail address): " CLOUDFLARE_EMAIL_ADDRESS
+          read -p "Enter your Cloudflare e-mail address (press enter to use $ADMIN_EMAIL_ADDRESS): " CLOUDFLARE_EMAIL_ADDRESS
         done
         read -p "Enter your Cloudflare API key: " CLOUDFLARE_API_KEY
         CLOUDFLARE_YESNO=yes
@@ -98,7 +98,7 @@ echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Logging in with an SSH key will encrypt your session and boost security. With Digital Ocean, you can create a server with an SSH key system already implemented. By answering yes to the following prompt, password authentication will be disabled and it will only be possible to log in to your server with an SSH key. The SSH key file will be transferred from the root user to the administrator user."
 echo ""
 # Change the SSH key to be used with new root user
-read -p "Transfer the root users SSH key to the new root user? [Y/N] " SSH_CHOICE
+read -p "Transfer the root users SSH key to $NEW_ROOT_USERNAME? [Y/N] " SSH_CHOICE
 case "$SSH_CHOICE" in
   y|Y ) SSH_CHOICE=yes;;
   n|N ) SSH_CHOICE=no;;
