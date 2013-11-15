@@ -2,8 +2,8 @@
 # Deletes all records and points records to IP address
 # ./cloudflare-domains.sh e-mail api-key type name content
 # SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off NOT FULLY IMPLEMENTED, YOU CAN ONLY CHOOSE] [github ID yyourID|off]
-if [ $3 != off ]; then
-githubid=gigabyteio
+if [ $5 != off ]; then
+githubid=$5
 github_cname=0
 else
 github_cname=off
