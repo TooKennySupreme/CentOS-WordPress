@@ -13,11 +13,26 @@ echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) Using the following prompt
 echo ""
 read -p 'Enter a backend path for improved security: ' CLI_BACKEND_PATH
 echo ""
-read -p "Enter the administrator's user name: " ADMIN_USER
+read -p "Enter the WordPress administrator's user name: " ADMIN_USER
 echo ""
-read -p -s "Enter the administrator's password: " ADMIN_PASSWORD
+read -s -p "Enter the WordPress administrator's password: " ADMIN_PASSWORD
 echo ""
-read -p "Enter the administrator's e-mail address: " ADMIN_EMAIL
+read -s -p "Re-enter the WordPress administrator password: " PASSWORD_CHECK
+while [ "$ADMIN_PASSWORD" != "$PASSWORD_CHECK" ]; do 
+    echo ""
+    echo "Passwords did not match. Try again."
+    echo ""
+    read -s -p "Enter the WordPress administrator password: " ADMIN_PASSWORD
+    echo ""
+    read -s -p "Re-enter the WordPress administrator password: " PASSWORD_CHECK
+done
+echo ""
+read -p "Enter the WordPress administrator's e-mail address: " ADMIN_EMAIL
+until [[ "$ADMIN_EMAIL" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$ ]]; do
+    echo "$ADMIN_EMAIL is an invalid e-mail address format. Try again."
+    echo ""
+    read -p "Enter the WordPress administrator's e-mail address: " ADMIN_EMAIL
+done
 echo ""
 echo "* $(tput setaf 6)Declaring potentially customizable script variables in wordpress.sh$(tput sgr0)"
 # NOTE: NOT ALL OF THESE VARIABLES ARE REQUIRED... THEY WERE COPIED FROM setup.sh
