@@ -76,8 +76,6 @@ sed -i "s/DB_NAME_HANDLE/${CLI_DATABASE_NAME}/g" /$WEBSITE_INSTALL_DIRECTORY/$CL
 sed -i "s/DB_USER_HANDLE/${CLI_DATABASE_USER}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 sed -i "s/DB_PASSWORD_HANDLE/${CLI_DATABASE_PASSWORD}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 sed -i "s/TABLE_PREFIX_HANDLE/${CLI_PREFIX_RANDOM}/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
-#echo "* $(tput setaf 6)Installing ed$(tput sgr0)"
-#yum -y --quiet install ed
 echo "* $(tput setaf 6)Inserting secure keys from https://api.wordpress.org/secret-key/1.1/salt/ into wp-config.php$(tput sgr0)"
 perl -i -pe '
   BEGIN { 
@@ -231,6 +229,10 @@ cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_W
 # Set nginx as owner
 echo "* $(tput setaf 6)Recursively changing ownership of /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public to nginx$(tput sgr0)"
 chown -Rf nginx:nginx /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public
+echo "* $(tput setaf 6)Removing unnecessary files from WordPress$(tput sgr0)"
+rm /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH/wp-config-sample.php
+rm /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH/readme.html
+rm /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH/license.txt
 # Chown it up here.
 echo "* $(tput setaf 6)Restarting nginx to update configuration settings$(tput sgr0)"
 service nginx restart
