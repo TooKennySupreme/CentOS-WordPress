@@ -1,7 +1,7 @@
 #!/bin/bash
 # Deletes all records and points records to IP address
 # ./cloudflare-domains.sh e-mail api-key type name content
-# SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off NOT FULLY IMPLEMENTED, YOU CAN ONLY CHOOSE] [github ID yyourID|off]
+# SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off NOT FULLY IMPLEMENTED, YOU CAN ONLY CHOOSE] [github ID yyourID|off] [wordpress install yes|no]
 if [ $5 != off ]; then
 githubid=$5
 github_cname=0
@@ -258,7 +258,10 @@ fi
                         adjust_settings_status="$(tput bold)$(tput setaf 1)$adjust_settings_status$(tput sgr0)"
                 fi
                 echo "* $(tput setaf 6)Adjusting settings for $i (Security-Level: Medium, Cache-Level: Aggressive, IPv6-Support: Off, Rocket-Loading: Automatic, Minify: HTML/JS/CSS): $adjust_settings_status$(tput sgr0)"
-
+        if [ $5 = on ]; then
+        # Run WordPress installation
+        
+        fi
 done
 # http://www.olark.com/gtalk/check_srv
 # https://support.google.com/a/answer/112038 < --- Domain verify stuff from Google
