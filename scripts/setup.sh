@@ -281,7 +281,7 @@ echo "* $(tput setaf 6)Restoring whitelist.sh permissions to original state$(tpu
 chmod 644 whitelist.sh
 if [ $CLOUDFLARE_YESNO = yes ]; then
 echo "* $(tput setaf 6)Opening the Cloudflare DNS configuration script$(tput sgr0)"
-bash cloudflare-domains.sh $CLOUDFLARE_EMAIL_ADDRESS $CLOUDFLARE_API_KEY $APPS_SETTINGS $CLOUDFLARE_ALL_WEBSITES $GITHUB_ID
+bash cloudflare-domains.sh $CLOUDFLARE_EMAIL_ADDRESS $CLOUDFLARE_API_KEY $APPS_SETTINGS $CLOUDFLARE_ALL_WEBSITES $GITHUB_ID $CLOUDFLARE_WP_YESNO
 fi
 echo ""
 echo ""
