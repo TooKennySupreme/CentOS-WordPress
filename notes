@@ -9,3 +9,5 @@ Figure out DKIM SPF policy for Google Apps email + also allow server to send sig
 Apply everything at http://www.unlocktheinbox.com/
 Figure out how to move uploads folder to root directory
 Figure out how custom folder structure affects caching with batcache.php/apc.php
+Finish prompts for wp admin/email nd stuff
+WP-CLI plugins nd wordpress setup
