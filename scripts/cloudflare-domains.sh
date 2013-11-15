@@ -14,6 +14,9 @@ srv_ttl=3600 # one hour
 a_ttl=604800 # one week
 cname_ttl=86400 # one day
 direct_connect=0
+echo ""
+echo "$(tput bold)$(tput setaf 2)Setting Up DNS via Cloudflare API$(tput sgr0)"
+echo ""
 echo "* $(tput setaf 6)Getting server's public IP address using ifconfig.me$(tput sgr0)"
 ip_address=$(curl ifconfig.me) #get public ip from ipconfig website
 result=($( php -f /usr/local/src/gigabyteio/cloudflare/get-domains.php $1 $2 ))
@@ -191,13 +194,6 @@ do
         #fi
 #v=spf1 a include:_spf.google.com ~all
         # Add GigabyteIO label
-        create_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i TXT spf "v=spf1 include:_spf.google.com +a +mx ~all" ))
-                if [ $create_status = success ]; then
-                        create_status="$(tput bold)$(tput setaf 2)$create_status$(tput sgr0)"
-                else
-                        create_status="$(tput bold)$(tput setaf 1)$create_status$(tput sgr0)"
-                fi
-                echo "* $(tput setaf 6)Adding SPF record: $create_status$(tput sgr0)"
         create_gigatxt_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i TXT gigabyteio "Powered by GigabyteIO (http://gigabyte.io/)" ))
                 if [ $create_gigatxt_status = success ]; then
                         create_gigatxt_status="$(tput bold)$(tput setaf 2)$create_gigatxt_status$(tput sgr0)"
@@ -205,6 +201,13 @@ do
                         create_gigatxt_status="$(tput bold)$(tput setaf 1)$create_gigatxt_status$(tput sgr0)"
                 fi
                 echo "* $(tput setaf 6)Adding GigabyteIO text label: $create_gigatxt_status$(tput sgr0)"
+        create_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i SPF spf "v=spf1 include:_spf.google.com +a +mx ~all" ))
+                if [ $create_status = success ]; then
+                        create_status="$(tput bold)$(tput setaf 2)$create_status$(tput sgr0)"
+                else
+                        create_status="$(tput bold)$(tput setaf 1)$create_status$(tput sgr0)"
+                fi
+                echo "* $(tput setaf 6)Adding SPF entry: $create_status$(tput sgr0)"
         security_level=med #help|high|med|low|eoff
         cache_level=agg #agg|basic
         ipv6_mode=0 #0\1
