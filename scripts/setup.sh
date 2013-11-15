@@ -70,10 +70,9 @@ case "$CLOUDFLARE_YESNO" in
                 y|Y ) APPS_SETTINGS=google;;
                 n|N ) APPS_SETTINGS=off;;
                 * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
-            esac;;
+                esac;;
           n|N ) CLOUDFLARE_ALL_WEBSITES=on && APPS_SETTINGS=off;;
           * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
-        esac;;
         # Not sure how long the Cloudflare API client key is so I'm taking this check out
         # Are they keys always 37 chars? Or do they vary?
         #until [[ ${#CLOUDFLARE_API_KEY} = 32 ]]; do
@@ -88,6 +87,7 @@ case "$CLOUDFLARE_YESNO" in
           y|Y ) CLOUDFLARE_WP_YESNO=yes;;
           n|N ) CLOUDFLARE_WP_YESNO=no;;
           * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
+        esac
         esac;;
   n|N ) CLOUDFLARE_YESNO=no;;
   * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
