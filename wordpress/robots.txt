@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /archive/
+Disallow: /tag/
+Disallow: /category/
+Sitemap: /sitemap.xml
