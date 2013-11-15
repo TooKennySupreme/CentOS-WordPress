@@ -191,6 +191,13 @@ do
         #fi
 #v=spf1 a include:_spf.google.com ~all
         # Add GigabyteIO label
+        create_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i TXT spf "v=spf1 include:_spf.google.com +a +mx ~all" ))
+                if [ $create_status = success ]; then
+                        create_status="$(tput bold)$(tput setaf 2)$create_status$(tput sgr0)"
+                else
+                        create_status="$(tput bold)$(tput setaf 1)$create_status$(tput sgr0)"
+                fi
+                echo "* $(tput setaf 6)Adding SPF record: $create_status$(tput sgr0)"
         create_gigatxt_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-record.php $1 $2 $i TXT gigabyteio "Powered by GigabyteIO (http://gigabyte.io/)" ))
                 if [ $create_gigatxt_status = success ]; then
                         create_gigatxt_status="$(tput bold)$(tput setaf 2)$create_gigatxt_status$(tput sgr0)"
