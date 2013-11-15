@@ -40,7 +40,7 @@ echo "* $(tput setaf 6)Response from Cloudflare received: $result$(tput sgr0)"
 total_sites=${#result[@]} # might be useful
 for i in "${result[@]}"
 do
-if [ $4 = on ]
+if [ $4 = on ]; then
 echo ""
 read -p "Configure DNS for $i? [Y/N] " SKIP_TO_NEXT_DOMAIN
 case "$SKIP_TO_NEXT_DOMAIN" in
