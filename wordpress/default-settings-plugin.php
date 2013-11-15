@@ -45,7 +45,7 @@ function toggle_plugins() {
 // Defines plugins to be activated
 $arr = array("one", "two", "three");
 // Full path to WordPress from the root
-$website_base = 'INSERTWEBSITEBASEHERE'
+$website_base = 'INSERTWEBSITEBASEHERE';
 $wordpress_path = '/full/path/to/wordpress/';
 
 // Absolute path to plugins dir
