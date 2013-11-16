@@ -1,7 +1,13 @@
 #!/bin/bash
 
 # Get website URL and backend path
-
+CLI_WEBSITE=$1
+SITE_TITLE=$2
+CLI_BACKEND_PATH=$3
+ADMIN_USER=$4
+ADMIN_PASSWORD=$5
+PASSWORD_CHECK=$5
+ADMIN_EMAIL=$6
 echo ""
 echo "$(tput bold)$(tput setaf 6)Setting up a new WordPress website...$(tput sgr0)"
 echo ""
