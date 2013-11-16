@@ -104,7 +104,6 @@ echo ""
 fi
 if [ $CLOUDFLARE_WP_YESNO = yes ]; then
 read -p "Enter the WordPress administrator's user name: " WORDPRESS_ADMIN_USER
-echo ""
 read -s -p "Enter the WordPress administrator's password: " WORDPRESS_ADMIN_PASSWORD
 echo ""
 read -s -p "Re-enter the WordPress administrator password: " WORDPRESS_PASSWORD_CHECK
@@ -116,6 +115,7 @@ while [ "$WORDPRESS_ADMIN_PASSWORD" != "$WORDPRESS_PASSWORD_CHECK" ]; do
     echo ""
     read -s -p "Re-enter the WordPress administrator password: " WORDPRESS_PASSWORD_CHECK
 done
+echo ""
 read -p "Enter the WordPress administrator's e-mail (press enter to use $ADMIN_EMAIL_ADDRESS): " WORDPRESS_ADMIN_EMAIL
 if [[ -z "$WORDPRESS_ADMIN_EMAIL" ]]; then
           WORDPRESS_ADMIN_EMAIL=$ADMIN_EMAIL_ADDRESS
