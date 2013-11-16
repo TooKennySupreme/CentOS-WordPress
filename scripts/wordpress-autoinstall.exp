@@ -17,7 +17,7 @@ set wppass [lindex $argv 10]
 set timeout -1
  
 # Run the Centmin install
-spawn "bash /usr/local/src/gigabyteio/wordpress.sh $urlwebsite $defaultitle $backendpath $wpadminname $wppass $adminemail"
+spawn "bash /usr/local/src/gigabyteio/wordpress.sh $urlwebsite $defaultitle 'cms' $wpadminname $wppass $adminemail"
 
 # Set buffer size
 match_max 100000
