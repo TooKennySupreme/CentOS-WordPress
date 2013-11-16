@@ -1,7 +1,15 @@
 #!/bin/bash
 # Deletes all records and points records to IP address
 # ./cloudflare-domains.sh e-mail api-key type name content
-# SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off NOT FULLY IMPLEMENTED, YOU CAN ONLY CHOOSE] [github ID yyourID|off] [wordpress install yes|no]
+# SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off] [github ID yyourID|off] [wordpress auto install yes|no] [admin_email] [url] [default_title] [wp_admin] [wp_admin_pass]
+if [ $6 = yes ]; then
+cmsbackendpath=cms
+adminemail=$7
+default_title=$9
+website_url=$8
+wp_admin=$10
+wp_admin_pass=$11
+fi
 if [ $5 != off ]; then
 githubid=$5
 github_cname=0
@@ -260,7 +268,7 @@ fi
                 echo "* $(tput setaf 6)Adjusting settings for $i (Security-Level: Medium, Cache-Level: Aggressive, IPv6-Support: Off, Rocket-Loading: Automatic, Minify: HTML/JS/CSS): $adjust_settings_status$(tput sgr0)"
         if [ $5 = on ]; then
         # Run WordPress installation
-        
+        # SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off] [github ID yyourID|off] [wordpress auto install yes|no] [admin_email] [url] [default_title] [wp_admin] [wp_admin_pass]
         fi
 done
 # http://www.olark.com/gtalk/check_srv
