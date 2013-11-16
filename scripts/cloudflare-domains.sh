@@ -269,6 +269,7 @@ fi
         if [ $5 = on ]; then
         # Run WordPress installation
         # SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off] [github ID yyourID|off] [wordpress auto install yes|no] [admin_email] [url] [default_title] [wp_admin] [wp_admin_pass]
+        bash /usr/local/src/gigabyteio/scripts/wordpress-autoinstall.exp $1 $2 $3 $4 $5 $6 $7 $8 $9 $10
         fi
 done
 # http://www.olark.com/gtalk/check_srv
