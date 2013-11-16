@@ -266,7 +266,7 @@ fi
                         adjust_settings_status="$(tput bold)$(tput setaf 1)$adjust_settings_status$(tput sgr0)"
                 fi
                 echo "* $(tput setaf 6)Adjusting settings for $i (Security-Level: Medium, Cache-Level: Aggressive, IPv6-Support: Off, Rocket-Loading: Automatic, Minify: HTML/JS/CSS): $adjust_settings_status$(tput sgr0)"
-        if [ $6 = on ]; then
+        if [ $6 = yes ]; then
         # Run WordPress installation
         # SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off] [github ID yyourID|off] [wordpress auto install yes|no] [admin_email] [url] [default_title] [wp_admin] [wp_admin_pass]
         bash /usr/local/src/gigabyteio/scripts/wordpress-autoinstall.exp $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11
