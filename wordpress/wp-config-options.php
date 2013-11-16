@@ -10,7 +10,9 @@
 define( 'DB_NAME', 'DB_NAME_HANDLE' );
 define( 'DB_USER', 'DB_USER_HANDLE' );
 define( 'DB_PASSWORD', 'DB_PASSWORD_HANDLE' );
-define( 'DB_HOST', $_ENV{DATABASE_SERVER} ); // Dynamically sets the database host
+define( 'DB_HOST', 'localhost' );
+// Dynamic database selection disabled since WP-CLI doesn't like it
+//define( 'DB_HOST', $_ENV{DATABASE_SERVER} ); // Dynamically sets the database host
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
