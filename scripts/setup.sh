@@ -56,6 +56,9 @@ case "$CLOUDFLARE_YESNO" in
           echo "$CLOUDFLARE_EMAIL_ADDRESS is an invalid e-mail address format. Try again."
           echo ""
           read -p "Enter your Cloudflare e-mail address (press enter to use $ADMIN_EMAIL_ADDRESS): " CLOUDFLARE_EMAIL_ADDRESS
+        if [[ -z "$CLOUDFLARE_EMAIL_ADDRESS" ]]; then
+          CLOUDFLARE_EMAIL_ADDRESS=$ADMIN_EMAIL_ADDRESS
+        fi
         done
         read -p "Enter your Cloudflare API key: " CLOUDFLARE_API_KEY
         CLOUDFLARE_YESNO=yes
@@ -92,6 +95,16 @@ case "$CLOUDFLARE_YESNO" in
   n|N ) CLOUDFLARE_YESNO=no;;
   * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
 esac
+if [ $CLOUDFLARE_WP_YESNO = yes ]; then
+if [[ -z "$CLOUDFLARE_EMAIL_ADDRESS" ]]; then
+          CLOUDFLARE_EMAIL_ADDRESS=$ADMIN_EMAIL_ADDRESS
+        fi
+        until [[ "$CLOUDFLARE_EMAIL_ADDRESS" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$ ]]; do
+          echo "$CLOUDFLARE_EMAIL_ADDRESS is an invalid e-mail address format. Try again."
+          echo ""
+          read -p "Enter your Cloudflare e-mail address (press enter to use $ADMIN_EMAIL_ADDRESS): " CLOUDFLARE_EMAIL_ADDRESS
+        done
+fi
 echo ""
 echo "$(tput bold)$(tput setaf 2)Step 5 of 6:$(tput sgr0) Configure an SSH key login"
 echo ""
@@ -281,6 +294,7 @@ echo "* $(tput setaf 6)Restoring whitelist.sh permissions to original state$(tpu
 chmod 644 whitelist.sh
 if [ $CLOUDFLARE_YESNO = yes ]; then
 echo "* $(tput setaf 6)Opening the Cloudflare DNS configuration script$(tput sgr0)"
+# SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off] [github ID yyourID|off] [wordpress auto install yes|no] [admin_email] [url] [default_title] [wp_admin] [wp_admin_pass]
 bash cloudflare-domains.sh $CLOUDFLARE_EMAIL_ADDRESS $CLOUDFLARE_API_KEY $APPS_SETTINGS $CLOUDFLARE_ALL_WEBSITES $GITHUB_ID $CLOUDFLARE_WP_YESNO
 fi
 echo ""
