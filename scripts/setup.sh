@@ -96,7 +96,7 @@ case "$CLOUDFLARE_YESNO" in
   n|N ) CLOUDFLARE_YESNO=no;;
   * ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Invalid input." && exit;;
 esac
-if [ $CLOUDFLARE_YESNO=no ]; then
+if [ $CLOUDFLARE_YESNO = no ]; then
 echo "$(tput bold)$(tput setaf 2)Step 4 of 6:$(tput sgr0) WordPress installation"
 echo ""
         echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) This step is being skipped because Cloudflare integration is not enabled. You can still install the custom WordPress set up by following the instructions at the end of this installation."
