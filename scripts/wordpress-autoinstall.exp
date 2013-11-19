@@ -11,7 +11,7 @@ set adminemail [lindex $argv 4]
 set timeout -1
  
 # Run the Centmin install
-spawn "./wordpress.sh $urlwebsite $defaultitle 'cms' $wpadminname $wppass $adminemail"
+spawn "./wordpress.sh"
 
 # Set buffer size
 match_max 100000
@@ -26,7 +26,7 @@ expect "Enter a website title for "
 send -- "$defaultitle\r"
 
 expect "Enter a backend path for improved security: "
-send -- "$backendpath\r"
+send -- "cms\r"
 
 expect "Enter the WordPress administrator's user name: "
 send -- "$wpadminname\r"
