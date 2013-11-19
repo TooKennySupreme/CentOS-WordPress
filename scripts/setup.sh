@@ -2,6 +2,7 @@
 # Changing this will change the CNAME created for pages.. will work something out with this later (maybe integrate the API for auto set up)
 GITHUB_ID='gigabyteio'
 DEFAULT_WORDPRESS_INSTALL_TITLE='GigabyteIO'
+CLOUDFLARE_WP_YESNO=''
 echo "$(tput bold)$(tput setaf 2)Step 1 of 6:$(tput sgr0) Assign the root user a new password"
 echo ""
 # Change root user password
