@@ -41,7 +41,8 @@ send -- "$wppass\r"
 expect "Enter the WordPress administrator's e-mail address: "
 send -- "$adminemail\r"
 
-expect "Enter password:"
+expect "Your root MySQL password is required. Please enter your MySQL root password:"
+sleep 5
 send -- "$mysqlpass\r"
 
 expect eof
