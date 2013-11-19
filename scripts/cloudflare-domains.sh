@@ -213,6 +213,7 @@ fi
         for ((n=0;n<15;n++))
         do
         # email apikey domain priority service servicename protocol weight port
+        # Note: This sequence is a little buggy - something causes the PHP object to get corrupted and this is addressed by using a hack: the response is encoded and decoded from JSON
         create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i ${priority[$n]} ${service[$n]} $i $protocol $weight ${port[$n]} ${target[$n]} ))
                 echo $create_srv_status
                 if [ $create_srv_status = success ]; then
