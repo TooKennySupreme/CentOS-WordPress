@@ -16,11 +16,7 @@
 4. Follow the prompts and prosper
 
 ## Benchmarks
-| Future test        | Other thing           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+Nothing official yet but a pingdom score below 90% is rare even for a picture blog. Nginx test page gets 99% - 100% consistently.
 
 ## Technology Used
 + Nginx + FastCGICache - Bundles arguably the fastest web server with a server level static file caching
