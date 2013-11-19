@@ -39,7 +39,7 @@ direct_connect=0
 echo ""
 echo "$(tput bold)$(tput setaf 2)Setting Up DNS via Cloudflare API$(tput sgr0)"
 echo ""
-echo "* $(tput setaf 6)Getting server's public IP address using ifconfig.me$(tput sgr0)"
+echo "* $(tput setaf 6)Getting server's public IP address using ip.appspot.com$(tput sgr0)"
 ip_address=$(curl -s ip.appspot.com) #get public ip from ipconfig website
 echo "* $(tput setaf 6)IP address received: $ip_address$(tput sgr0)"
 echo "* $(tput setaf 6)Requesting list of domains from Cloudflare$(tput sgr0)"
