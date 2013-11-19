@@ -6,6 +6,7 @@ set defaultitle [lindex $argv 3]
 set wpadminname [lindex $argv 5]
 set wppass [lindex $argv 4]
 set adminemail [lindex $argv 1]
+set mysqlpass [lindex $argv 6]
  
 # Makes it so that expect does not time out
 set timeout -1
