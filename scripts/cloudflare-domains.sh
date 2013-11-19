@@ -9,6 +9,7 @@ default_title=$9
 website_url=$8
 wp_admin=${10}
 wp_admin_pass=${11}
+mysql_pass=${12}
 fi
 if [ $5 != off ]; then
 githubid=$5
@@ -273,7 +274,7 @@ fi
         cp /usr/local/src/gigabyteio/wordpress.sh /usr/local/src/gigabyteio/scripts/wordpress.sh
         chmod +x wordpress.sh
         chmod +x wordpress-autoinstall.exp
-        ./wordpress-autoinstall.exp $i $7 $9 $wp_admin $wp_admin_pass
+        ./wordpress-autoinstall.exp $i $7 $9 $wp_admin $wp_admin_pass $mysql_pass
         fi
 done
 # http://www.olark.com/gtalk/check_srv
