@@ -134,7 +134,7 @@ cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public
 echo "* $(tput setaf 6)Creating custom wp-content directory$(tput sgr0)"
 mkdir content
 echo "* $(tput setaf 6)Creating custom plugin directory$(tput sgr0)"
-mkdir addons
+mkdir content/plugins
 echo "* $(tput setaf 6)Creating custom mu-plugin directory$(tput sgr0)"
 mkdir includes
 echo "* $(tput setaf 6)Creating themes directory in the custom wp-content directory$(tput sgr0)"
