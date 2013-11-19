@@ -8,7 +8,6 @@ ADMIN_USER=$4
 ADMIN_PASSWORD=$5
 PASSWORD_CHECK=$5
 ADMIN_EMAIL=$6
-MYSQL_PASS=$7
 echo ""
 echo "$(tput bold)$(tput setaf 6)Setting up a new WordPress website...$(tput sgr0)"
 echo ""
@@ -96,7 +95,7 @@ CLI_DATABASE_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c64 | tr -d '-
 echo "* $(tput setaf 6)Creating database with randomly generated fields$(tput sgr0)"
 echo ""
 echo "Your root MySQL password is required. Please enter your MySQL root password:"
-mysql -uroot -p$MYSQL_PASS --verbose -e "CREATE DATABASE $CLI_DATABASE_NAME; GRANT ALL PRIVILEGES ON $CLI_DATABASE_NAME.* TO '$CLI_DATABASE_USER'@'$CLI_DATABASE_HOST' IDENTIFIED BY '$CLI_DATABASE_PASSWORD'; FLUSH PRIVILEGES"
+mysql -uroot -p --verbose -e "CREATE DATABASE $CLI_DATABASE_NAME; GRANT ALL PRIVILEGES ON $CLI_DATABASE_NAME.* TO '$CLI_DATABASE_USER'@'$CLI_DATABASE_HOST' IDENTIFIED BY '$CLI_DATABASE_PASSWORD'; FLUSH PRIVILEGES"
 
 # Set up wp-config.php
 echo "* $(tput setaf 6)Copying wp-config.php template from /$POOR_IO_HOME/$WORDPRESS_FOLDER/wp-config-options.php to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php$(tput sgr0)"
