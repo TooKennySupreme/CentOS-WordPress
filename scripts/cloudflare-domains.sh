@@ -273,7 +273,7 @@ fi
         cp /usr/local/src/gigabyteio/wordpress.sh /usr/local/src/gigabyteio/scripts/wordpress.sh
         chmod +x wordpress.sh
         chmod +x wordpress-autoinstall.exp
-        ./wordpress-autoinstall.exp "$1" "$2" "$3" "$4" "$5" "$6" "$7" "$8" "$9" "$10" "$11"
+        ./wordpress-autoinstall.exp $1 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11
         fi
 done
 # http://www.olark.com/gtalk/check_srv
