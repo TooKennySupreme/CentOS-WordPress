@@ -318,7 +318,7 @@ echo "* $(tput setaf 6)Restoring whitelist.sh permissions to original state$(tpu
 chmod 644 whitelist.sh
 if [ $CLOUDFLARE_YESNO = yes ]; then
 echo "* $(tput setaf 6)Opening the Cloudflare DNS configuration script$(tput sgr0)"
-URL_FUTURE='n/a' # unimportant variable - not used
+URL_FUTURE='blah' # unimportant variable - not used
 echo "DEBUG:"
 echo "$CLOUDFLARE_EMAIL_ADDRESS $CLOUDFLARE_API_KEY $APPS_SETTINGS $CLOUDFLARE_ALL_WEBSITES $GITHUB_ID $CLOUDFLARE_WP_YESNO $WORDPRESS_ADMIN_EMAIL  $URL_FUTURE $DEFAULT_WORDPRESS_INSTALL_TITLE $WORDPRESS_ADMIN_USER $WORDPRESS_ADMIN_PASSWORD"
 # SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off] [github ID yyourID|off] [wordpress auto install yes|no] [admin_email] [url] [default_title] [wp_admin] [wp_admin_pass]
