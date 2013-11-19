@@ -215,11 +215,10 @@ fi
         # email apikey domain priority service servicename protocol weight port
         # Note: This sequence is a little buggy - something causes the PHP object to get corrupted and this is addressed by using a hack: the response is encoded and decoded from JSON
         create_srv_status=($( php -f /usr/local/src/gigabyteio/cloudflare/new-srv-record.php $1 $2 $i ${priority[$n]} ${service[$n]} $i $protocol $weight ${port[$n]} ${target[$n]} ))
-                echo $create_srv_status
                 if [ $create_srv_status = success ]; then
-                        create_srv_status="$(tput bold)$(tput setaf 2)success$(tput sgr0)"
+                        create_srv_status="$(tput bold)$(tput setaf 2)$create_srv_status$(tput sgr0)"
                 else
-                        create_srv_status="$(tput bold)$(tput setaf 1)ERROR $create_srv_status$(tput sgr0)"
+                        create_srv_status="$(tput bold)$(tput setaf 1)$create_srv_status$(tput sgr0)"
                 fi
                 echo "* $(tput setaf 6)Adding SRV record for $i (TTL: $srv_ttl Service: ${service[$n]} Protocol: $protocol Priority: ${priority[$n]} Weight: $weight Port: ${port[$n]} Target: ${target[$n]}):  $create_srv_status$(tput sgr0)"
                 #(TTL: $srv_ttl Service: ${service[$n]} $protocol Priority: ${priority[$n]} Weight: $weight Port: ${port[$n]} Target: ${target[$i]})
