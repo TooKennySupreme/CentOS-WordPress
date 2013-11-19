@@ -2,10 +2,10 @@
 # Usage: ./centmin-install.exp websiteurl "websitetitle" backendpath wpadminname wppass adminemail
 # SYNTAX FOR USE: ./cloudflare-domains.sh [cloudflare email address] [cloudflare API key] [Google Apps choice google|off] [Custom set up for each domain on|off] [github ID yyourID|off] [wordpress auto install yes|no] [admin_email] [url] [default_title] [wp_admin] [wp_admin_pass]
 set urlwebsite [lindex $argv 0]
-set defaultitle [lindex $argv 1]
-set wpadminname [lindex $argv 2]
-set wppass [lindex $argv 3]
-set adminemail [lindex $argv 4]
+set defaultitle [lindex $argv 3]
+set wpadminname [lindex $argv 5]
+set wppass [lindex $argv 4]
+set adminemail [lindex $argv 1]
  
 # Makes it so that expect does not time out
 set timeout -1
