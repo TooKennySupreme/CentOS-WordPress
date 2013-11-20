@@ -40,6 +40,7 @@ expect "Enter the WordPress administrator's e-mail address: "
 send -- "$adminemail\r"
 
 expect "Your root MySQL password is required. Please enter your MySQL root password:"
+expect "Enter password:"
 sleep 5
 send -- "$mysqlpass\r"
 
