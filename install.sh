@@ -1,11 +1,12 @@
 #!/bin/bash
 echo ""
 echo ""
-echo "$(tput bold)$(tput setaf 6)CentOS WordPress by GigabyteIO$(tput sgr0)"
-echo "Home URL  : http://gigabyte.io"
-echo "Github URL: https://github.com/GigabyteIO/CentOS-WordPress"
+echo "$(tput bold)$(tput setaf 6)CentOS WordPress$(tput sgr0)"
+echo "Home URL  : http://megabyte.io"
+echo "Github URL: https://github.com/MByteIO/CentOS-WordPress"
 echo "Author    : Brian Zalewski"
-echo "Credit to CentminMod! Check out their website at http://centminmod.com/!"
+echo ""
+echo "Credit to CentminMod! Check out their website at http://centminmod.com!"
 echo ""
 echo ""
 echo "$(tput bold)$(tput setaf 2)Running preliminary tasks$(tput sgr0)"
@@ -15,7 +16,7 @@ cd ~
 if [ -f /usr/local/src/gigabyteio/install.sh ];
 then
   echo ""
-  read -p "$(tput bold)$(tput setaf 3)Warning:$(tput sgr0) The GigabyteIO directory already exists! Delete it and continue the installation? [Y/N] " INSTALL_CHOICE
+  read -p "$(tput bold)$(tput setaf 3)Warning:$(tput sgr0) The MegabyteIO directory already exists! Delete it and continue the installation? [Y/N] " INSTALL_CHOICE
   case "$INSTALL_CHOICE" in
     y|Y ) echo "" && echo "* $(tput setaf 6)Removing /usr/local/src/gigabyteio$(tput sgr0)" && rm -rf /usr/local/src/gigabyteio;;
     n|N ) echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Installation aborted by user." && exit;;
