@@ -1,7 +1,7 @@
 #!/bin/bash -x
 # Changing this will change the CNAME created for pages.. will work something out with this later (maybe integrate the API for auto set up)
-GITHUB_ID='gigabyteio'
-DEFAULT_WORDPRESS_INSTALL_TITLE='GigabyteIO'
+GITHUB_ID='megabyteio'
+DEFAULT_WORDPRESS_INSTALL_TITLE='MegabyteIO'
 CLOUDFLARE_WP_YESNO=''
 echo "$(tput bold)$(tput setaf 2)Step 1 of 6:$(tput sgr0) Assign the root user a new password"
 echo ""
@@ -88,7 +88,7 @@ case "$CLOUDFLARE_YESNO" in
         echo ""
         echo "$(tput bold)$(tput setaf 2)Step 4 of 6:$(tput sgr0) WordPress installation"
         echo ""
-        read -p "Automatically install GigabyteIO's starter WordPress configuration for all Cloudflare domains? [Y/N] " CLOUDFLARE_WP_YESNO
+        read -p "Automatically install MegabyteIO's starter WordPress configuration for all Cloudflare domains? [Y/N] " CLOUDFLARE_WP_YESNO
         case "$CLOUDFLARE_WP_YESNO" in
           y|Y ) CLOUDFLARE_WP_YESNO=yes;;
           n|N ) CLOUDFLARE_WP_YESNO=no;;
@@ -148,28 +148,28 @@ echo ""
 echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) The script will now configure the server. This process generally takes around $(tput bold)$(tput setaf 3)30 minutes$(tput sgr0). The installation will be run with the following variables (you should probably write these down):"
 echo ""
 echo "$(tput bold)MySQL Root Password:$(tput sgr0) Your Administrator Password"
-echo "$(tput bold)Memcached Username:$(tput sgr0) GigabyteIO"
+echo "$(tput bold)Memcached Username:$(tput sgr0) MegabyteIO"
 MEMCACHED_PWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
 echo "$(tput bold)Memcached Password:$(tput sgr0) $MEMCACHED_PWORD"
 echo ""
 read -p "$(tput bold)Press any key to run the unattended installation... $(tput sgr0)" -n1 -s
 echo ""
 echo ""
-echo "$(tput bold)$(tput setaf 2)Installing CentOS WordPress by GigabyteIO$(tput sgr0)"
+echo "$(tput bold)$(tput setaf 2)Installing CentOS WordPress$(tput sgr0)"
 echo ""
 # Setting time zone has to be done manually for now - not exactly sure how to find and replace with a variable - if anyone could guide me in the right direction, I'll add this feature :)
 # Declare script variables for future portability
 echo "* $(tput setaf 6)Declaring potentially customizable script variables in setup.sh$(tput sgr0)"
 CENTMIN_DIR='usr/local/src' # Directory where centmin is installed
-INSTALL_FOLDER_NAME='gigabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
-CONF_FOLDER='configs' # Name of folder in the GigabyteIO directory that holds the configuration files
-SCRIPTS_FOLDER='scripts' # Name of folder in the GigabyteIO directory that holds scripts
-WORDPRESS_FOLDER='wordpress' # Name of folder in the GigabyteIO directory that holds WordPress related files
+INSTALL_FOLDER_NAME='megabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
+CONF_FOLDER='configs' # Name of folder in the MegabyteIO directory that holds the configuration files
+SCRIPTS_FOLDER='scripts' # Name of folder in the MegabyteIO directory that holds scripts
+WORDPRESS_FOLDER='wordpress' # Name of folder in the MegabyteIO directory that holds WordPress related files
 SSH_PORT_NUMBER=8388 # SSH port used, this is changed automatically after the Centmin install finishes
 CENTMIN_FOLDER_NAME='centmin-v1.2.3mod' # Name of centmin folder
 CENTMIN_DOWNLOAD_URL='http://centminmod.com/download/centmin-v1.2.3-eva2000.04.zip' # Centmin download URL
 CENTMIN_FILE_NAME='centmin-v1.2.3-eva2000.04.zip' # Centmin zip file name
-GITHUB_URL='https://github.com/GigabyteIO/WordPress-Droplet.git' # GigabyteIO git repo
+GITHUB_URL='https://github.com/MByte/roots.git' # MegabyteIO git repo
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 SSH_CLIENT_IP_ADDRESS=$(echo $SSH_CONNECTION | cut -f1 -d' ')
@@ -254,8 +254,8 @@ perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' /$CENTMIN_DIR/$CENTMIN_FOL
 perl -pi -e 's/Brisbane/New_York/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Change custom TCP packet header in centmin.sh
-echo "* $(tput setaf 6)Changing TCP packet header to GigabyteIO in centmin.sh$(tput sgr0)"
-perl -pi -e 's/nginx centminmod/GigabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
+echo "* $(tput setaf 6)Changing TCP packet header to MegabyteIO in centmin.sh$(tput sgr0)"
+perl -pi -e 's/nginx centminmod/MegabyteIO/g' /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
 
 # Install CentminMod with expect script to automate user inputs
 echo "* $(tput setaf 6)Copying centmin-install.exp from /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
@@ -266,7 +266,7 @@ echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
 chmod +x centmin.sh
 echo "* $(tput setaf 6)Initializing the CentminMod install process via centmin-install.exp$(tput sgr0)"
 # Usage ./centmin-install.exp mysqlpass memcacheusername memcachepassword
-./centmin-install.exp "$NEW_ROOT_PASSWORD" "GigabyteIO" "$MEMCACHED_PWORD"
+./centmin-install.exp "$NEW_ROOT_PASSWORD" "MegabyteIO" "$MEMCACHED_PWORD"
 echo ""
 echo "$(tput bold)$(tput setaf 2)CentminMod base installation complete$(tput sgr0)"
 echo ""
@@ -331,9 +331,9 @@ echo ""
 echo ""
 echo "$(tput bold)$(tput setaf 2)Installation Complete$(tput sgr0)"
 echo ""
-echo "$(tput bold)$(tput setaf 6)Thanks for choosing CentOS WordPress by GigabyteIO$(tput sgr0)"
-echo "Home URL  : http://gigabyte.io"
-echo "Github URL: https://github.com/GigabyteIO/CentOS-WordPress"
+echo "$(tput bold)$(tput setaf 6)Thanks for choosing CentOS WordPress$(tput sgr0)"
+echo "Home URL  : http://megabyte.io"
+echo "Github URL: https://github.com/MByteIO/CentOS-WordPress"
 echo "Author    : Brian Zalewski"
 echo "Credit to CentminMod! Check out their website at http://centminmod.com/!"
 echo ""
