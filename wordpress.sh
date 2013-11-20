@@ -46,20 +46,20 @@ echo "* $(tput setaf 6)Declaring potentially customizable script variables in wo
 CLI_DATABASE_HOST='localhost'
 # Default for CentminMod - change if using custom directory schema
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains'
-# Default location for GigabyteIO
-POOR_IO_HOME='usr/local/src/gigabyteio'
+# Default location for MegabyteIO
+POOR_IO_HOME='usr/local/src/megabyteio'
 # Default location for nginx configuration files
 NGINX_CONF_DIR='usr/local/nginx/conf'
 CENTMIN_DIR='usr/local/src' # Directory where centmin is installed
-INSTALL_FOLDER_NAME='gigabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
-CONF_FOLDER='configs' # Name of folder in the GigabyteIO directory that holds the configuration files
-SCRIPTS_FOLDER='scripts' # Name of folder in the GigabyteIO directory that holds scripts
-WORDPRESS_FOLDER='wordpress' # Name of folder in the GigabyteIO directory that holds WordPress related files
+INSTALL_FOLDER_NAME='megabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
+CONF_FOLDER='configs' # Name of folder in the MegabyteIO directory that holds the configuration files
+SCRIPTS_FOLDER='scripts' # Name of folder in the MegabyteIO directory that holds scripts
+WORDPRESS_FOLDER='wordpress' # Name of folder in the MegabyteIO directory that holds WordPress related files
 SSH_PORT_NUMBER=8388 # SSH port used, this is changed automatically after the Centmin install finishes
 CENTMIN_FOLDER_NAME='centmin-v1.2.3mod' # Name of centmin folder
 CENTMIN_DOWNLOAD_URL='http://centminmod.com/download/centmin-v1.2.3-eva2000.04.zip' # Centmin download URL
 CENTMIN_FILE_NAME='centmin-v1.2.3-eva2000.04.zip' # Centmin zip file name
-GITHUB_URL='https://github.com/MByteIO/roots.git' # GigabyteIO git repo
+GITHUB_URL='https://github.com/MByteIO/roots.git' # MegabyteIO git repo
 WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
 NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
 echo "* $(tput setaf 6)Copying centmin-wordpress.exp from /$POOR_IO_HOME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
