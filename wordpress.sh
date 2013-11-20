@@ -156,7 +156,7 @@ cd gitclones
 
 # Add plugins
 echo "* $(tput setaf 6)Changing directory to custom plugins folder$(tput sgr0)"
-cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/addons
+cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/addons
 echo "* $(tput setaf 6)Cloning Yoast WordPress SEO latest developement version plugin$(tput sgr0)"
 git clone -q https://github.com/Yoast/wordpress-seo.git wordpress-seo
 echo "* $(tput setaf 6)Downloading MP6 plugin from wordpress.org$(tput sgr0)"
@@ -245,7 +245,7 @@ sed -i "s/REPLACETHIS/$CLI_WEBSITE/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 sed -i "s/BACKENDPATH/$CLI_BACKEND_PATH/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 
 echo "* $(tput setaf 6)Adding \"Silence is golden\" index.php file to all custom directories$(tput sgr0)"
-cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/addons
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/addons
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/includes
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
