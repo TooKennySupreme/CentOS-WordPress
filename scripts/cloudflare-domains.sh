@@ -274,6 +274,8 @@ fi
         cp /usr/local/src/gigabyteio/wordpress.sh /usr/local/src/gigabyteio/scripts/wordpress.sh
         chmod +x wordpress.sh
         chmod +x wordpress-autoinstall.exp
+        echo "DEBUG:"
+        echo "$i $7 $9 $wp_admin $wp_admin_pass $mysql_pass"
         ./wordpress-autoinstall.exp $i $7 $9 $wp_admin $wp_admin_pass $mysql_pass
         fi
 done
