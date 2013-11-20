@@ -252,7 +252,7 @@ cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_W
 echo "* $(tput setaf 6)Installing WP-CLI$(tput sgr0)"
 curl https://raw.github.com/wp-cli/wp-cli.github.com/master/installer.sh | bash
 echo "* $(tput setaf 6)Installing WordPress for $CLI_WEBSITE$(tput sgr0)"
-source $HOME/.wp-cli/vendor/wp-cli/wp-cli/utils/wp-completion.bash
+source ~/.bash_profile
 wp core install --path="$CLI_BACKEND_PATH" --url="$CLI_WEBSITE" --title="$SITE_TITLE" --admin_user="$ADMIN_USER" --admin_password="$ADMIN_PASSWORD" --admin_email="$ADMIN_EMAIL"
 # Set nginx as owner
 echo "* $(tput setaf 6)Recursively changing ownership of /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public to nginx$(tput sgr0)"
