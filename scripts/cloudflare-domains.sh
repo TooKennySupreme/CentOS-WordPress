@@ -276,7 +276,7 @@ fi
         chmod +x wordpress-autoinstall.exp
         echo "DEBUG:"
         echo "$i $7 $9 $wp_admin $wp_admin_pass $mysql_pass"
-        ./wordpress-autoinstall.exp $i $7 $9 $wp_admin $wp_admin_pass $mysql_pass
+        ./wordpress-autoinstall.exp $i $adminemail $cmsbackendpath $default_title $wp_admin_pass $wp_admin $mysql_pass
         fi
 done
 # http://www.olark.com/gtalk/check_srv
