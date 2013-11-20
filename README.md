@@ -1,5 +1,5 @@
 # CentOS WordPress
-**CentOS WordPress** is an installer for [CentminMod](http://centminmod.com/) (tested with and built for a [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36)). CentOS WordPress adds a *bleeding-edge web server stack* to your CentOS-based VPS.
+**CentOS WordPress** is an installer for [CentminMod](http://centminmod.com/) (tested with and built for a [Digital Ocean VPS](https://www.digitalocean.com/?refcode=751743d45e36)). CentOS WordPress adds a **bleeding-edge web server stack** to your CentOS-based VPS.
 
 ## Features
 + Easy installation
