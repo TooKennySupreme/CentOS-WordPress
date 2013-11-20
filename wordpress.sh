@@ -149,10 +149,10 @@ echo "* $(tput setaf 6)Creating new gitclones folder$(tput sgr0)"
 mkdir gitclones
 echo "* $(tput setaf 6)Changing directory to gitclones folder$(tput sgr0)"
 cd gitclones
-echo "* $(tput setaf 6)Cloning batcache plugin$(tput sgr0)"
-git clone -q https://github.com/Automattic/batcache.git
-echo "* $(tput setaf 6)Cloning APC cache plugin$(tput sgr0)"
-git clone -q https://github.com/eremedia/APC.git
+#echo "* $(tput setaf 6)Cloning batcache plugin$(tput sgr0)"
+#git clone -q https://github.com/Automattic/batcache.git
+#echo "* $(tput setaf 6)Cloning APC cache plugin$(tput sgr0)"
+#git clone -q https://github.com/eremedia/APC.git
 
 # Add plugins
 echo "* $(tput setaf 6)Changing directory to custom plugins folder$(tput sgr0)"
@@ -212,18 +212,18 @@ rm -f rename-wp-login.1.7.zip
 
 # Add must-use plugins
 echo "* $(tput setaf 6)Adding php-widget.php to must-use plugin directory from /$POOR_IO_HOME/$WORDPRESS_FOLDER$(tput sgr0)"
-cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/php-widget.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/includes/php-widget.php
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/php-widget.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/includes/php-widget.php
 echo "* $(tput setaf 6)Adding default-settings-plugin.php to must-use plugin directory from /$POOR_IO_HOME/$WORDPRESS_FOLDER$(tput sgr0)"
-cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/default-settings-plugin.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/includes/default-settings-plugin.php
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/default-settings-plugin.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/includes/default-settings-plugin.php
 
 # Move caching plugin files to appropriate directories
-echo "* $(tput setaf 6)Installing batcache to appropriate folders$(tput sgr0)"
-cp /$POOR_IO_HOME/gitclones/batcache/advanced-cache.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/advanced-cache.php
-cp /$POOR_IO_HOME/gitclones/batcache/batcache.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/addons/batcache.php
-echo "* $(tput setaf 6)Installing APC object-cache plugin to appropriate folder$(tput sgr0)"
-cp /$POOR_IO_HOME/gitclones/APC/object-cache.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/object-cache.php
+#echo "* $(tput setaf 6)Installing batcache to appropriate folders$(tput sgr0)"
+#cp /$POOR_IO_HOME/gitclones/batcache/advanced-cache.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/advanced-cache.php
+#cp /$POOR_IO_HOME/gitclones/batcache/batcache.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/addons/batcache.php
+#echo "* $(tput setaf 6)Installing APC object-cache plugin to appropriate folder$(tput sgr0)"
+#cp /$POOR_IO_HOME/gitclones/APC/object-cache.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/object-cache.php
 
-# Add latest version of Shoestrap
+# Add latest version of Roots
 echo "* $(tput setaf 6)Changing directory to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes$(tput sgr0)"
 cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
 echo "* $(tput setaf 6)Getting custom version of Roots.IO$(tput sgr0)"
@@ -246,7 +246,7 @@ sed -i "s/BACKENDPATH/$CLI_BACKEND_PATH/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.
 
 echo "* $(tput setaf 6)Adding \"Silence is golden\" index.php file to all custom directories$(tput sgr0)"
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/addons
-cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/includes
+cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/includes
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content
 cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/index.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
 echo "* $(tput setaf 6)Installing WP-CLI$(tput sgr0)"
