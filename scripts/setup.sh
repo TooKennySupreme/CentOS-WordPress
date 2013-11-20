@@ -317,6 +317,10 @@ echo "* $(tput setaf 6)Restoring tweaks.sh permissions to original state$(tput s
 chmod 644 tweaks.sh
 echo "* $(tput setaf 6)Restoring whitelist.sh permissions to original state$(tput sgr0)"
 chmod 644 whitelist.sh
+echo "* $(tput setaf 6)Installing WP-CLI$(tput sgr0)"
+curl https://raw.github.com/wp-cli/wp-cli.github.com/master/installer.sh | bash
+echo "* $(tput setaf 6)Sourcing WP-CLI aliases$(tput sgr0)"
+echo 'export PATH=/root/.wp-cli/bin:$PATH' >> ~/.bash_profile
 if [ $CLOUDFLARE_YESNO = yes ]; then
 echo "* $(tput setaf 6)Opening the Cloudflare DNS configuration script$(tput sgr0)"
 URL_FUTURE='blah' # unimportant variable - not used
