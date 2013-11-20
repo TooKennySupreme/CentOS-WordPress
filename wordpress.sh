@@ -227,7 +227,7 @@ cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/default-settings-plugin.php /$WEBSITE_INSTAL
 echo "* $(tput setaf 6)Changing directory to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes$(tput sgr0)"
 cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
 echo "* $(tput setaf 6)Getting custom version of Roots.IO$(tput sgr0)"
-git clone -q https://github.com/GigabyteIO/roots.git
+git clone -q $GITHUB_URL
 
 # Remove default configuration and add new, optimized one
 echo "* $(tput setaf 6)Removing the default nginx configuration for current website$(tput sgr0)"
