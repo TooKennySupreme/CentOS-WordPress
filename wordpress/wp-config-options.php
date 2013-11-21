@@ -149,8 +149,8 @@ define( 'MEDIA_TRASH', TRUE ); // Enable trash for media
 define( 'EMPTY_TRASH_DAYS', 14 ); // Empty trash every X days
 
 /* Memory settings */
-define( 'WP_MEMORY_LIMIT', '256M' );
-define( 'WP_MAX_MEMORY_LIMIT', '512M' );
+define( 'WP_MEMORY_LIMIT', '128M' );
+define( 'WP_MAX_MEMORY_LIMIT', '192M' );
 
 /* Performance tweaks */
 // Compression for JS and styles - supposedly these slow down your website. Regardless, we use pagespeed so let's turn these off
