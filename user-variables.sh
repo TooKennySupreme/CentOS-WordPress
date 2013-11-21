@@ -13,3 +13,6 @@ declare -a active_plugins=( 'google-sitemap-generator' 'redirection' )
 # Specify cases where defaults should not be used
 theme_overide( 'thebestsites.com', 'https://github.com/MByteIO/AnotherTheme.git' )
 cache_overide( 'thebestsites.com', 'wp_single' )
+
+# Sync newest git release to specific folder
+git_sync( 'git address' '' )
