@@ -245,7 +245,7 @@ wp plugin install --activate my-shortcodes --path='cms' --url="$CLI_WEBSITE"
 wp plugin install --activate redirection --path='cms' --url="$CLI_WEBSITE"
 wp plugin install --activate google-sitemap-generator --path='cms' --url="$CLI_WEBSITE"
 wp plugin install pods --path='cms' --url="$CLI_WEBSITE"
-wp plugin install google-authenticator --path='cms' --url="$CLI_WEBSITE"
+wp plugin install wordpress-seo --path='cms' --url="$CLI_WEBSITE"
 # Set nginx as owner
 echo "* $(tput setaf 6)Recursively changing ownership of /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public to nginx$(tput sgr0)"
 chown -Rf nginx:nginx /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public
