@@ -15,10 +15,9 @@ declare -a requires_database=( 'wp-single' 'wp_multi' )         # Types of insta
 # Site specific variables
 site_conf="$site_conf_dir/$site_name.conf"                      # Site-specific configuration named [site_url].conf in the $site_conf_dir
 declare -a site_folders=( 'public' 'private' 'logs' 'backup' )  # Folders to create for each website install
-site_public="$website_dir/$site_name/public"                    # Public folder handle
-site_private="$website_dir/$site_name/private"                  # Private folder handle
-site_logs="$website_dir/$site_name/logs"                        # Log folder handle
-site_backup="$website_dir/$site_name/backup"                    # Backup folder handle
+for i in $site_folders; do                                      # Create folder variable hooks for each member of site_folders
+  site_${i}="$website_dir/$site_name/$i"
+done
 
 # WordPress specific variables
 wp_config=""                                                    # WordPress configuration file location
@@ -31,9 +30,7 @@ centmin_dir="$source_dir/centmin-v1.2.3mod"                     # Centmin unzipp
 
 # MegabyteIO specific directory structure
 megabyteio_dir="$source_dir/megabyteio"                         # MegabyteIO directory
-megabyteio_bash="$megabyteio_dir/bash"                          # MegabyteIO bash scripts sub-directory
-megabyteio_expect="$megabyteio_dir/expect"                      # MegabyteIO expect scripts sub-directory
-megabyteio_php="$megabyteio_dir/php"                            # MegabyteIO php scripts sub-directory
-megabyteio_repos="$megabyteio_dir/modules"                      # MegabyteIO git sub-modules
-megabyteio_confs="$megabyteio_dir/confs"                        # MegabyteIO configuration files
-megabyteio_misc="$megabyteio_dir/misc"                          # MegabyteIO miscellaneous files
+declare -a megabyteio_folders=( 'bash' 'expect' 'php' 'modules' 'confs' 'misc' )
+for i in $megabyteio_folders; do
+  $megabyteio_${i}="$megabyteio_dir/$i"
+done
