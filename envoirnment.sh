@@ -26,7 +26,7 @@ wp_core_folder=""                                               # Location of th
 
 # CentminMod variables
 centmin_dl_url='http://centminmod.com/download/'                # Remote directory containing Centmin file
-centmin_filename='centmin-v1.2.3-eva2000.04.zip'                # Centmin zip file
+centmin_filename='centmin-v1.2.3-eva2000.06.zip'                # Centmin zip file
 centmin_dir="$source_dir/centmin-v1.2.3mod"                     # Centmin unzipped directory
 
 # MegabyteIO specific directory structure
