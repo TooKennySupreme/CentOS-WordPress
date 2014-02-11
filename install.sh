@@ -27,7 +27,7 @@ echo "* $(tput setaf 6)Installing git$(tput sgr0)"
 yum -y --quiet install git
 echo "* $(tput setaf 6)Cloning the MegabyteIO git repository to /usr/local/src/megabyteio$(tput sgr0)"
 git clone -q https://github.com/MByteIO/CentOS-WordPress.git /usr/local/src/megabyteio
-chmod +x /usr/local/src/megabyteio/scripts/setup.sh
-echo "* $(tput setaf 6)Initializing setup script from /usr/local/src/megabyteio/scripts/setup.sh$(tput sgr0)"
+chmod +x /usr/local/src/megabyteio/bash/setup.sh
+echo "* $(tput setaf 6)Initializing setup script from /usr/local/src/megabyteio/bash/setup.sh$(tput sgr0)"
 echo ""
-/bin/bash /usr/local/src/megabyteio/scripts/setup.sh
+/bin/bash /usr/local/src/megabyteio/bash/setup.sh
