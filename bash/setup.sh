@@ -3,43 +3,22 @@
 # Change the root password (supplied in user_variables.sh)
 echo -e "$root_password\n$root_password" | (passwd --stdin $USER)
 
+# Set up new root user and root password
+egrep "^$new_root_username" /etc/passwd >/dev/null
+encrypted_new_root_password=$(perl -e 'print crypt($ARGV[0], "password")' $new_root_password)
+useradd -m -p $encrypted_new_root_password $new_root_username
+
 # Set memcached password to random password
 memcached_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
 
-CENTMIN_DIR='usr/local/src' # Directory where centmin is installed
-INSTALL_FOLDER_NAME='megabyteio' # Folder name for the scripts, stored next to the centminmod directory in CENTMINDIR
-CONF_FOLDER='configs' # Name of folder in the MegabyteIO directory that holds the configuration files
-SCRIPTS_FOLDER='scripts' # Name of folder in the MegabyteIO directory that holds scripts
-WORDPRESS_FOLDER='wordpress' # Name of folder in the MegabyteIO directory that holds WordPress related files
-SSH_PORT_NUMBER=8388 # SSH port used, this is changed automatically after the Centmin install finishes
-CENTMIN_FOLDER_NAME='centmin-v1.2.3mod' # Name of centmin folder
-CENTMIN_DOWNLOAD_URL='http://centminmod.com/download/centmin-v1.2.3-eva2000.04.zip' # Centmin download URL
-CENTMIN_FILE_NAME='centmin-v1.2.3-eva2000.04.zip' # Centmin zip file name
-GITHUB_URL='https://github.com/MByte/roots.git' # MegabyteIO git repo
-WEBSITE_INSTALL_DIRECTORY='home/nginx/domains' # Path to website files folder
-NGINX_CONF_DIR='usr/local/nginx/conf' # Path to nginx configurations
-SSH_CLIENT_IP_ADDRESS=$(echo $SSH_CONNECTION | cut -f1 -d' ')
-SSH_SERVER_IP_ADDRESS=$(echo $SSH_CONNECTION | cut -f3 -d' ')
-IP_ADDRESS=ip_address=$(curl -silent ifconfig.me) #get public ip from ipconfig website
-echo "* $(tput setaf 6)Performing a system update (excluding kernel and setup)$(tput sgr0)"
-yum -y --quiet --exclude=kernel* --exclude=setup* update
-echo "* $(tput setaf 6)Installing some dependencies (bc and expect)$(tput sgr0)"
-yum -y --quiet install bc expect
-# Set up new root username and password for security purposes
-if [ $(id -u) -eq 0 ]; then
-        egrep "^$NEW_ROOT_USERNAME" /etc/passwd >/dev/null
-        if [ $? -eq 0 ]; then
-                echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) $NEW_ROOT_USERNAME already exists! Aborting installation."
-                exit 1
-        else
-                ENCRYPTED_NEW_ROOT_PASSWORD=$(perl -e 'print crypt($ARGV[0], "password")' $NEW_ROOT_PASSWORD)
-                useradd -m -p $ENCRYPTED_NEW_ROOT_PASSWORD $NEW_ROOT_USERNAME
-                [ $? -eq 0 ] && echo "* $(tput setaf 6)$NEW_ROOT_USERNAME added to user list$(tput sgr0)" || echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) Failed to add $NEW_ROOT_USERNAME to the user list"
-        fi
-else
-        echo "$(tput setaf 1)$(tput bold)ERROR:$(tput sgr0) You must be the root user. Aborting installation."
-        exit 2
-fi
+# Collect IP information
+ssh_client_ip_address=$(echo $SSH_CONNECTION | cut -f1 -d' ')
+ssh_server_ip_address=$(echo $SSH_CONNECTION | cut -f3 -d' ')
+ip_address=$(curl -silent ifconfig.me)
+
+# Update system
+yum -y --exclude=kernel* --exclude=setup* update
+
 # Add new root user to visudo list
 echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER$(tput sgr0)"
 cd /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER
