@@ -7,6 +7,9 @@ root_password='rootpassword'
 new_root_username='testroot'
 new_root_password='testpassword'
 
+# New SSH port
+new_ssh_port='8388'
+
 # API Keys
 cloudflare_email=''
 cloudflare_api_key=''
