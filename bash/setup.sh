@@ -7,7 +7,7 @@ source $current_dir/user-variables.sh
 echo -e "$root_password\n$root_password" | (passwd --stdin $USER)
 
 # Set up new root user and root password
-adduser --group sudo $new_root_username
+adduser --group sudo $new_root_username #/etc/sudoers.d
 echo -e "$new_root_password\n$new_root_password" | (passwd $new_root_username --stdin)
 
 # Set memcached password to random password
