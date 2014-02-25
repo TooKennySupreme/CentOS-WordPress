@@ -1,8 +1,7 @@
 #!/bin/bash -x
 # Import variables from envoirnment.sh and user-variables.sh
-current_dir="/usr/local/src/megabyteio/bash"
-source $current_dir/envoirnment.sh
-source $current_dir/user-variables.sh
+source "$bash_dir"'envoirnment.sh'
+source "$bash_dir"'user-variables.sh'
 
 # Install dependencies
 yum -y install expect git wget unzip bc
@@ -42,3 +41,6 @@ perl -pi -e 's/Brisbane/New_York/g' "$centmin_dir"'centmin.sh'
 
 # Change custom TCP packet header in centmin.sh
 perl -pi -e 's/nginx centminmod/MegabyteIO/g' "$centmin_dir"'centmin.sh'
+
+# Run the Centmin Mod installation
+"$expect_dir"'centmin_install.exp'
