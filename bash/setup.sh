@@ -1,5 +1,5 @@
 #!/bin/bash -x
-current_dir="usr/local/src/megabyteio/bash"
+current_dir="/usr/local/src/megabyteio/bash"
 source $current_dir/envoirnment.sh
 source $current_dir/user-variables.sh
 
