@@ -30,6 +30,8 @@ megabyteio_dir="$source_dir"'megabyteio/'                         # MegabyteIO d
 declare -a megabyteio_folders=( 'bash' 'expect' 'php' 'modules' 'confs' 'misc' )
 for i in "${megabyteio_folders[@]}"			         # Create folder directory variables from megabyteio_folders	  
 do
-	declare $i_dir=""$megabyteio_dir""$i"/"
+	echo $i
+	echo $1
+	declare $i_dir=$megabyteio_dir
 	echo $i_dir
 done
