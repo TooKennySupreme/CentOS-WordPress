@@ -10,9 +10,9 @@ yum -y install expect git wget unzip bc
 echo -e "$root_password\n$root_password" | (passwd --stdin $USER)
 
 # Set up new root user and root password
-adduser $new_root_username #/etc/sudoers.d
+adduser $new_root_username
 echo -e "$new_root_password\n$new_root_password" | (passwd $new_root_username --stdin)
-echo "$new_root_username ALL=(ALL:ALL) ALL" >> /etc/sudoers;
+echo "$new_root_username ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/root_users;
 
 # Set memcached password to random password
 memcached_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
