@@ -45,4 +45,5 @@ perl -pi -e 's/nginx centminmod/MegabyteIO/g' "$centmin_setup"
 
 # Run the Centmin Mod installation
 chmod +x "$expect_dir"'centmin-install.exp'
+chmod +x "$centmin_setup"
 "$expect_dir"'centmin-install.exp' "$root_password" 'memcached' "$memcached_password" "$centmin_setup"
