@@ -47,11 +47,16 @@ perl -pi -e 's/nginx centminmod/MegabyteIO/g' "$centmin_setup"
 chmod +x "$expect_dir"'centmin-install.exp'
 chmod +x "$centmin_setup"
 cd "$centmin_dir"
-"$expect_dir"'centmin-install.exp' "$root_password" 'memcached' "$memcached_password" "$centmin_setup"
+#"$expect_dir"'centmin-install.exp' "$root_password" 'memcached' "$memcached_password" "$centmin_setup"
 
-# Disable APC CLI in both the apc.ini file and the php.ini file.
-#perl -pi -e 's/apc.enable_cli=1/apc.enable_cli=0/g' /root/centminmod/php.d/apc.ini
-#echo "apc.enable_cli = Off" >> /usr/local/lib/php.ini
+# Copy nginx configuration files
+for i in "$confs_dir/nginx/*"
+do
+  echo $i
+done
+# Disable APC CLI in both the apc.ini file and the php.ini file
+perl -pi -e 's/apc.enable_cli=1/apc.enable_cli=0/g' /root/centminmod/php.d/apc.ini
+echo "apc.enable_cli = Off" >> /usr/local/lib/php.ini
 
-# Changes shm_size to 256M - What's the optimal shm_size? Any ideas? Commits!
-#perl -pi -e 's/apc.shm_size=32M/apc.shm_size=256M/g' /root/centminmod/php.d/apc.ini
+# Changes shm_size to 256M - What's the optimal shm_size? Any ideas?
+perl -pi -e 's/apc.shm_size=32M/apc.shm_size=256M/g' /root/centminmod/php.d/apc.ini
