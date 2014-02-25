@@ -6,7 +6,6 @@ source_dir='/usr/local/src'                                     # Directory of t
 nginx_conf="$nginx_conf_dir/nginx.conf"                         # nginx.conf location
 site_conf_dir="$nginx_conf_dir/conf.d"                          # Site-specific conf location
 website_dir='/home/nginx/domains'                               # Directory website files are kept in
-current_dir="$( cd "$( dirname "${[0]}" )" && pwd )"            # Current directory (works unless script is symlinked) - see http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
 ssh_conf='/etc/ssh/sshd_config'                                 # SSH configuration file
 
 # Connection specific variables
@@ -29,6 +28,3 @@ centmin_dir="$source_dir/centmin-v1.2.3mod"                     # Centmin unzipp
 # MegabyteIO specific directory structure
 megabyteio_dir="$source_dir/megabyteio"                         # MegabyteIO directory
 declare -a megabyteio_folders=( 'bash' 'expect' 'php' 'modules' 'confs' 'misc' )
-for i in $megabyteio_folders; do
-  $megabyteio_${i}="$megabyteio_dir/$i"
-done
