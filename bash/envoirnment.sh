@@ -4,8 +4,7 @@
 nginx_conf_dir='/usr/local/nginx/'                               # Directory of nginx install file
 source_dir='/usr/local/src/'                                     # Directory of the MegabyteIO folder
 nginx_conf="$nginx_conf_dir"'nginx.conf'                         # nginx.conf location
-echo $nginx_conf
-site_conf_dir="$nginx_conf_dir/conf.d/"                          # Site-specific conf location
+site_conf_dir="$nginx_conf_dir"'conf.d/'                          # Site-specific conf location
 website_dir='/home/nginx/domains/'                               # Directory website files are kept in
 ssh_conf='/etc/ssh/sshd_config'                                 # SSH configuration file
 
@@ -14,7 +13,7 @@ mysql_host='localhost'                                          # Host of the My
 declare -a requires_database=( 'wp-single' 'wp_multi' )         # Types of installations that need databases
 
 # Site specific variables
-site_conf="$site_conf_dir/$site_name.conf"                      # Site-specific configuration named [site_url].conf in the $site_conf_dir
+site_conf="$site_conf_dir"'$site_name.conf'                      # Site-specific configuration named [site_url].conf in the $site_conf_dir
 declare -a site_folders=( 'public' 'private' 'logs' 'backup' )  # Folders to create for each website install
 
 # WordPress specific variables
@@ -22,9 +21,9 @@ wp_config=""                                                    # WordPress conf
 wp_core_folder=""                                               # Location of the WordPress core files
 
 # CentminMod variables
-centmin_dl_url='http://centminmod.com/download'                 # Remote directory containing Centmin file
+centmin_dl_url='http://centminmod.com/download/'                 # Remote directory containing Centmin file
 centmin_filename='centmin-v1.2.3-eva2000.06.zip'                # Centmin zip file
-centmin_dir=$source_dir + 'centmin-v1.2.3mod'                     # Centmin unzipped directory
+centmin_dir="$source_dir"'centmin-v1.2.3mod'                     # Centmin unzipped directory
 echo $centmin_dir
 
 # MegabyteIO specific directory structure
