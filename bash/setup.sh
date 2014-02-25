@@ -1,4 +1,5 @@
 #!/bin/bash -x
+# Import variables from envoirnment.sh and user-variables.sh
 current_dir="/usr/local/src/megabyteio/bash"
 source $current_dir/envoirnment.sh
 source $current_dir/user-variables.sh
