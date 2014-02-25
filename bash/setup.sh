@@ -31,7 +31,7 @@ perl -pi -e 's/#PermitRootLogin yes/PermitRootLogin no/g' $ssh_conf
 echo "AllowUsers $new_root_username" >> $ssh_conf
 
 # Download and set up CentminMod directory
-wget -O $source_dir "$centmin_dl_url/$centmin_file_name"
+wget -p $source_dir "$centmin_dl_url/$centmin_file_name"
 unzip "$source_dir/$centmin_file_name"
 rm "$source_dir/$centmin_file_name"
 
