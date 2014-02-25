@@ -3,7 +3,7 @@
 # Envoirnment specific variables
 nginx_conf_dir='/usr/local/nginx/'                               # Directory of nginx install file
 source_dir='/usr/local/src/'                                     # Directory of the MegabyteIO folder
-nginx_conf="$nginx_conf_dir/nginx.conf"                         # nginx.conf location
+nginx_conf="$nginx_conf_dir"'nginx.conf'                         # nginx.conf location
 echo $nginx_conf
 site_conf_dir="$nginx_conf_dir/conf.d/"                          # Site-specific conf location
 website_dir='/home/nginx/domains/'                               # Directory website files are kept in
