@@ -36,8 +36,8 @@ unzip "$source_dir$centmin_filename" -d "$source_dir"
 rm "$source_dir$centmin_filename"
 
 # Change time zone in centmin.sh
-perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' $centmin_dir/centmin.sh
-perl -pi -e 's/Brisbane/New_York/g' $centmin_dir/centmin.sh
+perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' "$centmin_dir"'centmin.sh'
+perl -pi -e 's/Brisbane/New_York/g' "$centmin_dir"'centmin.sh'
 
 # Change custom TCP packet header in centmin.sh
-perl -pi -e 's/nginx centminmod/MegabyteIO/g' /$centmin_dir/centmin.sh
+perl -pi -e 's/nginx centminmod/MegabyteIO/g' "$centmin_dir"'centmin.sh'
