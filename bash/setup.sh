@@ -1,4 +1,6 @@
 #!/bin/bash -x
+source envoirnment.sh
+source user-variables.sh
 
 # Change the root password (supplied in user_variables.sh)
 echo -e "$root_password\n$root_password" | (passwd --stdin $USER)
