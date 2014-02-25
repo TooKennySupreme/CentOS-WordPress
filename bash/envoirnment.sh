@@ -26,10 +26,10 @@ centmin_filename='centmin-v1.2.3-eva2000.06.zip'                 # Centmin zip f
 centmin_dir="$source_dir"'centmin-v1.2.3mod/'			 # Centmin unzipped directory
 
 # MegabyteIO specific directory structure
-megabyteio_dir="$source_dir"'megabyteio'                         # MegabyteIO directory
+megabyteio_dir="$source_dir"'megabyteio/'                         # MegabyteIO directory
 declare -a megabyteio_folders=( 'bash' 'expect' 'php' 'modules' 'confs' 'misc' )
 for i in "${megabyteio_folders[@]}"			         # Create folder directory variables from megabyteio_folders	  
 do
+	$i_dir=""$megabyteio_dir""$i"'/'"
 	echo $i_dir
-	$i_dir="$megabyteio_dir""$i"'/'
 done
