@@ -31,9 +31,9 @@ perl -pi -e 's/#PermitRootLogin yes/PermitRootLogin no/g' $ssh_conf
 echo "AllowUsers $new_root_username" >> $ssh_conf
 
 # Download and set up CentminMod directory
-wget -P "$source_dir" "$centmin_dl_url$centmin_file_name"
-unzip "$source_dir/$centmin_file_name"
-rm "$source_dir/$centmin_file_name"
+wget -P "$source_dir" "$centmin_dl_url$centmin_filename"
+unzip "$source_dir$centmin_filename"
+rm "$source_dir$centmin_filename"
 
 # Change time zone in centmin.sh
 perl -pi -e 's/ZONEINFO=Australia/ZONEINFO=America/g' $centmin_dir/centmin.sh
