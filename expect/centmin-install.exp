@@ -10,7 +10,7 @@ set centmindir   [lindex $argv 3]
 set timeout -1
  
 # Run the Centmin install
-spawn "$centmin_dir'centmin.sh'"
+spawn "$centmindir'centmin.sh'"
 
 # Set buffer size
 match_max 100000
