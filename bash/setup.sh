@@ -1,9 +1,8 @@
 #!/bin/bash -x
 # Import variables from envoirnment.sh and user-variables.sh
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-echo $current_dir
-source "$current_dir"'envoirnment.sh'
-source "$current_dir"'user-variables.sh'
+source "$current_dir"'/envoirnment.sh'
+source "$current_dir"'/user-variables.sh'
 
 # Install dependencies
 yum -y install expect git wget unzip bc
