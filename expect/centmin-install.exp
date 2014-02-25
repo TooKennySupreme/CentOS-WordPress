@@ -1,16 +1,16 @@
 #!/usr/bin/expect -f
-# Usage: centmin-install.exp mysqlpass memcacheusername memcachepassword centmindir
+# Usage: centmin-install.exp mysqlpass memcacheusername memcachepassword centminsetup
 
 set mysqlpass    [lindex $argv 0]
 set memcacheuser [lindex $argv 1]
 set memcachepass [lindex $argv 2]
-set centmindir   [lindex $argv 3]
+set centminsetup [lindex $argv 3]
 
 # Makes it so that expect does not time out
 set timeout -1
  
 # Run the Centmin install
-spawn "$centmindir'centmin.sh'"
+spawn "$centminsetup"
 
 # Set buffer size
 match_max 100000
