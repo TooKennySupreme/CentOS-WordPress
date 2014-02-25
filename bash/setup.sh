@@ -32,7 +32,7 @@ echo "AllowUsers $new_root_username" >> $ssh_conf
 
 # Download and set up CentminMod directory
 wget -P "$source_dir" "$centmin_dl_url$centmin_filename"
-unzip "$source_dir$centmin_filename"
+unzip "$source_dir$centmin_filename" -d "$source_dir"
 rm "$source_dir$centmin_filename"
 
 # Change time zone in centmin.sh
