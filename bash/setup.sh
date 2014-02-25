@@ -20,7 +20,7 @@ ssh_server_ip_address=$(echo $SSH_CONNECTION | cut -f3 -d' ')
 ip_address=$(curl -silent ifconfig.me)
 
 # Update system
-yum -y --exclude=kernel* --exclude=setup* update
+# yum -y --exclude=kernel* --exclude=setup* update
 
 # Tweak SSH settings for security
 perl -pi -e 's/#UseDNS yes/UseDNS no/g' $ssh_conf
