@@ -1,6 +1,5 @@
 #!/bin/bash -x
-current_dir="$( cd "$( dirname "${[0]}" )" && pwd )"
-echo $current_dir
+current_dir="usr/local/src/megabyteio/bash"
 source $current_dir/envoirnment.sh
 source $current_dir/user-variables.sh
 
