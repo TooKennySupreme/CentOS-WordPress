@@ -48,3 +48,7 @@ chmod +x "$expect_dir"'centmin-install.exp'
 chmod +x "$centmin_setup"
 cd "$centmin_dir"
 "$expect_dir"'centmin-install.exp' "$root_password" 'memcached' "$memcached_password" "$centmin_setup"
+
+# Disable APC CLI in both the apc.ini file and the php.ini file.
+#perl -pi -e 's/apc.enable_cli=1/apc.enable_cli=0/g' /root/centminmod/php.d/apc.ini
+#echo "apc.enable_cli = Off" >> /usr/local/lib/php.ini
