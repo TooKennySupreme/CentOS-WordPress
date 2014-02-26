@@ -49,6 +49,10 @@ chmod +x "$centmin_setup"
 cd "$centmin_dir"
 #"$expect_dir"'centmin-install.exp' "$root_password" 'memcached' "$memcached_password" "$centmin_setup"
 
+# Change SSH port to new port designated in user-variables.sh
+chmod +x "$expect_dir"'centmin-ssh.exp'
+"$expect_dir"'centmin-ssh.exp' '22' "$new_ssh_port" "$centmin_setup"
+
 # Copy nginx configuration files
 for i in ""$confs_dir"nginx/*"
 do
