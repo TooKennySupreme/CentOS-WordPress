@@ -20,8 +20,8 @@ default_cache='fastcgi'
 
 # Website lists
 declare -a wordpress_multisite_list=( 'megabyte.io' 'bestwebapps.net' 'enviedsolutions.com' 'bestmetroapps.com' 'thebestsites.com' 'laurazalewski.com' 'ultrasound.io' ) # First website in list is the primary domain
-declare -a wordpress_single_list=( 'laurazalewski.com' 'flya' )
-declare -a static_website_list=( 'pharmasonic.net' 'hiya' )
+declare -a wordpress_single_list=( 'laurazalewski.com' )
+declare -a static_website_list=( 'pharmasonic.net' )
 
 # Defaults for WordPress installations
 wordpress_username='testwordpress'
