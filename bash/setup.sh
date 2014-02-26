@@ -50,7 +50,7 @@ cd "$centmin_dir"
 #"$expect_dir"'centmin-install.exp' "$root_password" 'memcached' "$memcached_password" "$centmin_setup"
 
 # Copy nginx configuration files
-for i in "$confs_dir/nginx/*"
+for i in ""$confs_dir"nginx/*"
 do
   echo $i
 done
