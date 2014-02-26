@@ -52,7 +52,7 @@ cd "$centmin_dir"
 # Copy nginx configuration files
 for i in ""$confs_dir"nginx/*"
 do
-  echo $i
+  cp -f $i $nginx_conf_dir
 done
 
 # Disable APC CLI in both the apc.ini file and the php.ini file
