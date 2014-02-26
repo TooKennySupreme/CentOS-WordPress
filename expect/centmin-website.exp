@@ -1,5 +1,5 @@
 #!/usr/bin/expect -f
-# Usage: ./centmin-install.exp websitename centminsetup
+# Usage: centmin-website.exp websitename centminsetup
 
 set websitename  [lindex $argv 0]
 set centminsetup [lindex $argv 1]
