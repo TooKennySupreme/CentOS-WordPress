@@ -4,7 +4,7 @@ current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$current_dir"'/envoirnment.sh'
 source "$current_dir"'/user-variables.sh'
 
-echo ${wordpress_multisite_list[1]}
+echo ${wordpress_multisite_list[0]}
 for i in "${wordpress_single_list[@]}"
 do
   echo $i
