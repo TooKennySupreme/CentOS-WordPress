@@ -1,13 +1,14 @@
 #!/usr/bin/expect -f
-# Usage: ./centmin-install.exp websitename
+# Usage: ./centmin-install.exp websitename centminsetup
 
-set websitename [lindex $argv 0]
+set websitename  [lindex $argv 0]
+set centminsetup [lindex $argv 1]
  
 # Makes it so that expect does not time out
 set timeout -1
  
 # Run the Centmin install
-spawn "./centmin.sh"
+spawn "$centminsetup"
 
 # Set buffer size
 match_max 100000
