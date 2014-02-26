@@ -2,7 +2,8 @@
 # Usage: ./centmin-ssh.exp originalport newport
 
 set originalport [lindex $argv 0]
-set newport [lindex $argv 1]
+set newport      [lindex $argv 1]
+set centmin
  
 # Makes it so that expect does not time out
 set timeout -1
