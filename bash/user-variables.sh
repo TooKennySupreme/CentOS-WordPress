@@ -24,6 +24,8 @@ declare -a wordpress_single_list=( 'laurazalewski.com' )
 declare -a static_website_list=( 'ultrasound.io')
 
 # Defaults for WordPress installations
+wordpress_username='testwordpress'
+wordpress_password='testwordpress'
 default_theme='https://github.com/MByteIO/SimpleAwesomeWordPress.git'       # Default theme git
 default_mu='https://github.com/MByteIO/MustUseWordPress.git'                # Default must-use plugins git
 declare -a default_inactive_plugins=( 'wordpress-seo' 'pods' 'my-shortcodes' 'front-end-editor' )
