@@ -1,15 +1,15 @@
 #!/usr/bin/expect -f
-# Usage: ./centmin-ssh.exp originalport newport
+# Usage: centmin-ssh.exp originalport newport centminsetup
 
 set originalport [lindex $argv 0]
 set newport      [lindex $argv 1]
-set centmin
+set centminsetup [lindex $argv 2]
  
 # Makes it so that expect does not time out
 set timeout -1
  
 # Run the Centmin install
-spawn "./centmin.sh"
+spawn "$centminsetup"
 
 # Set buffer size
 match_max 100000
