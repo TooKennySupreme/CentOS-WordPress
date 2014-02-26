@@ -19,7 +19,7 @@ github_api_key=''
 default_cache='fastcgi'
 
 # Website lists
-declare -a wordpress_multisite_list=( 'megabyte.io' 'enviedsolutions.com' 'bestmetroapps.com' 'thebestsites.com' )
+declare -a wordpress_multisite_list=( 'megabyte.io' 'enviedsolutions.com' 'bestmetroapps.com' 'thebestsites.com' ) # First website in list is the primary domain
 declare -a wordpress_single_list=( 'laurazalewski.com' )
 declare -a static_website_list=( 'ultrasound.io')
 
