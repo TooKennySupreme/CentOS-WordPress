@@ -53,16 +53,10 @@ cd "$centmin_dir"
 chmod +x "$expect_dir"'centmin-ssh.exp'
 "$expect_dir"'centmin-ssh.exp' '22' "$new_ssh_port" "$centmin_setup"
 
-# Install multisite
+# Setup multisite vhost and directory
 "$expect_dir"'centmin-website.exp' "${wordpress_multisite_list[0]}"
 
-# Install single WordPress websites
-for i in "${wordpress_single_list[@]}"
-do
-  "$expect_dir"'centmin-website.exp' "$i"
-done
-
-# Install static websites
+# Setup static websites vhosts and directories
 for i in "${static_website_list[@]}"
 do
   "$expect_dir"'centmin-website.exp' "$i"
@@ -89,10 +83,5 @@ echo "Home URL  : http://megabyte.io"
 echo "Github URL: https://github.com/MByteIO/CentOS-WordPress"
 echo "Author    : Brian Zalewski"
 echo "Credit to CentminMod! Check out their website at http://centminmod.com/!"
-echo ""
-echo ""
-echo "Set up DKIM e-mail authentication by going to admin.google.com -> Google Apps -> GMail -> Authenticate E-Mail."
-echo ""
-echo "$(tput bold)$(tput setaf 7)Read Me:$(tput sgr0) You should now restart the server. You can also test to make sure the web server works by going to your IP address in a browser. After you restart the server, you can automatically install, configure, and optimize a WordPress website by running:"
 echo ""
 echo ""
