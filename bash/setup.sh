@@ -22,6 +22,7 @@ memcached_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
 ssh_client_ip_address=$(echo $SSH_CONNECTION | cut -f1 -d' ')
 ssh_server_ip_address=$(echo $SSH_CONNECTION | cut -f3 -d' ')
 ip_address=$(curl -silent ifconfig.me)
+
 # Update system
 yum -y --exclude=kernel* --exclude=setup* update
 
