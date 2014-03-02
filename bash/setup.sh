@@ -3,7 +3,7 @@
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$current_dir"'/envoirnment.sh'
 source "$current_dir"'/user-variables.sh'
-source "$current_dir"'/wordpress-install.sh'
+#ource "$current_dir"'/wordpress-install.sh'
 
 # Install dependencies, update system, and clean all
 yum -y install expect git wget unzip bc yum-plugin-fastestmirror
@@ -11,25 +11,25 @@ yum -y --exclude=kernel* --exclude=setup* update
 yum clean all
 
 # Change the root password (supplied in user_variables.sh)
-echo -e "$root_password\n$root_password" | (passwd --stdin $USER)
+echo -e "$root_password\n$root_password" | (passwd root --stdin)
 
 # Set up new root user and root password (supplied in user_variables.sh)
 adduser $new_root_username
 echo -e "$new_root_password\n$new_root_password" | (passwd $new_root_username --stdin)
 echo "$new_root_username ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/root_users;
 
-# Set memcached password to random password
+# Set memcached and MySQL passwords to values
 memcached_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
+mysql_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c32 | tr -d '-')
 
 # Collect IP information
-ssh_client_ip_address=$(echo $SSH_CONNECTION | cut -f1 -d' ')
-ssh_server_ip_address=$(echo $SSH_CONNECTION | cut -f3 -d' ')
-ip_address=$(curl -silent ifconfig.me)
+client_ip_address=$(echo $SSH_CONNECTION | cut -f1 -d' ')
+server_ip_address=$(echo $SSH_CONNECTION | cut -f3 -d' ')
 
 # Tweak SSH settings for security
 perl -pi -e 's/#UseDNS yes/UseDNS no/g' $ssh_conf
 perl -pi -e 's/#PermitRootLogin yes/PermitRootLogin no/g' $ssh_conf
-echo "AllowUsers $new_root_username" >> $ssh_conf
+echo "AllowUsers $new_root_username'@'$client_ip_address" >> $ssh_conf
 
 # Download and set up CentminMod directory
 wget -P "$source_dir" "$centmin_dl_url$centmin_filename"
@@ -47,7 +47,7 @@ perl -pi -e 's/nginx centminmod/MegabyteIO/g' "$centmin_setup"
 chmod +x "$expect_dir"'centmin-install.exp'
 chmod +x "$centmin_setup"
 cd "$centmin_dir"
-"$expect_dir"'centmin-install.exp' "$root_password" 'memcached' "$memcached_password" "$centmin_setup"
+"$expect_dir"'centmin-install.exp' "$mysql_password" 'memcached' "$memcached_password" "$centmin_setup"
 
 # Change SSH port to new port designated in user-variables.sh
 chmod +x "$expect_dir"'centmin-ssh.exp'
