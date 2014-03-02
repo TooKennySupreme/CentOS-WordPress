@@ -66,7 +66,7 @@ function custom_wordpress_install {
 
 	# Install WordPress
 	cd "$public_folder"
-	wp core install --path="$custom_backend" --url="$1" --title="${wordpress_multisite_titles[0]}" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email"
+	wp core install --path="$custom_backend" --url="$1" --title="$wordpress_multisite_title" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email"
 
 	# Install base theme
 	git clone $default_theme "$public_folder"'content/themes'
