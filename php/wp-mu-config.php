@@ -77,7 +77,8 @@ define( 'SITECOOKIEPATH', '' );
 /* DEBUG SETTINGS */
 /* ***************************************** */
 
-define( 'CURRENT_SERVER', 'dev' ); // Set to dev for developement settings and live for production settings
+// Conflicts with WP-CLI
+/* define( 'CURRENT_SERVER', 'dev' ); // Set to dev for developement settings and live for production settings
 switch( CURRENT_SERVER ){
 	case 'dev': // Development debug settings
 		define( 'WP_CACHE', FALSE );
@@ -114,7 +115,7 @@ switch( CURRENT_SERVER ){
 		define( 'WP_DEBUG_LOG', TRUE );
 		define( 'WP_DEBUG_DISPLAY', FALSE );
 		define( 'SCRIPT_DEBUG', FALSE );
-	break; }
+	break; } */
 
 /* ***************************************** */
 /* CONTENT AND PERFORMANCE SETTINGS */
