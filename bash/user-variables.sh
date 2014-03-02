@@ -19,7 +19,6 @@ declare -a static_website_list=( 'ultrasound.io' 'enviedsolutions.com' )
 wordpress_username='testwordpress'
 wordpress_password='testwordpress'
 wordpress_email='brian@enviedsolutions.com'
-custom_backend='cms'                                                        # Custom backend path
 default_theme='https://github.com/MByteIO/MegabyteIO-Theme.git'             # Default theme git
 default_theme_folder_name='megabyteio'
 default_mu='https://github.com/MByteIO/MegabyteIO-MustUse.git'                # Default must-use plugins git
