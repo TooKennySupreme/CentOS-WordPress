@@ -5,7 +5,7 @@ source "$current_dir"'/envoirnment.sh'
 source "$current_dir"'/user-variables.sh'
 source "$current_dir"'/wordpress-install.sh'
 
-# Install dependencies
+# Install dependencies, update system, and clean all
 yum -y install expect git wget unzip bc yum-plugin-fastestmirror
 yum -y --exclude=kernel* --exclude=setup* update
 yum clean all
@@ -13,7 +13,7 @@ yum clean all
 # Change the root password (supplied in user_variables.sh)
 echo -e "$root_password\n$root_password" | (passwd --stdin $USER)
 
-# Set up new root user and root password
+# Set up new root user and root password (supplied in user_variables.sh)
 adduser $new_root_username
 echo -e "$new_root_password\n$new_root_password" | (passwd $new_root_username --stdin)
 echo "$new_root_username ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/root_users;
