@@ -14,9 +14,12 @@ function custom_wordpress_install {
 	mkdir "$backend_folder"
 	mkdir "$public_folder"'content'
 	mkdir "$public_folder"'addons'
-	mkdir "$public_folder"'includes'
 	mkdir "$public_folder"'content/themes'
-
+	
+	# Add must-use-plugins and default theme
+	git clone $default_theme "$public_folder"'content/themes/'"$default_theme_folder_name"
+	git clone $default_mu "$public_folder"'includes'
+	
 	# Add index files to directories
 	cp "$php_dir"'index.php' "$public_folder"'content'
 	cp "$php_dir"'index.php' "$public_folder"'addons'
@@ -67,12 +70,6 @@ function custom_wordpress_install {
 	# Install WordPress
 	cd "$public_folder"
 	wp core install --path="$custom_backend" --url="$1" --title="$wordpress_multisite_title" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email"
-
-	# Install base theme
-	git clone $default_theme "$public_folder"'content/themes'
-
-	# Install default must-use plugins
-	git clone $default_mu "$public_folder"'includes'
 
 	# Install activated plugins
 	for i in "${activate_plugins[@]}"
