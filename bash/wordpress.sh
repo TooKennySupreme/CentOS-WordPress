@@ -5,12 +5,24 @@ function custom_wordpress_install {
 	# Set location variables
 	public_folder="$website_dir""$1"'/public/'
 	private_folder="$website_dir""$1"'/private/'
+	backend_folder="$public_folder""$custom_backend"'/'
 	wp_config="$public_folder"'wp-config.php'
 	db_config="$private_folder"'db-config.php'
 
-	# Remove base files from public folder and make custom backend folder
-	rm -rf "$public_folder"'*'
-	mkdir "$public_folder""$custom_backend"
+	# Remove base files from public folder and make folders
+	rm -rf "$public_folder"*
+	mkdir "$backend_folder"
+	mkdir "$public_folder"'content'
+	mkdir "$public_folder"'addons'
+	mkdir "$public_folder"'includes'
+	mkdir "$public_folder"'content/themes'
+
+	# Add index files to directories
+	cp "$php_dir"'index.php' "$public_folder"'content'
+	cp "$php_dir"'index.php' "$public_folder"'addons'
+	cp "$php_dir"'index.php' "$public_folder"'includes'
+	cp "$php_dir"'index.php' "$public_folder"'content/themes'
+
 
 	# Generate random MySQL credentials and random table prefix
 	database_name=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
@@ -19,7 +31,7 @@ function custom_wordpress_install {
 	database_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c64 | tr -d '-')
 
 	# Create database
-	mysql -uroot -p"$mysql_password" --verbose -e "CREATE DATABASE $database_name; GRANT ALL PRIVILEGES ON $database_name.* TO '$database_user'@'$database_host' IDENTIFIED BY '$database_password'; FLUSH PRIVILEGES"
+	mysql -uroot -p"$mysql_password" --verbose -e "CREATE DATABASE $database_name; GRANT ALL PRIVILEGES ON $database_name.* TO '$database_user'@'$mysql_host' IDENTIFIED BY '$database_password'; FLUSH PRIVILEGES"
   	
   	# Copy multisite template
 	cp "$php_dir"'wp-mu-config.php' "$wp_config"
@@ -35,4 +47,18 @@ function custom_wordpress_install {
 
 	# Edit backend path in wp-config.php
 	sed -i "s/{CUSTOM_BACKEND}/$custom_backend/g" "$wp_config"
+
+	# Download WordPress core files
+	wget -P "$backend_folder" 'http://wordpress.org/latest.tar.gz'
+	tar -xzf "$backend_folder"'latest.tar.gz' -C "$backend_folder"
+	cp -Rf "$backend_folder"'wordpress/'* "$backend_folder"
+	rm -Rf "$backend_folder"'wordpress'
+	rm -f "$backend_folder"'latest.tar.gz'
+	rm -f "$backend_folder"'license.txt'
+	rm -f "$backend_folder"'readme.html'
+
+	# Install WordPress
+	cd "$public_folder"
+	wp core install --path="$custom_backend" --url="$1" --title="${wordpress_multisite_titles[0]}" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email"
+
 }
