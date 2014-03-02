@@ -23,6 +23,12 @@ function custom_wordpress_install {
 	cp "$php_dir"'index.php' "$public_folder"'includes'
 	cp "$php_dir"'index.php' "$public_folder"'content/themes'
 
+	# Add public folder index
+	cp "$php_dir"'public_index.php' "$public_folder"'index.php'
+	sed -i "s/{CUSTOM_BACKEND}/$custom_backend/g" "$public_folder"'index.php'
+
+	# Add robots.txt
+	cp "$misc_dir"'robots.txt' "$public_folder"
 
 	# Generate random MySQL credentials and random table prefix
 	database_name=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
@@ -56,9 +62,30 @@ function custom_wordpress_install {
 	rm -f "$backend_folder"'latest.tar.gz'
 	rm -f "$backend_folder"'license.txt'
 	rm -f "$backend_folder"'readme.html'
+	rm -f "$backend_folder"'wp-config-sample.php'
 
 	# Install WordPress
 	cd "$public_folder"
 	wp core install --path="$custom_backend" --url="$1" --title="${wordpress_multisite_titles[0]}" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email"
 
+	# Install base theme
+	git clone $default_theme "$public_folder"'content/themes'
+
+	# Install default must-use plugins
+	git clone $default_mu "$public_folder"'includes'
+
+	# Install activated plugins
+	for i in "${activate_plugins[@]}"
+	do
+		wp plugin install --activate $i --path="$custom_backend" --url="$1"
+	done
+
+	# Install deactivated plugins
+	for i in "${inactive_plugins[@]}"
+	do
+		wp plugin install $i --path="$custom_backend" --url="$1"
+	done
+
+	# Set nginx as the owner for all files
+	chown -Rf nginx:nginx "$public_folder"
 }
