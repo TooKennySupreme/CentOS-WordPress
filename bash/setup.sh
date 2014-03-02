@@ -58,8 +58,7 @@ cd "$centmin_dir"
 "$expect_dir"'centmin-ssh.exp' '22' "$new_ssh_port" "$centmin_setup"
 
 # Setup multisite vhost and directory
-multisite_main_website=${wordpress_multisite_list[0]}
-"$expect_dir"'centmin-website.exp' "$multisite_main_website" "$centmin_setup"
+"$expect_dir"'centmin-website.exp' "$wordpress_multisite_url" "$centmin_setup"
 
 # Setup static websites vhosts and directories
 for i in "${static_website_list[@]}"
@@ -71,16 +70,16 @@ done
 eval "$centmin_wpcli"' install --allow-root'
 
 # Install WordPress multi-site
-custom_wordpress_install "$multisite_main_website"
+custom_wordpress_install "$wordpress_multisite_url"
 
 # Copy nginx base configuration files
 cp -f "$conf_dir"'nginx/'* "$nginx_conf_dir"
 
 # Set up nginx configuration files
-rm -f "$site_conf_dir""$multisite_main_website"'.conf'
-cp "$conf_dir"'wordpress-multisite.conf' "$site_conf_dir""$multisite_main_website"'.conf'
-sed -i "s/{WEBSITE_NAME}/$multisite_main_website/g" "$site_conf_dir""$multisite_main_website"'.conf'
-sed -i "s/{CUSTOM_BACKEND}/$CLI_BACKEND_PATH/g" "$site_conf_dir""$multisite_main_website"'.conf'
+rm -f "$site_conf_dir""$wordpress_multisite_url"'.conf'
+cp "$conf_dir"'wordpress-multisite.conf' "$site_conf_dir""$wordpress_multisite_url"'.conf'
+sed -i "s/{WEBSITE_NAME}/$wordpress_multisite_url/g" "$site_conf_dir""$wordpress_multisite_url"'.conf'
+sed -i "s/{CUSTOM_BACKEND}/$CLI_BACKEND_PATH/g" "$site_conf_dir""$wordpress_multisite_url"'.conf'
 
 # Whitelist CloudFlare IPs in csf
 whitelist_cloudflare
