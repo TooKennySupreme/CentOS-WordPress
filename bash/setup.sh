@@ -18,6 +18,15 @@ adduser $new_root_username
 echo -e "$new_root_password\n$new_root_password" | (passwd $new_root_username --stdin)
 echo "$new_root_username ALL=(ALL:ALL) ALL" >> /etc/sudoers.d/root_users;
 
+# Transfer authorized_keys from root to new root user
+mkdir /home/$new_root_username/.ssh
+cp /root/.ssh/authorized_keys /home/$new_root_username/.ssh/authorized_keys
+rm /root/.ssh/authorized_keys
+chown $new_root_username:$new_root_username /home/$new_root_username/.ssh
+chmod 700 /home/$new_root_username/.ssh
+chown $new_root_username:$new_root_username /home/$new_root_username/.ssh/authorized_keys
+chmod 600 /home/$new_root_username/.ssh/authorized_keys
+
 # Set memcached and MySQL passwords to values
 memcached_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
 mysql_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c32 | tr -d '-')
@@ -72,7 +81,7 @@ perl -pi -e 's/apc.shm_size=32M/apc.shm_size=256M/g' /root/centminmod/php.d/apc.
 # Install WP-CLI
 curl https://raw.github.com/wp-cli/wp-cli.github.com/master/installer.sh | bash
 echo 'export PATH=/root/.wp-cli/bin:$PATH' >> ~/.bash_profile
-
+echo $mysql_password
 # Credits and further instructions
 echo ""
 echo ""
