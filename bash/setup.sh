@@ -3,7 +3,7 @@
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$current_dir"'/envoirnment.sh'
 source "$current_dir"'/user-variables.sh'
-#ource "$current_dir"'/wordpress-install.sh'
+source "$current_dir"'/wordpress-install.sh'
 
 # Install dependencies, update system, and clean all
 yum -y install expect git wget unzip bc yum-plugin-fastestmirror
