@@ -57,7 +57,8 @@ cd "$centmin_dir"
 "$expect_dir"'centmin-ssh.exp' '22' "$new_ssh_port" "$centmin_setup"
 
 # Setup multisite vhost and directory
-"$expect_dir"'centmin-website.exp' "${wordpress_multisite_list[0]}" "$centmin_setup"
+multisite_main_website=${wordpress_multisite_list[0]}
+"$expect_dir"'centmin-website.exp' "$multisite_main_website" "$centmin_setup"
 
 # Setup static websites vhosts and directories
 for i in "${static_website_list[@]}"
@@ -69,7 +70,13 @@ done
 eval "$centmin_wpcli"' install --allow-root'
 
 # Install WordPress multi-site
-custom_wordpress_install "${wordpress_multisite_list[0]}"
+custom_wordpress_install "$multisite_main_website"
+
+# Set up nginx configuration files
+rm -f "$site_conf_dir""$multisite_main_website"'.conf'
+cp "$conf_dir"'wordpress-multisite.conf' "$site_conf_dir""$multisite_main_website"'.conf'
+sed -i "s/{WEBSITE_NAME}/$multisite_main_website/g" "$site_conf_dir""$multisite_main_website"'.conf'
+sed -i "s/{CUSTOM_BACKEND}/$CLI_BACKEND_PATH/g" "$site_conf_dir""$multisite_main_website"'.conf'
 
 # Disable APC CLI in both the apc.ini file and the php.ini file
 perl -pi -e 's/apc.enable_cli=1/apc.enable_cli=0/g' /root/centminmod/php.d/apc.ini
