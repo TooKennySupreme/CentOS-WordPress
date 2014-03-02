@@ -82,6 +82,9 @@ cp "$conf_dir"'wordpress-multisite.conf' "$site_conf_dir""$multisite_main_websit
 sed -i "s/{WEBSITE_NAME}/$multisite_main_website/g" "$site_conf_dir""$multisite_main_website"'.conf'
 sed -i "s/{CUSTOM_BACKEND}/$CLI_BACKEND_PATH/g" "$site_conf_dir""$multisite_main_website"'.conf'
 
+# Whitelist CloudFlare IPs in csf
+whitelist_cloudflare
+
 # Disable APC CLI in both the apc.ini file and the php.ini file
 perl -pi -e 's/apc.enable_cli=1/apc.enable_cli=0/g' /root/centminmod/php.d/apc.ini
 echo "apc.enable_cli = Off" >> /usr/local/lib/php.ini
