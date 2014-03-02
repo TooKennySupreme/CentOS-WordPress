@@ -52,6 +52,9 @@ function custom_wordpress_install {
 	# Edit default theme folder name in wp-config.php
 	sed -i "s/{DEFAULT_THEME}/$default_theme_folder_name/g" "$wp_config"
 	
+	# Add website name for php log
+	sed -i "s/{WEBSITE_NAME}/$1/g" "$wp_config"
+	
 	# Download WordPress core files
 	wget -P "$public_folder" 'http://wordpress.org/latest.tar.gz'
 	tar -xzf "$public_folder"'latest.tar.gz' -C "$public_folder"
