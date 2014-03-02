@@ -66,9 +66,6 @@ do
   "$expect_dir"'centmin-website.exp' "$i" "$centmin_setup"
 done
 
-# Install WP-CLI
-eval "$centmin_wpcli"' install --allow-root'
-
 # Install WordPress multi-site
 custom_wordpress_install "$wordpress_multisite_url"
 
