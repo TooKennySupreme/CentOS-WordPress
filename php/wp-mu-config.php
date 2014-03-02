@@ -7,9 +7,9 @@
 
 
 /* Database connection settings */
-define( 'DB_NAME', 'DB_NAME_HANDLE' );
-define( 'DB_USER', 'DB_USER_HANDLE' );
-define( 'DB_PASSWORD', 'DB_PASSWORD_HANDLE' );
+define( 'DB_NAME', '{DATABASE_NAME}' );
+define( 'DB_USER', '{DATABASE_USER}' );
+define( 'DB_PASSWORD', '{DATABASE_PASSWORD}' );
 define( 'DB_HOST', 'localhost' );
 // Dynamic database selection disabled since WP-CLI doesn't like it
 //define( 'DB_HOST', $_ENV{DATABASE_SERVER} ); // Dynamically sets the database host
@@ -17,7 +17,7 @@ define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
 /* Custom database format */
-$table_prefix = 'TABLE_PREFIX_HANDLE_';
+$table_prefix = '{DATABASE_PREFIX}_';
 // define( 'CUSTOM_USER_TABLE', $table_prefix . 'CUSTOM_USER_TABLE_HANDLE' );
 // define( 'CUSTOM_USER_META_TABLE', $table_prefix . 'CUSTOM_USER_META_TABLE_HANDLE' );
 
@@ -52,7 +52,7 @@ define('WP_DEFAULT_THEME', 'roots' );
 // define('STYLESHEETPATH', '/absolute/path/to/wp-content/themes/active-theme');
 
 /* Directory structure settings */
-define( 'WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] . '/cms'); // Defines the site URL to minimize database transactions
+define( 'WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] . '/{CUSTOM_BACKEND}'); // Defines the site URL to minimize database transactions
 define( 'WP_HOME', 'http://' . $_SERVER['SERVER_NAME'] ); // Defines home URL to minimize database transactions
 define( 'WP_CONTENT_DIR', dirname( __FILE__ ) . '/content' ); // Custom content directory
 define( 'WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/content' );
@@ -70,8 +70,8 @@ define( 'UPLOADS', '/media' ); // Upload directory relative to WP install direct
 
 
 /* Multisite settings */
-define( 'WP_ALLOW_MULTISITE', FALSE ); // Allow multisite
-define( 'MULTISITE', FALSE ); // Network setup (FIDDLE WITH THIS FOR QUERY REDUCTION)
+define( 'WP_ALLOW_MULTISITE', TRUE ); // Allow multisite
+define( 'MULTISITE', TRUE ); // Network setup (FIDDLE WITH THIS FOR QUERY REDUCTION)
 
 /* Cookie settings */
 /*
@@ -149,8 +149,8 @@ define( 'MEDIA_TRASH', TRUE ); // Enable trash for media
 define( 'EMPTY_TRASH_DAYS', 14 ); // Empty trash every X days
 
 /* Memory settings */
-define( 'WP_MEMORY_LIMIT', '128M' );
-define( 'WP_MAX_MEMORY_LIMIT', '192M' );
+define( 'WP_MEMORY_LIMIT', '256M' );
+define( 'WP_MAX_MEMORY_LIMIT', '512M' );
 
 /* Performance tweaks */
 // Compression for JS and styles - supposedly these slow down your website. Regardless, we use pagespeed so let's turn these off
@@ -192,7 +192,7 @@ define( 'CORE_UPGRADE_SKIP_NEW_BUNDLED', TRUE ); // Skip content directory when 
 
 /* Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
-        define('ABSPATH', dirname(__FILE__) . '/BACKEND_PATH_HANDLE/');
+        define('ABSPATH', dirname(__FILE__) . '/{CUSTOM_BACKEND}/');
 
 /* Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
