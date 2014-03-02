@@ -77,13 +77,13 @@ function custom_wordpress_install {
 	# Install activated plugins
 	for i in "${activate_plugins[@]}"
 	do
-		wp plugin install --activate $i --path="$custom_backend" --url="$1"
+		wp plugin install --activate $i --path="$custom_backend" --url="$1" --allow-root
 	done
 
 	# Install deactivated plugins
 	for i in "${inactive_plugins[@]}"
 	do
-		wp plugin install $i --path="$custom_backend" --url="$1"
+		wp plugin install $i --path="$custom_backend" --url="$1" --allow-root
 	done
 
 	# Set nginx as the owner for all files
