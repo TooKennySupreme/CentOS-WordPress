@@ -23,4 +23,4 @@ custom_backend='cms'                                                        # Cu
 default_theme='https://github.com/MByteIO/MegabyteIO-Theme.git'             # Default theme git
 default_mu='https://github.com/MByteIO/MegabyteIO-MustUse.git'                # Default must-use plugins git
 declare -a active_plugins=( 'google-sitemap-generator' 'redirection' )
-declare -a inactive_plugins=( 'wordpress-seo' 'pods' 'my-shortcodes' )
+declare -a inactive_plugins=( 'wordpress-seo' 'pods' )
