@@ -19,8 +19,6 @@ centmin_dl_url='http://centminmod.com/download/'                 # Remote direct
 centmin_filename='centmin-v1.2.3-eva2000.06.zip'                 # Centmin zip file
 centmin_dir="$source_dir"'centmin-v1.2.3mod/'			 # Centmin unzipped directory
 centmin_setup="$centmin_dir"'centmin.sh'			 # Centmin.sh location
-centmin_addons="$centmin_dir"'addons/'				 # Centmin addons directory
-centmin_wpcli="$centmin_addons"'wpcli.sh'			 # Centmin wpcli.sh location
 
 # MegabyteIO specific directory structure
 megabyteio_dir="$source_dir"'megabyteio/'                         # MegabyteIO directory
