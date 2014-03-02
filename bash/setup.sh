@@ -66,7 +66,7 @@ do
 done
 
 # Install WP-CLI
-"$centmin_wpcli"' install --allow-root'
+eval "$centmin_wpcli"' install --allow-root'
 
 # Install WordPress multi-site
 custom_wordpress_install "${wordpress_multisite_list[0]}"
