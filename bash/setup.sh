@@ -72,6 +72,9 @@ eval "$centmin_wpcli"' install --allow-root'
 # Install WordPress multi-site
 custom_wordpress_install "$multisite_main_website"
 
+# Copy nginx base configuration files
+cp -f "$conf_dir"'nginx/'* "$nginx_conf_dir"
+
 # Set up nginx configuration files
 rm -f "$site_conf_dir""$multisite_main_website"'.conf'
 cp "$conf_dir"'wordpress-multisite.conf' "$site_conf_dir""$multisite_main_website"'.conf'
@@ -93,6 +96,9 @@ echo 'memcached_password='"$memcached_password" >> '/root/.passwords'
 chmod 644 "$centmin_setup"
 chmod 644 "$centmin_wpcli"
 chmod 644 "$expect_dir"*
+
+# Restart nginx
+service nginx restart
 
 # Credits and further instructions
 echo ""
