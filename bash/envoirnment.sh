@@ -10,25 +10,18 @@ ssh_conf='/etc/ssh/sshd_config'                                  # SSH configura
 
 # Connection specific variables
 mysql_host='localhost'                                           # Host of the MySQL database
-declare -a requires_database=( 'wp-single' 'wp_multi' )          # Types of installations that need databases
-
-# Site specific variables
-site_conf="$site_conf_dir"'$site_name.conf'                      # Site-specific configuration named [site_url].conf in the $site_conf_dir
-declare -a site_folders=( 'public' 'private' 'logs' 'backup' )   # Folders to create for each website install
-
-# WordPress specific variables
-wp_config=""                                                     # WordPress configuration file location
-wp_core_folder=""                                                # Location of the WordPress core files
 
 # CentminMod variables
 centmin_dl_url='http://centminmod.com/download/'                 # Remote directory containing Centmin file
 centmin_filename='centmin-v1.2.3-eva2000.06.zip'                 # Centmin zip file
 centmin_dir="$source_dir"'centmin-v1.2.3mod/'			 # Centmin unzipped directory
 centmin_setup="$centmin_dir"'centmin.sh'			 # Centmin.sh location
+centmin_addons="$centmin_dir"'addons/'				 # Centmin addons directory
+centmin_wpcli="$centmin_addons"'wpcli.sh'			 # Centmin wpcli.sh location
 
 # MegabyteIO specific directory structure
 megabyteio_dir="$source_dir"'megabyteio/'                         # MegabyteIO directory
-declare -a megabyteio_folders=( 'bash' 'expect' 'php' 'modules' 'confs' 'misc' )
+declare -a megabyteio_folders=( 'bash' 'expect' 'php' 'confs' 'misc' )
 for i in "${megabyteio_folders[@]}"			         # Create folder directory variables from megabyteio_folders	  
 do
 	current_variable="$i"'_dir'
