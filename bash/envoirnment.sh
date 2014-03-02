@@ -10,6 +10,9 @@ ssh_conf='/etc/ssh/sshd_config'                                  # SSH configura
 
 # Connection specific variables
 mysql_host='localhost'                                           # Host of the MySQL database
+mysql_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c32 | tr -d '-') # MySQL root password
+client_ip_address=$(echo $SSH_CONNECTION | cut -f1 -d' ')	 # Connecting clients IP address
+server_ip_address=$(echo $SSH_CONNECTION | cut -f3 -d' ')	 # Servers IP address
 
 # CentminMod variables
 centmin_dl_url='http://centminmod.com/download/'                 # Remote directory containing Centmin file
@@ -27,3 +30,6 @@ do
 	current_variable="$i"'_dir'
 	declare $current_variable=""$megabyteio_dir""$i"/"
 done
+
+# Misc
+memcached_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-') # Memcached password
