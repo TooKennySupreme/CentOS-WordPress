@@ -5,13 +5,12 @@ function custom_wordpress_install {
 	# Set location variables
 	public_folder="$website_dir""$1"'/public/'
 	private_folder="$website_dir""$1"'/private/'
-	backend_folder="$public_folder""$custom_backend"'/'
 	wp_config="$public_folder"'wp-config.php'
 	db_config="$private_folder"'db-config.php'
 
 	# Remove base files from public folder and make folders
 	rm -rf "$public_folder"*
-	mkdir "$backend_folder"
+	mkdir "$public_folder"'media'
 	mkdir "$public_folder"'content'
 	mkdir "$public_folder"'addons'
 	mkdir "$public_folder"'content/themes'
@@ -25,10 +24,6 @@ function custom_wordpress_install {
 	cp "$php_dir"'index.php' "$public_folder"'addons'
 	cp "$php_dir"'index.php' "$public_folder"'includes'
 	cp "$php_dir"'index.php' "$public_folder"'content/themes'
-
-	# Add public folder index
-	cp "$php_dir"'public-index.php' "$public_folder"'index.php'
-	sed -i "s/{CUSTOM_BACKEND}/$custom_backend/g" "$public_folder"'index.php'
 
 	# Add robots.txt
 	cp "$misc_dir"'robots.txt' "$public_folder"
@@ -54,33 +49,30 @@ function custom_wordpress_install {
 	# Edit Salts in wp-config.php
 	perl -i -pe 'BEGIN {$keysalts = qx(curl -sS https://api.wordpress.org/secret-key/1.1/salt)} s/{AUTH-KEYS-SALTS}/$keysalts/g' "$wp_config"
 
-	# Edit backend path in wp-config.php
-	sed -i "s/{CUSTOM_BACKEND}/$custom_backend/g" "$wp_config"
-
 	# Download WordPress core files
-	wget -P "$backend_folder" 'http://wordpress.org/latest.tar.gz'
-	tar -xzf "$backend_folder"'latest.tar.gz' -C "$backend_folder"
-	cp -Rf "$backend_folder"'wordpress/'* "$backend_folder"
-	rm -Rf "$backend_folder"'wordpress'
-	rm -f "$backend_folder"'latest.tar.gz'
-	rm -f "$backend_folder"'license.txt'
-	rm -f "$backend_folder"'readme.html'
-	rm -f "$backend_folder"'wp-config-sample.php'
+	wget -P "$public_folder" 'http://wordpress.org/latest.tar.gz'
+	tar -xzf "$public_folder"'latest.tar.gz' -C "$public_folder"
+	cp -Rf "$public_folder"'wordpress/'* "$public_folder"
+	rm -Rf "$public_folder"'wordpress'
+	rm -f "$public_folder"'latest.tar.gz'
+	rm -f "$public_folder"'license.txt'
+	rm -f "$public_folder"'readme.html'
+	rm -f "$public_folder"'wp-config-sample.php'
 
 	# Install WordPress
 	cd "$public_folder"
-	wp core multisite-install --path="$custom_backend" --subdomains --url="$1" --title="$wordpress_multisite_title" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email" --allow-root
+	wp core multisite-install --subdomains --url="$1" --title="$wordpress_multisite_title" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email" --allow-root
 
 	# Install activated plugins
 	for i in "${active_plugins[@]}"
 	do
-		wp plugin install --activate $i --path="$custom_backend" --url="$1" --allow-root
+		wp plugin install --activate $i --url="$1" --allow-root
 	done
 
 	# Install deactivated plugins
 	for i in "${inactive_plugins[@]}"
 	do
-		wp plugin install $i --path="$custom_backend" --url="$1" --allow-root
+		wp plugin install $i --url="$1" --allow-root
 	done
 
 	# Set nginx as the owner for all files
