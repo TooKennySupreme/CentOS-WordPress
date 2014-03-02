@@ -1,45 +1,23 @@
 #!/bin/bash
 
-# Usage: single-wordpress.sh website username password admin_email
+# Usage: wordpress_install website
+function custom_wordpress_install {
+	# Remove base files from public folder
+	rm -rf "$website_dir""$1"'/public/'*
+	mkdir "$website_dir""$1"'/public/'"$custom_backend"
+	
+	# Generate random MySQL credentials and random table prefix
+	database_name=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
+	database_user=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
+	random_prefix=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c4 | tr -d '-')
+	database_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c64 | tr -d '-')
 
-echo "* $(tput setaf 6)Copying centmin-wordpress.exp from /$POOR_IO_HOME/$SCRIPTS_FOLDER to /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME$(tput sgr0)"
-cp /$CENTMIN_DIR/$INSTALL_FOLDER_NAME/$SCRIPTS_FOLDER/centmin-wordpress.exp /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-wordpress.exp
-echo "* $(tput setaf 6)Changing directory to /$CENTMIN_DIR/$INSTALL_FOLDER_NAME$(tput sgr0)"
-cd /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME
-echo "* $(tput setaf 6)Giving centmin-wordpress.exp executable permissions$(tput sgr0)"
-chmod +x centmin-wordpress.exp
-echo "* $(tput setaf 6)Giving centmin.sh executable permissions$(tput sgr0)"
-chmod +x centmin.sh
-echo "* $(tput setaf 6)Initializing the CentminMod website setup via centmin-wordpress.exp$(tput sgr0)"
-./centmin-wordpress.exp "$CLI_WEBSITE"
-echo "* $(tput setaf 6)Removing centmin-wordpress.exp from CentminMod folder$(tput sgr0)"
-rm -f /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin-wordpress.exp
-echo "* $(tput setaf 6)Restoring centmin.sh permissions to original state$(tput sgr0)"
-chmod 644 /$CENTMIN_DIR/$CENTMIN_FOLDER_NAME/centmin.sh
-
-# Remove default error pages and create backend path directory
-echo "* $(tput setaf 6)Removing default website files from /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public$(tput sgr0)"
-rm -rf /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/*
-echo "* $(tput setaf 6)Creating backend path directory$(tput sgr0)"
-mkdir /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH
-
-# Generate random MySQL credentials and create the database
-echo "* $(tput setaf 6)Generating random ~8 character database name$(tput sgr0)"
-CLI_DATABASE_NAME=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
-echo "* $(tput setaf 6)Generating random ~8 character database user name$(tput sgr0)"
-CLI_DATABASE_USER=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8 | tr -d '-')
-echo "* $(tput setaf 6)Generating random ~4 character database table prefix$(tput sgr0)"
-CLI_PREFIX_RANDOM=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c4 | tr -d '-')
-echo "* $(tput setaf 6)Generating random ~64 character database password$(tput sgr0)"
-CLI_DATABASE_PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c64 | tr -d '-')
-echo "* $(tput setaf 6)Creating database with randomly generated fields$(tput sgr0)"
-echo ""
-echo "Your root MySQL password is required. Please enter your MySQL root password:"
-mysql -uroot -p --verbose -e "CREATE DATABASE $CLI_DATABASE_NAME; GRANT ALL PRIVILEGES ON $CLI_DATABASE_NAME.* TO '$CLI_DATABASE_USER'@'$CLI_DATABASE_HOST' IDENTIFIED BY '$CLI_DATABASE_PASSWORD'; FLUSH PRIVILEGES"
-
+	# Create database
+  mysql -uroot -p"$mysql_password" --verbose -e "CREATE DATABASE $database_name; GRANT ALL PRIVILEGES ON $database_name.* TO '$database_user'@'$database_host' IDENTIFIED BY '$database_password'; FLUSH PRIVILEGES"
+  
+  cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/wp-mu-config.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/private/wp-config.php
+}
 # Set up wp-config.php
-echo "* $(tput setaf 6)Copying wp-config.php template from /$POOR_IO_HOME/$WORDPRESS_FOLDER/wp-config-options.php to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php$(tput sgr0)"
-cp /$POOR_IO_HOME/$WORDPRESS_FOLDER/wp-config-options.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 echo "* $(tput setaf 6)Inserting database connection settings into wp-config.php$(tput sgr0)"
 sed -i "s/DB_NAME_HANDLE/$CLI_DATABASE_NAME/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
 sed -i "s/DB_USER_HANDLE/$CLI_DATABASE_USER/g" /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/wp-config.php
