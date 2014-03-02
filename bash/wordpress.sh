@@ -49,6 +49,9 @@ function custom_wordpress_install {
 	# Edit Salts in wp-config.php
 	perl -i -pe 'BEGIN {$keysalts = qx(curl -sS https://api.wordpress.org/secret-key/1.1/salt)} s/{AUTH-KEYS-SALTS}/$keysalts/g' "$wp_config"
 
+	# Edit default theme folder name in wp-config.php
+	sed -i "s/{DEFAULT_THEME}/$default_theme_folder_name/g" "$wp_config"
+	
 	# Download WordPress core files
 	wget -P "$public_folder" 'http://wordpress.org/latest.tar.gz'
 	tar -xzf "$public_folder"'latest.tar.gz' -C "$public_folder"
