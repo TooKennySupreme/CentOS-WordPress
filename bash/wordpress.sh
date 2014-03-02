@@ -72,7 +72,7 @@ function custom_wordpress_install {
 	wp core multisite-install --path="$custom_backend" --subdomains --url="$1" --title="$wordpress_multisite_title" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email" --allow-root
 
 	# Install activated plugins
-	for i in "${activate_plugins[@]}"
+	for i in "${active_plugins[@]}"
 	do
 		wp plugin install --activate $i --path="$custom_backend" --url="$1" --allow-root
 	done
