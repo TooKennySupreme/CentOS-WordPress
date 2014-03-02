@@ -61,7 +61,7 @@ function custom_wordpress_install {
 
 	# Install WordPress
 	cd "$public_folder"
-	wp core multisite-install --subdomains --url="$1" --title="$wordpress_multisite_title" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email" --allow-root
+	wp core multisite-install --url="$1" --subdomains --title="$wordpress_multisite_title" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email" --allow-root
 
 	# Install activated plugins
 	for i in "${active_plugins[@]}"
