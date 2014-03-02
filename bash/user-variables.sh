@@ -12,7 +12,7 @@ new_ssh_port='8388'
 
 # Website lists
 declare -a wordpress_multisite_list=( 'megabyte.io' 'bestmetroapps.com' 'thebestsites.com' 'laurazalewski.com' ) # First website in list is the primary domain
-declare -a wordpress_multisite_titles=( 'Megabyte I/O' 'Best Metro Apps' 'The Best Sites' 'Laura Zalewski' )
+wordpress_multisite_title='Megabyte I/O'
 declare -a static_website_list=( 'ultrasound.io' 'enviedsolutions.com' )
 
 # Defaults for WordPress installations
