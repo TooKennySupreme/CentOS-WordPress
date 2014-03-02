@@ -11,7 +11,7 @@ new_root_password='testpassword'
 new_ssh_port='8388'
 
 # Website lists
-declare -a wordpress_multisite_list=( 'megabyte.io' 'bestmetroapps.com' 'thebestsites.com' 'laurazalewski.com' ) # First website in list is the primary domain
+wordpress_multisite_url='megabyte.io'
 wordpress_multisite_title='Megabyte I/O'
 declare -a static_website_list=( 'ultrasound.io' 'enviedsolutions.com' )
 
