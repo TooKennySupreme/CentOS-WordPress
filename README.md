@@ -7,7 +7,6 @@
 + Compiles software from source
 + Caches WordPress into RAM
 + Best security practices
-+ Automatically configures your DNS with the Cloudflare API
 + Improvements to CentminMod
 
 ## Instructions
