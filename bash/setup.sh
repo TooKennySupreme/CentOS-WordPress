@@ -5,7 +5,8 @@ source "$current_dir"'/envoirnment.sh'
 source "$current_dir"'/user-variables.sh'
 
 # Install dependencies
-yum -y install expect git wget unzip bc
+yum -y install expect git wget unzip bc yum-plugin-fastestmirror
+yum clean all
 
 # Change the root password (supplied in user_variables.sh)
 echo -e "$root_password\n$root_password" | (passwd --stdin $USER)
