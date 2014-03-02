@@ -24,7 +24,7 @@ function custom_wordpress_install {
 	cp "$php_dir"'index.php' "$public_folder"'content/themes'
 
 	# Add public folder index
-	cp "$php_dir"'public_index.php' "$public_folder"'index.php'
+	cp "$php_dir"'public-index.php' "$public_folder"'index.php'
 	sed -i "s/{CUSTOM_BACKEND}/$custom_backend/g" "$public_folder"'index.php'
 
 	# Add robots.txt
