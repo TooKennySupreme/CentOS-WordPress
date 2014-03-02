@@ -47,7 +47,7 @@ perl -pi -e 's/nginx centminmod/MegabyteIO/g' "$centmin_setup"
 # Set script permissions to executable
 chmod +x "$centmin_setup"
 chmod +x "$centmin_wpcli"
-chmod +x "$expect_dir"'*'
+chmod +x "$expect_dir"*
 
 # Run the Centmin Mod installation
 cd "$centmin_dir"
@@ -85,7 +85,7 @@ echo 'memcached_password='"$memcached_password" >> '/root/.passwords'
 # Reset permissions on executable files
 chmod 644 "$centmin_setup"
 chmod 644 "$centmin_wpcli"
-chmod 644 "$expect_dir"'*'
+chmod 644 "$expect_dir"*
 
 # Credits and further instructions
 echo ""
