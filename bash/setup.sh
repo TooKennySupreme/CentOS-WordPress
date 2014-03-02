@@ -3,7 +3,7 @@
 current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source "$current_dir"'/envoirnment.sh'
 source "$current_dir"'/user-variables.sh'
-source "$current_dir"'/wordpress-install.sh'
+source "$current_dir"'/wordpress.sh'
 
 # Install dependencies, update system, and clean all
 yum -y install expect git wget unzip bc yum-plugin-fastestmirror
@@ -57,12 +57,12 @@ cd "$centmin_dir"
 "$expect_dir"'centmin-ssh.exp' '22' "$new_ssh_port" "$centmin_setup"
 
 # Setup multisite vhost and directory
-"$expect_dir"'centmin-website.exp' "${wordpress_multisite_list[0]}"
+"$expect_dir"'centmin-website.exp' "${wordpress_multisite_list[0]}" "$centmin_setup"
 
 # Setup static websites vhosts and directories
 for i in "${static_website_list[@]}"
 do
-  "$expect_dir"'centmin-website.exp' "$i"
+  "$expect_dir"'centmin-website.exp' "$i" "$centmin_setup"
 done
 
 # Install WP-CLI
