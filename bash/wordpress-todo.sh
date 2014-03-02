@@ -12,11 +12,6 @@
 #echo "* $(tput setaf 6)Installing APC object-cache plugin to appropriate folder$(tput sgr0)"
 #cp /$POOR_IO_HOME/gitclones/APC/object-cache.php /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/object-cache.php
 
-# Add latest version of Roots
-echo "* $(tput setaf 6)Changing directory to /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes$(tput sgr0)"
-cd /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/content/themes
-echo "* $(tput setaf 6)Getting custom version of Roots.IO$(tput sgr0)"
-git clone -q $GITHUB_URL
 
 # Remove default configuration and add new, optimized one
 echo "* $(tput setaf 6)Removing the default nginx configuration for current website$(tput sgr0)"
@@ -33,24 +28,4 @@ echo "* $(tput setaf 6)Adjusting nginx configuration for current website$(tput s
 sed -i "s/REPLACETHIS/$CLI_WEBSITE/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 sed -i "s/BACKENDPATH/$CLI_BACKEND_PATH/g" /$NGINX_CONF_DIR/conf.d/$CLI_WEBSITE.conf
 
-wp core install --path="$CLI_BACKEND_PATH" --url="$CLI_WEBSITE" --title="$SITE_TITLE" --admin_user="$ADMIN_USER" --admin_password="$ADMIN_PASSWORD" --admin_email="$ADMIN_EMAIL"
-echo "* $(tput setaf 6)Installing plugins$(tput sgr0)"
-wp plugin install --activate mp6 --path='cms' --url="$CLI_WEBSITE"
-wp plugin install --activate front-end-editor --path='cms' --url="$CLI_WEBSITE"
-#wp plugin install --activate wordpress-seo --path='cms' --url="$CLI_WEBSITE"
-# Install SEOProfessor - Yoast tries to do too many things all at the same time
-wp plugin install --activate my-shortcodes --path='cms' --url="$CLI_WEBSITE"
-wp plugin install --activate redirection --path='cms' --url="$CLI_WEBSITE"
-wp plugin install --activate google-sitemap-generator --path='cms' --url="$CLI_WEBSITE"
-wp plugin install pods --path='cms' --url="$CLI_WEBSITE"
-wp plugin install wordpress-seo --path='cms' --url="$CLI_WEBSITE"
-# Set nginx as owner
-echo "* $(tput setaf 6)Recursively changing ownership of /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public to nginx$(tput sgr0)"
-chown -Rf nginx:nginx /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public
-echo "* $(tput setaf 6)Removing unnecessary files from WordPress$(tput sgr0)"
-rm /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH/wp-config-sample.php
-rm /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH/readme.html
-rm /$WEBSITE_INSTALL_DIRECTORY/$CLI_WEBSITE/public/$CLI_BACKEND_PATH/license.txt
-# Chown it up here.
-echo "* $(tput setaf 6)Restarting nginx to update configuration settings$(tput sgr0)"
 service nginx restart
