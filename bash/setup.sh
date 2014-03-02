@@ -7,6 +7,7 @@ source "$current_dir"'/wordpress-install.sh'
 
 # Install dependencies
 yum -y install expect git wget unzip bc yum-plugin-fastestmirror
+yum -y --exclude=kernel* --exclude=setup* update
 yum clean all
 
 # Change the root password (supplied in user_variables.sh)
@@ -24,9 +25,6 @@ memcached_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
 ssh_client_ip_address=$(echo $SSH_CONNECTION | cut -f1 -d' ')
 ssh_server_ip_address=$(echo $SSH_CONNECTION | cut -f3 -d' ')
 ip_address=$(curl -silent ifconfig.me)
-
-# Update system
-yum -y --exclude=kernel* --exclude=setup* update
 
 # Tweak SSH settings for security
 perl -pi -e 's/#UseDNS yes/UseDNS no/g' $ssh_conf
