@@ -44,14 +44,16 @@ perl -pi -e 's/Brisbane/New_York/g' "$centmin_setup"
 # Change custom TCP packet header in centmin.sh
 perl -pi -e 's/nginx centminmod/MegabyteIO/g' "$centmin_setup"
 
-# Run the Centmin Mod installation
-chmod +x "$expect_dir"'centmin-install.exp'
+# Set script permissions to executable
 chmod +x "$centmin_setup"
+chmod +x "$centmin_wpcli"
+chmod +x "$expect_dir"'*'
+
+# Run the Centmin Mod installation
 cd "$centmin_dir"
-"$expect_dir"'centmin-install.exp' "$mysql_password" 'memcached' "$memcached_password" "$centmin_setup"
+"$expect_dir"'centmin-install.exp' "$mysql_password" "$new_root_username" "$memcached_password" "$centmin_setup"
 
 # Change SSH port to new port designated in user-variables.sh
-chmod +x "$expect_dir"'centmin-ssh.exp'
 "$expect_dir"'centmin-ssh.exp' '22' "$new_ssh_port" "$centmin_setup"
 
 # Setup multisite vhost and directory
@@ -63,6 +65,9 @@ do
   "$expect_dir"'centmin-website.exp' "$i"
 done
 
+# Install WP-CLI
+"$centmin_wpcli"' install --allow-root'
+
 # Disable APC CLI in both the apc.ini file and the php.ini file
 perl -pi -e 's/apc.enable_cli=1/apc.enable_cli=0/g' /root/centminmod/php.d/apc.ini
 echo "apc.enable_cli = Off" >> /usr/local/lib/php.ini
@@ -70,10 +75,15 @@ echo "apc.enable_cli = Off" >> /usr/local/lib/php.ini
 # Changes shm_size to 256M - What's the optimal shm_size? Any ideas?
 perl -pi -e 's/apc.shm_size=32M/apc.shm_size=256M/g' /root/centminmod/php.d/apc.ini
 
-# Install WP-CLI
-curl https://raw.github.com/wp-cli/wp-cli.github.com/master/installer.sh | bash
-echo 'export PATH=/root/.wp-cli/bin:$PATH' >> ~/.bash_profile
-echo $mysql_password
+# Save passwords to root folder in file named .passwords
+echo 'mysql_root_password='"$mysql_password" >> '/root/.passwords'
+echo 'memcached_password='"$memcached_password" >> '/root/.passwords'
+
+# Reset permissions on executable files
+chmod 644 "$centmin_setup"
+chmod 644 "$centmin_wpcli"
+chmod 644 "$expect_dir"'*'
+
 # Credits and further instructions
 echo ""
 echo ""
