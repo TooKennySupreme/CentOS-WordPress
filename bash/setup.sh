@@ -73,7 +73,7 @@ eval "$centmin_wpcli"' install --allow-root'
 custom_wordpress_install "$wordpress_multisite_url"
 
 # Copy nginx base configuration files
-cp -f "$conf_dir"'nginx/'* "$nginx_conf_dir"
+cp -rf "$conf_dir"'nginx/'* "$nginx_conf_dir"
 
 # Set up nginx configuration files
 rm -f "$site_conf_dir""$wordpress_multisite_url"'.conf'
