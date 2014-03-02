@@ -64,8 +64,8 @@ define( 'UPLOADS', '/media' ); 									// Upload directory relative to WP insta
 
 /* Multisite settings */
 define( 'WP_ALLOW_MULTISITE', TRUE ); 		// Allow multisite
-define( 'MULTISITE', TRUE ); 				// Network setup (FIDDLE WITH THIS FOR QUERY REDUCTION)
-define( 'SUBDOMAIN_INSTALL', TRUE );
+// define( 'MULTISITE', TRUE ); 		// Network setup (FIDDLE WITH THIS FOR QUERY REDUCTION)
+// define( 'SUBDOMAIN_INSTALL', TRUE );
 
 /* Cookie settings */
 define( 'ADMIN_COOKIE_PATH', '/' );
