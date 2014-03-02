@@ -47,7 +47,7 @@ define( 'WPLANG', '' ); // U.S. English (en_US) by default
 // define( 'WP_LANG_DIR', dirname(__FILE__) . '/languages');
 
 /* Theme settings */
-define('WP_DEFAULT_THEME', 'roots' );
+define('WP_DEFAULT_THEME', 'megabyteio' );
 // define('TEMPLATEPATH', '/absolute/path/to/wp-content/themes/active-theme');
 // define('STYLESHEETPATH', '/absolute/path/to/wp-content/themes/active-theme');
 
