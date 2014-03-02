@@ -27,14 +27,6 @@ chmod 700 /home/$new_root_username/.ssh
 chown $new_root_username:$new_root_username /home/$new_root_username/.ssh/authorized_keys
 chmod 600 /home/$new_root_username/.ssh/authorized_keys
 
-# Set memcached and MySQL passwords to values
-memcached_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c16 | tr -d '-')
-mysql_password=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c32 | tr -d '-')
-
-# Collect IP information
-client_ip_address=$(echo $SSH_CONNECTION | cut -f1 -d' ')
-server_ip_address=$(echo $SSH_CONNECTION | cut -f3 -d' ')
-
 # Tweak SSH settings for security
 perl -pi -e 's/#UseDNS yes/UseDNS no/g' $ssh_conf
 perl -pi -e 's/#PermitRootLogin yes/PermitRootLogin no/g' $ssh_conf
