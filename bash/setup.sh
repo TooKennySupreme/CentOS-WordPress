@@ -79,7 +79,6 @@ cp -rf "$confs_dir"'nginx/'* "$nginx_conf_dir"
 rm -f "$site_conf_dir""$wordpress_multisite_url"'.conf'
 cp "$confs_dir"'wordpress-multisite.conf' "$site_conf_dir""$wordpress_multisite_url"'.conf'
 sed -i "s/{WEBSITE_NAME}/$wordpress_multisite_url/g" "$site_conf_dir""$wordpress_multisite_url"'.conf'
-sed -i "s/{CUSTOM_BACKEND}/$CLI_BACKEND_PATH/g" "$site_conf_dir""$wordpress_multisite_url"'.conf'
 
 # Whitelist CloudFlare IPs in csf
 whitelist_cloudflare
