@@ -8,7 +8,7 @@ function custom_wordpress_install {
 	wp_config="$public_folder"'wp-config.php'
 	db_config="$private_folder"'db-config.php'
 
-	# Remove base files from public folder and make folders
+	# Remove base files from public folder
 	rm -rf "$public_folder"*
 	mkdir "$public_folder"'media'
 	mkdir "$public_folder"'content'
