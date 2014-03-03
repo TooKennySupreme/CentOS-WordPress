@@ -94,6 +94,10 @@ perl -pi -e 's/apc.shm_size=32M/apc.shm_size=256M/g' /root/centminmod/php.d/apc.
 echo 'mysql_root_password='"$mysql_password" >> '/root/.passwords'
 echo 'memcached_password='"$memcached_password" >> '/root/.passwords'
 
+# Remove demo.com
+rm -Rf "$website_dir"'demo.com'
+rm -f "$site_conf_dir"'virtual.conf'
+
 # Reset permissions on executable files
 chmod 644 "$centmin_setup"
 chmod 644 "$centmin_wpcli"
