@@ -7,7 +7,7 @@ source "$current_dir"'/wordpress.sh'
 source "$current_dir"'/cloudflare.sh'
 
 # Install dependencies, update system, and clean all
-yum -y install expect git wget unzip bc yum-plugin-fastestmirror vim
+yum -y install expect git wget unzip bc yum-plugin-fastestmirror vim npm
 yum -y --exclude=kernel* --exclude=setup* update
 yum clean all
 
