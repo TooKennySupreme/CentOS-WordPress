@@ -5,25 +5,9 @@ function custom_wordpress_install {
 	# Set location variables
 	public_folder="$website_dir""$1"'/public/'
 	private_folder="$website_dir""$1"'/private/'
-	wp_config="$public_folder"'wp-config.php'
-	db_config="$private_folder"'db-config.php'
 
-	# Remove base files from public folder
+	# Remove base files
 	rm -rf "$public_folder"*
-	mkdir "$public_folder"'media'
-	mkdir "$public_folder"'content'
-	mkdir "$public_folder"'addons'
-	mkdir "$public_folder"'content/themes'
-	
-	# Add must-use-plugins and default theme
-	git clone $default_theme "$public_folder"'content/themes/'"$default_theme_folder_name"
-	git clone $default_mu "$public_folder"'includes'
-	
-	# Add index files to directories
-	cp "$php_dir"'index.php' "$public_folder"'content'
-	cp "$php_dir"'index.php' "$public_folder"'addons'
-	cp "$php_dir"'index.php' "$public_folder"'includes'
-	cp "$php_dir"'index.php' "$public_folder"'content/themes'
 
 	# Add robots.txt
 	cp "$misc_dir"'robots.txt' "$public_folder"
@@ -56,18 +40,18 @@ function custom_wordpress_install {
 	sed -i "s/{WEBSITE_NAME}/$1/g" "$wp_config"
 	
 	# Download WordPress core files
-	wget -P "$public_folder" 'http://wordpress.org/latest.tar.gz'
-	tar -xzf "$public_folder"'latest.tar.gz' -C "$public_folder"
-	cp -Rf "$public_folder"'wordpress/'* "$public_folder"
-	rm -Rf "$public_folder"'wordpress'
-	rm -Rf "$public_folder"'wp-content'
+	cd "$public_folder"
+	wp core download --allow-root
 	rm -f "$public_folder"'latest.tar.gz'
 	rm -f "$public_folder"'license.txt'
 	rm -f "$public_folder"'readme.html'
 	rm -f "$public_folder"'wp-config-sample.php'
+	
+	# Add must-use-plugins and default theme
+	git clone $default_theme "$public_folder"'wp-content/themes/'"$default_theme_folder_name"
+	git clone $default_mu "$public_folder"'wp-content/mu-plugins'
 
 	# Install WordPress
-	cd "$public_folder"
 	wp core multisite-install --url="$1" --subdomains --title="$wordpress_multisite_title" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email" --allow-root
 
 	# Install deactivated plugins
