@@ -5,9 +5,25 @@ function custom_wordpress_install {
 	# Set location variables
 	public_folder="$website_dir""$1"'/public/'
 	private_folder="$website_dir""$1"'/private/'
+	wp_config="$public_folder"'wp-config.php'
+	db_config="$private_folder"'db-config.php'
 
-	# Remove base files
+	# Remove base files and add custom folder structure
 	rm -rf "$public_folder"*
+	mkdir "$public_folder"'media'
+	mkdir "$public_folder"'assets'
+	mkdir "$public_folder"'assets/addons'
+	mkdir "$public_folder"'assets/themes'
+	
+	# Add must-use-plugins and default theme
+	git clone $default_theme "$public_folder"'assets/themes/'"$default_theme_folder_name"
+	git clone $default_mu "$public_folder"'assets/includes'
+	
+	# Add index files to directories
+	cp "$php_dir"'index.php' "$public_folder"'assets'
+	cp "$php_dir"'index.php' "$public_folder"'assets/addons'
+	cp "$php_dir"'index.php' "$public_folder"'assets/includes'
+	cp "$php_dir"'index.php' "$public_folder"'assets/themes'
 
 	# Add robots.txt
 	cp "$misc_dir"'robots.txt' "$public_folder"
@@ -46,10 +62,6 @@ function custom_wordpress_install {
 	rm -f "$public_folder"'license.txt'
 	rm -f "$public_folder"'readme.html'
 	rm -f "$public_folder"'wp-config-sample.php'
-	
-	# Add must-use-plugins and default theme
-	git clone $default_theme "$public_folder"'wp-content/themes/'"$default_theme_folder_name"
-	git clone $default_mu "$public_folder"'wp-content/mu-plugins'
 
 	# Install WordPress
 	wp core multisite-install --url="$1" --subdomains --title="$wordpress_multisite_title" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email" --allow-root
