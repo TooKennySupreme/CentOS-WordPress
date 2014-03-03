@@ -60,6 +60,7 @@ function custom_wordpress_install {
 	tar -xzf "$public_folder"'latest.tar.gz' -C "$public_folder"
 	cp -Rf "$public_folder"'wordpress/'* "$public_folder"
 	rm -Rf "$public_folder"'wordpress'
+	rm -Rf "$public_folder"'wp-content'
 	rm -f "$public_folder"'latest.tar.gz'
 	rm -f "$public_folder"'license.txt'
 	rm -f "$public_folder"'readme.html'
