@@ -66,6 +66,10 @@ define( 'UPLOADS', '/media' ); 									// Upload directory relative to WP insta
 define( 'WP_ALLOW_MULTISITE', TRUE ); 		// Allow multisite
 // define( 'MULTISITE', TRUE ); 		// Network setup (FIDDLE WITH THIS FOR QUERY REDUCTION)
 // define( 'SUBDOMAIN_INSTALL', TRUE );
+// define('DOMAIN_CURRENT_SITE', 'megabyte.io');
+// define('PATH_CURRENT_SITE', '/');
+// define('SITE_ID_CURRENT_SITE', 1);
+// define('BLOG_ID_CURRENT_SITE', 1);
 
 /* Cookie settings */
 define( 'ADMIN_COOKIE_PATH', '/' );
