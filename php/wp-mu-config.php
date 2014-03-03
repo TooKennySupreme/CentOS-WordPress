@@ -49,14 +49,14 @@ define('WP_DEFAULT_THEME', '{DEFAULT_THEME}' );
 /* Directory structure settings */
 define( 'WP_SITEURL', 'http://' . $_SERVER['SERVER_NAME'] ); 	// Defines the site URL to minimize database transactions
 define( 'WP_HOME', 'http://' . $_SERVER['SERVER_NAME'] ); 		// Defines home URL to minimize database transactions
-define( 'WP_CONTENT_DIR', dirname( __FILE__ ) . '/content' ); 	// Custom content directory
-define( 'WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/content' );
-define( 'WP_PLUGIN_DIR', dirname( __FILE__ ) . '/addons' ); 	// Custom plugin directory
-define( 'WP_PLUGIN_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/addons' );
-define( 'PLUGINDIR', WP_PLUGIN_DIR ); 							// For compatibility with older scripts
-define( 'WPMU_PLUGIN_DIR', dirname( __FILE__ ) . '/includes' ); // Custom must-use plugin directory
-define( 'WPMU_PLUGIN_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/includes' );
-define( 'UPLOADS', '/media' ); 									// Upload directory relative to WP install directory
+// define( 'WP_CONTENT_DIR', dirname( __FILE__ ) . '/content' ); 	// Custom content directory
+// define( 'WP_CONTENT_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/content' );
+// define( 'WP_PLUGIN_DIR', dirname( __FILE__ ) . '/addons' ); 	// Custom plugin directory
+// define( 'WP_PLUGIN_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/addons' );
+// define( 'PLUGINDIR', WP_PLUGIN_DIR ); 							// For compatibility with older scripts
+// define( 'WPMU_PLUGIN_DIR', dirname( __FILE__ ) . '/includes' ); // Custom must-use plugin directory
+// define( 'WPMU_PLUGIN_URL', 'http://' . $_SERVER['SERVER_NAME'] . '/includes' );
+define( 'UPLOADS', 'media' ); 									// Upload directory relative to WP install directory
 
 /* ***************************************** */
 /* 		MULTISITE AND COOKIE SETTINGS 		 */
