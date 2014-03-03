@@ -146,6 +146,7 @@ switch( CURRENT_SERVER ){
 		define( 'WP_DEBUG_LOG', TRUE );
 		define( 'WP_DEBUG_DISPLAY', TRUE );
 		define( 'SCRIPT_DEBUG', TRUE );
+		break;
 	case 'live': // Production debug settings
 		define( 'WP_CACHE', TRUE );
 		define( 'WP_DEBUG', FALSE );
@@ -158,7 +159,7 @@ switch( CURRENT_SERVER ){
 		define( 'WP_DEBUG_LOG', TRUE );
 		define( 'WP_DEBUG_DISPLAY', FALSE );
 		define( 'SCRIPT_DEBUG', FALSE );
- 	break; }
+		break; }
 
 /* ***************************************** */
 /* UPDATE SETTINGS */
