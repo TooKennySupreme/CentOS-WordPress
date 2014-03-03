@@ -1,4 +1,5 @@
 #!/bin/bash
+# NOTE: This file is removed at the end of the installation process so your passwords will only be visible in this file temporarily.
 
 # New root password
 root_password='rootpassword'
@@ -11,7 +12,7 @@ new_root_password='testpassword'
 new_ssh_port='8388'
 
 # Website lists
-wordpress_multisite_url='megabyte.io'
+wordpress_multisite_url='megabyte.io' # Domain name of main website to be used to set up the multisite
 wordpress_multisite_title='Megabyte I/O'
 declare -a static_website_list=( 'ultrasound.io' 'enviedsolutions.com' )
 
