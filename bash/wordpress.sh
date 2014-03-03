@@ -70,16 +70,10 @@ function custom_wordpress_install {
 	cd "$public_folder"
 	wp core multisite-install --url="$1" --subdomains --title="$wordpress_multisite_title" --admin_user="$wordpress_username" --admin_password="$wordpress_password" --admin_email="$wordpress_email" --allow-root
 
-	# Install activated plugins
-	for i in "${active_plugins[@]}"
-	do
-		wp plugin install --activate $i --url="$1" --allow-root
-	done
-
 	# Install deactivated plugins
 	for i in "${inactive_plugins[@]}"
 	do
-		wp plugin install $i --url="$1" --allow-root
+		wp plugin install $i --allow-root
 	done
 	
 	# Set nginx as the owner for all files
