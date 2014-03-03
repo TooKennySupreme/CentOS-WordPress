@@ -87,7 +87,7 @@ whitelist_cloudflare
 perl -pi -e 's/apc.enable_cli=1/apc.enable_cli=0/g' /root/centminmod/php.d/apc.ini
 echo "apc.enable_cli = Off" >> /usr/local/lib/php.ini
 
-# Changes shm_size to 256M - What's the optimal shm_size? Any ideas?
+# Changes shm_size to 512M - What's the optimal shm_size? Any ideas?
 perl -pi -e 's/apc.shm_size=32M/apc.shm_size=512M/g' /root/centminmod/php.d/apc.ini
 
 # Save passwords to root folder in file named .passwords
