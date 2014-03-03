@@ -66,7 +66,7 @@ define( 'UPLOADS', '/media' ); 									// Upload directory relative to WP insta
 define( 'WP_ALLOW_MULTISITE', TRUE ); 		// Allow multisite
 // define( 'MULTISITE', TRUE ); 		// Network setup (FIDDLE WITH THIS FOR QUERY REDUCTION)
 // define( 'SUBDOMAIN_INSTALL', TRUE );
-// define('DOMAIN_CURRENT_SITE', 'megabyte.io');
+// define('DOMAIN_CURRENT_SITE', '{WEBSITE_NAME}');
 // define('PATH_CURRENT_SITE', '/');
 // define('SITE_ID_CURRENT_SITE', 1);
 // define('BLOG_ID_CURRENT_SITE', 1);
@@ -115,6 +115,50 @@ define( 'ENFORCE_GZIP', FALSE );
 // define( 'FTP_USER', 'username123' );
 // define( 'FTP_PASS', 'password123' );
 // define( 'FTP_SSL', FALSE );
+
+/* ***************************************** */
+/* DEBUG SETTINGS */
+/* ***************************************** */
+
+// Conflicts with WP-CLI
+define( 'CURRENT_SERVER', 'dev' ); // Set to dev for developement settings and live for production settings
+switch( CURRENT_SERVER ){
+	case 'dev': // Development debug settings
+		define( 'WP_CACHE', FALSE );
+		define( 'WP_DEBUG', TRUE );
+		define( 'DISALLOW_FILE_EDIT', FALSE );
+		define( 'SAVEQUERIES', TRUE );
+		/* View queries in the footer of your theme with the following snippet:
+		<?php
+		if ( current_user_can( 'administrator' ) ) {
+		global $wpdb;
+		echo "<pre>";
+		print_r( $wpdb->queries );
+		echo "</pre>";
+		}
+		?> */
+		error_reporting(E_ALL | E_WARNING | E_ERROR);
+		// display errors
+		@ini_set('log_errors','Off');
+		@ini_set('display_errors','On');
+		// Notes on this ini_set stuff: http://digwp.com/2009/07/monitor-php-errors-wordpress/
+		@ini_set('error_log','/home/path/domain/{WEBSITE_NAME}/logs/php_error.log');
+		define( 'WP_DEBUG_LOG', TRUE );
+		define( 'WP_DEBUG_DISPLAY', TRUE );
+		define( 'SCRIPT_DEBUG', TRUE );
+	case 'live': // Production debug settings
+		define( 'WP_CACHE', TRUE );
+		define( 'WP_DEBUG', FALSE );
+		define( 'DISALLOW_FILE_EDIT', TRUE );
+		define( 'SAVEQUERIES', FALSE );
+		error_reporting(E_WARNING | E_ERROR);
+		// log errors in a file (content/debug.log), don't show them to end-users.
+		@ini_set('log_errors','On');
+		@ini_set('display_errors','Off');
+		define( 'WP_DEBUG_LOG', TRUE );
+		define( 'WP_DEBUG_DISPLAY', FALSE );
+		define( 'SCRIPT_DEBUG', FALSE );
+ 	break; }
 
 /* ***************************************** */
 /* UPDATE SETTINGS */
