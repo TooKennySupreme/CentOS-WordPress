@@ -106,6 +106,9 @@ chmod 644 "$expect_dir"*
 # Restart nginx
 service nginx restart
 
+# Remove user-variables.sh
+rm -f "$current_dir"'/user-variables.sh'
+
 # Credits and further instructions
 echo ""
 echo ""
