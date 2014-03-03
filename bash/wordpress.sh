@@ -24,6 +24,11 @@ function custom_wordpress_install {
 	cp "$php_dir"'index.php' "$public_folder"'assets/addons'
 	cp "$php_dir"'index.php' "$public_folder"'assets/includes'
 	cp "$php_dir"'index.php' "$public_folder"'assets/themes'
+	
+	# Adjust index.php files
+	echo '?>' >> "$public_folder"'assets/addons/index.php'
+	echo '?>' >> "$public_folder"'assets/includes/index.php'
+	echo '?>' >> "$public_folder"'assets/themes/index.php'
 
 	# Add robots.txt
 	cp "$misc_dir"'robots.txt' "$public_folder"
@@ -58,6 +63,7 @@ function custom_wordpress_install {
 	# Download WordPress core files
 	cd "$public_folder"
 	wp core download --allow-root
+	rm -rf "$public_folder"'wp-content'
 	rm -f "$public_folder"'latest.tar.gz'
 	rm -f "$public_folder"'license.txt'
 	rm -f "$public_folder"'readme.html'
