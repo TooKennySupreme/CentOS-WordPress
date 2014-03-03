@@ -82,12 +82,6 @@ function custom_wordpress_install {
 		wp plugin install $i --url="$1" --allow-root
 	done
 	
-	# Run grunt on default theme
-	cd "$public_folder"'content/themes/'"$default_theme_folder_name"
-	npm install -g grunt-cli
-	npm install
-	grunt
-	
 	# Set nginx as the owner for all files
 	chown -Rf nginx:nginx "$public_folder"
 }
